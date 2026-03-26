@@ -3,6 +3,8 @@
 {
   time.timeZone = "Europe/Paris";
 
+  console.keyMap = "fr";
+
   i18n = {
     defaultLocale = "fr_FR.UTF-8";
     extraLocaleSettings = {

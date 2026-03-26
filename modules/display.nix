@@ -29,17 +29,14 @@
     enable = true;
     settings.default_session = {
       user    = "greeter";
-      command = ''
-        ${pkgs.greetd.tuigreet}/bin/tuigreet \
-          --time \
-          --time-format '%H:%M  %A %d %B' \
-          --greeting '  NixOS' \
-          --asterisks \
-          --user-menu \
-          --theme 'border=#4C566A;text=#D8DEE9;prompt=#88C0D0;time=#88C0D0;action=#81A1C1;button=#5E81AC;container=#3B4252;input=#434C5E' \
-          --cmd Hyprland
-      '';
+      command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --time-format '%H:%M  %A %d %B' --greeting '  NixOS' --asterisks --user-menu --theme 'border=#4C566A;text=#D8DEE9;prompt=#88C0D0;time=#88C0D0;action=#81A1C1;button=#5E81AC;container=#3B4252;input=#434C5E' --sessions /run/current-system/sw/share/wayland-sessions";
     };
+  };
+
+  # Nettoyer le TTY avant que tuigreet s'affiche (évite les [OK] visibles)
+  systemd.services.greetd.serviceConfig = {
+    TTYVHangup   = true;
+    TTYVTDisallocate = true;
   };
 
   environment.sessionVariables = {

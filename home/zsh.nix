@@ -30,6 +30,7 @@
       rebuild = "sudo nixos-rebuild switch --flake /etc/nixos#nixos";
       update  = "sudo nix-channel --update && sudo nixos-rebuild switch --flake /etc/nixos#nixos";
       cleanup = "sudo nix-collect-garbage -d && sudo nix-store --gc";
+      trim    = "sudo nix-env --delete-generations --profile /nix/var/nix/profiles/system +3 && sudo nix-store --gc";
       nixedit = "sudo nvim /etc/nixos/configuration.nix";
 
       # Git

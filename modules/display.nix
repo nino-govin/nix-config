@@ -24,17 +24,21 @@
     ];
   };
 
-  # SDDM reste le display manager
-  services.displayManager.sddm = {
-    enable  = true;
-    package = pkgs.kdePackages.sddm;
-    wayland.enable = true;  # SDDM en mode Wayland
-    settings = {
-      General = {
-        EnableHiDPI = true;
-        # QT_SCALE_FACTOR pour Qt6 (QT_SCREEN_SCALE_FACTORS est Qt5)
-        GreeterEnvironment = "QT_SCALE_FACTOR=1.6";
-      };
+  # greetd + tuigreet : greeter natif Wayland, pas de flash TTY, pas de scaling Qt
+  services.greetd = {
+    enable = true;
+    settings.default_session = {
+      user    = "greeter";
+      command = ''
+        ${pkgs.greetd.tuigreet}/bin/tuigreet \
+          --time \
+          --time-format '%H:%M  %A %d %B' \
+          --greeting '  NixOS' \
+          --asterisks \
+          --user-menu \
+          --theme 'border=#4C566A;text=#D8DEE9;prompt=#88C0D0;time=#88C0D0;action=#81A1C1;button=#5E81AC;container=#3B4252;input=#434C5E' \
+          --cmd Hyprland
+      '';
     };
   };
 

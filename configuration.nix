@@ -3,7 +3,6 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./sddm-theme.nix
     ./modules/boot.nix
     ./modules/networking.nix
     ./modules/locale.nix

@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 
 {
+  home.file.".local/bin/cpu-stats.sh"  = { executable = true; source = ./scripts/cpu-stats.sh; };
   home.file.".local/bin/gpu-intel.sh"  = { executable = true; source = ./scripts/gpu-intel.sh; };
   home.file.".local/bin/gpu-nvidia.sh" = { executable = true; source = ./scripts/gpu-nvidia.sh; };
   home.file.".local/bin/storage.sh"    = { executable = true; source = ./scripts/storage.sh; };
@@ -99,28 +100,17 @@
         color: #d8dee9;
       }
 
-      /* ── Îlot CPU (usage + température) ─────────────────────────────── */
-      #cpu {
+      /* ── Îlot CPU (usage + température fusionnés) ───────────────────── */
+      #custom-cpu-stats {
         background: rgba(46, 52, 64, 0.88);
         border: 1px solid rgba(76, 86, 106, 0.5);
-        border-right: none;
-        border-radius: 12px 0 0 12px;
-        margin: 6px 0 6px 4px;
-        padding: 0 10px 0 14px;
+        border-radius: 12px;
+        margin: 6px 4px;
+        padding: 0 14px;
         color: #81a1c1;
       }
 
-      #temperature {
-        background: rgba(46, 52, 64, 0.88);
-        border: 1px solid rgba(76, 86, 106, 0.5);
-        border-left: none;
-        border-radius: 0 12px 12px 0;
-        margin: 6px 4px 6px 0;
-        padding: 0 14px 0 10px;
-        color: #a3be8c;
-      }
-
-      #temperature.critical {
+      #custom-cpu-stats.critical {
         color: #bf616a;
       }
 
@@ -266,8 +256,7 @@
 
       modules-right = [
         "hyprland/language"
-        "cpu"
-        "temperature"
+        "custom/cpu-stats"
         "custom/gpu-intel"
         "custom/gpu-nvidia"
         "memory"
@@ -311,26 +300,19 @@
         tooltip-format = "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>";
       };
 
-      temperature = {
-        thermal-zone       = 6;
-        critical-threshold = 90;
-        format             = " {temperatureC}°C";
-        format-critical    = " {temperatureC}°C";
-        tooltip            = false;
-        interval           = 5;
-      };
-
-      cpu = {
-        interval = 5;
-        format   = "󰻠 {usage}%";
-        tooltip  = false;
+      "custom/cpu-stats" = {
+        exec        = "~/.local/bin/cpu-stats.sh";
+        interval    = 5;
+        return-type = "json";
+        format      = "CPU 󰻠 {}";
+        tooltip     = true;
       };
 
       "custom/gpu-intel" = {
         exec        = "~/.local/bin/gpu-intel.sh";
         interval    = 5;
         return-type = "json";
-        format      = " {}";
+        format      = "GPU 󰘚 {}";
         tooltip     = true;
       };
 

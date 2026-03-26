@@ -1,19 +1,13 @@
 { config, pkgs, ... }:
 
 {
-  # Scripts custom GPU et stockage
-  home.file.".local/bin/gpu-stats.sh" = {
-    executable = true;
-    source     = ./scripts/gpu-stats.sh;
-  };
-  home.file.".local/bin/storage.sh" = {
-    executable = true;
-    source     = ./scripts/storage.sh;
-  };
+  home.file.".local/bin/gpu-intel.sh"  = { executable = true; source = ./scripts/gpu-intel.sh; };
+  home.file.".local/bin/gpu-nvidia.sh" = { executable = true; source = ./scripts/gpu-nvidia.sh; };
+  home.file.".local/bin/storage.sh"    = { executable = true; source = ./scripts/storage.sh; };
 
   programs.waybar = {
     enable  = true;
-    systemd.enable = true;  # waybar géré par systemd user, plus fiable que exec-once
+    systemd.enable = true;
 
     style = ''
       * {
@@ -31,48 +25,39 @@
         color: #d8dee9;
       }
 
-      /* Îlot générique */
-      .island {
-        background: rgba(46, 52, 64, 0.88);
-        border: 1px solid rgba(76, 86, 106, 0.5);
-        border-radius: 12px;
-        margin: 6px 4px;
-        padding: 0 10px;
-      }
-
-      /* Workspaces */
+      /* ── Workspaces ───────────────────────────────────────────────────── */
       #workspaces {
         background: rgba(46, 52, 64, 0.88);
         border: 1px solid rgba(76, 86, 106, 0.5);
         border-radius: 12px;
         margin: 6px 4px;
-        padding: 0 6px;
+        padding: 0 4px;
       }
 
       #workspaces button {
-        padding: 0 8px;
+        padding: 0 5px;
+        min-width: 18px;
         color: #4c566a;
         background: transparent;
         border-radius: 8px;
-        min-width: 24px;
       }
 
       #workspaces button.active {
         color: #88c0d0;
-        background: rgba(88, 192, 208, 0.15);
+        font-weight: bold;
+        background: transparent;
       }
 
       #workspaces button.urgent {
         color: #bf616a;
-        background: rgba(191, 97, 106, 0.15);
       }
 
       #workspaces button:hover {
-        background: rgba(76, 86, 106, 0.3);
         color: #d8dee9;
+        background: rgba(76, 86, 106, 0.2);
       }
 
-      /* Titre fenêtre */
+      /* ── Titre fenêtre ───────────────────────────────────────────────── */
       #window {
         background: rgba(46, 52, 64, 0.88);
         border: 1px solid rgba(76, 86, 106, 0.5);
@@ -83,7 +68,7 @@
         font-style: italic;
       }
 
-      /* Horloge */
+      /* ── Horloge ─────────────────────────────────────────────────────── */
       #clock {
         background: rgba(46, 52, 64, 0.88);
         border: 1px solid rgba(88, 192, 208, 0.4);
@@ -94,106 +79,7 @@
         font-weight: bold;
       }
 
-      /* Stats système — îlot commun */
-      #temperature, #cpu, #memory, #custom-gpu, #custom-storage {
-        background: rgba(46, 52, 64, 0.88);
-        border-radius: 0;
-        margin: 6px 0;
-        padding: 0 10px;
-        color: #81a1c1;
-      }
-
-      /* Arrondi gauche du premier module de l'îlot stats */
-      #temperature {
-        border: 1px solid rgba(76, 86, 106, 0.5);
-        border-right: none;
-        border-radius: 12px 0 0 12px;
-        padding-left: 14px;
-        color: #a3be8c;
-      }
-
-      #cpu {
-        border-top: 1px solid rgba(76, 86, 106, 0.5);
-        border-bottom: 1px solid rgba(76, 86, 106, 0.5);
-      }
-
-      #memory {
-        border-top: 1px solid rgba(76, 86, 106, 0.5);
-        border-bottom: 1px solid rgba(76, 86, 106, 0.5);
-      }
-
-      #custom-gpu {
-        border-top: 1px solid rgba(76, 86, 106, 0.5);
-        border-bottom: 1px solid rgba(76, 86, 106, 0.5);
-        color: #b48ead;
-      }
-
-      /* Arrondi droit du dernier module de l'îlot stats */
-      #custom-storage {
-        border: 1px solid rgba(76, 86, 106, 0.5);
-        border-left: none;
-        border-radius: 0 12px 12px 0;
-        padding-right: 14px;
-        color: #ebcb8b;
-      }
-
-      /* Îlot contrôles */
-      #backlight, #pulseaudio, #network, #battery {
-        background: rgba(46, 52, 64, 0.88);
-        border-radius: 0;
-        margin: 6px 0;
-        padding: 0 10px;
-      }
-
-      #backlight {
-        border: 1px solid rgba(76, 86, 106, 0.5);
-        border-right: none;
-        border-radius: 12px 0 0 12px;
-        padding-left: 14px;
-        color: #ebcb8b;
-      }
-
-      #pulseaudio {
-        border-top: 1px solid rgba(76, 86, 106, 0.5);
-        border-bottom: 1px solid rgba(76, 86, 106, 0.5);
-        color: #b48ead;
-      }
-
-      #pulseaudio.muted {
-        color: #4c566a;
-      }
-
-      #network {
-        border-top: 1px solid rgba(76, 86, 106, 0.5);
-        border-bottom: 1px solid rgba(76, 86, 106, 0.5);
-        color: #88c0d0;
-      }
-
-      #network.disconnected {
-        color: #bf616a;
-      }
-
-      #battery {
-        border: 1px solid rgba(76, 86, 106, 0.5);
-        border-left: none;
-        border-radius: 0 12px 12px 0;
-        padding-right: 14px;
-        color: #a3be8c;
-      }
-
-      #battery.warning {
-        color: #ebcb8b;
-      }
-
-      #battery.critical {
-        color: #bf616a;
-      }
-
-      #battery.charging {
-        color: #a3be8c;
-      }
-
-      /* Médias */
+      /* ── Médias ──────────────────────────────────────────────────────── */
       #mpris {
         background: rgba(46, 52, 64, 0.88);
         border: 1px solid rgba(163, 190, 140, 0.4);
@@ -203,7 +89,158 @@
         color: #a3be8c;
       }
 
-      /* Tray */
+      /* ── Clavier (langue + capslock) — îlot indépendant ─────────────── */
+      #language {
+        background: rgba(46, 52, 64, 0.88);
+        border: 1px solid rgba(76, 86, 106, 0.5);
+        border-radius: 12px;
+        margin: 6px 4px;
+        padding: 0 12px;
+        color: #d8dee9;
+        text-transform: uppercase;
+      }
+
+      #keyboard-state {
+        background: rgba(46, 52, 64, 0.88);
+        border: 1px solid rgba(235, 203, 139, 0.5);
+        border-radius: 12px;
+        margin: 6px 4px;
+        padding: 0 10px;
+        color: #ebcb8b;
+        font-weight: bold;
+      }
+
+      /* ── Îlot CPU (température + usage) ─────────────────────────────── */
+      #temperature {
+        background: rgba(46, 52, 64, 0.88);
+        border: 1px solid rgba(76, 86, 106, 0.5);
+        border-right: none;
+        border-radius: 12px 0 0 12px;
+        margin: 6px 0 6px 4px;
+        padding: 0 10px 0 14px;
+        color: #a3be8c;
+      }
+
+      #temperature.critical {
+        color: #bf616a;
+      }
+
+      #cpu {
+        background: rgba(46, 52, 64, 0.88);
+        border: 1px solid rgba(76, 86, 106, 0.5);
+        border-left: none;
+        border-radius: 0 12px 12px 0;
+        margin: 6px 4px 6px 0;
+        padding: 0 14px 0 10px;
+        color: #81a1c1;
+      }
+
+      /* ── Îlot GPU (Intel + NVIDIA) ───────────────────────────────────── */
+      #custom-gpu-intel {
+        background: rgba(46, 52, 64, 0.88);
+        border: 1px solid rgba(76, 86, 106, 0.5);
+        border-right: none;
+        border-radius: 12px 0 0 12px;
+        margin: 6px 0 6px 4px;
+        padding: 0 10px 0 14px;
+        color: #88c0d0;
+      }
+
+      #custom-gpu-nvidia {
+        background: rgba(46, 52, 64, 0.88);
+        border: 1px solid rgba(76, 86, 106, 0.5);
+        border-left: none;
+        border-radius: 0 12px 12px 0;
+        margin: 6px 4px 6px 0;
+        padding: 0 14px 0 10px;
+        color: #b48ead;
+      }
+
+      #custom-gpu-nvidia.inactive {
+        color: #4c566a;
+      }
+
+      #custom-gpu-nvidia.high {
+        color: #ebcb8b;
+      }
+
+      #custom-gpu-nvidia.critical {
+        color: #bf616a;
+      }
+
+      /* ── Îlot RAM + Stockage ─────────────────────────────────────────── */
+      #memory {
+        background: rgba(46, 52, 64, 0.88);
+        border: 1px solid rgba(76, 86, 106, 0.5);
+        border-right: none;
+        border-radius: 12px 0 0 12px;
+        margin: 6px 0 6px 4px;
+        padding: 0 10px 0 14px;
+        color: #81a1c1;
+      }
+
+      #custom-storage {
+        background: rgba(46, 52, 64, 0.88);
+        border: 1px solid rgba(76, 86, 106, 0.5);
+        border-left: none;
+        border-radius: 0 12px 12px 0;
+        margin: 6px 4px 6px 0;
+        padding: 0 14px 0 10px;
+        color: #ebcb8b;
+      }
+
+      #custom-storage.warning { color: #ebcb8b; }
+      #custom-storage.critical { color: #bf616a; }
+
+      /* ── Îlot luminosité ─────────────────────────────────────────────── */
+      #backlight {
+        background: rgba(46, 52, 64, 0.88);
+        border: 1px solid rgba(76, 86, 106, 0.5);
+        border-radius: 12px;
+        margin: 6px 4px;
+        padding: 0 12px;
+        color: #ebcb8b;
+      }
+
+      /* ── Îlot réseau ─────────────────────────────────────────────────── */
+      #network {
+        background: rgba(46, 52, 64, 0.88);
+        border: 1px solid rgba(76, 86, 106, 0.5);
+        border-radius: 12px;
+        margin: 6px 4px;
+        padding: 0 12px;
+        color: #88c0d0;
+      }
+
+      #network.disconnected { color: #bf616a; }
+
+      /* ── Îlot volume ─────────────────────────────────────────────────── */
+      #pulseaudio {
+        background: rgba(46, 52, 64, 0.88);
+        border: 1px solid rgba(76, 86, 106, 0.5);
+        border-radius: 12px;
+        margin: 6px 4px;
+        padding: 0 12px;
+        color: #b48ead;
+      }
+
+      #pulseaudio.muted { color: #4c566a; }
+
+      /* ── Îlot batterie ───────────────────────────────────────────────── */
+      #battery {
+        background: rgba(46, 52, 64, 0.88);
+        border: 1px solid rgba(76, 86, 106, 0.5);
+        border-radius: 12px;
+        margin: 6px 4px;
+        padding: 0 12px;
+        color: #a3be8c;
+      }
+
+      #battery.warning  { color: #ebcb8b; }
+      #battery.critical { color: #bf616a; }
+      #battery.charging { color: #a3be8c; }
+
+      /* ── Tray ────────────────────────────────────────────────────────── */
       #tray {
         background: rgba(46, 52, 64, 0.88);
         border: 1px solid rgba(76, 86, 106, 0.5);
@@ -212,33 +249,9 @@
         padding: 0 10px;
       }
 
-      #tray > .passive {
-        -gtk-icon-effect: dim;
-      }
+      #tray > .passive { -gtk-icon-effect: dim; }
 
-      /* États critiques température */
-      #temperature.critical {
-        color: #bf616a;
-      }
-
-      /* GPU états */
-      #custom-gpu.high {
-        color: #ebcb8b;
-      }
-
-      #custom-gpu.critical {
-        color: #bf616a;
-      }
-
-      /* Stockage états */
-      #custom-storage.warning {
-        color: #ebcb8b;
-      }
-
-      #custom-storage.critical {
-        color: #bf616a;
-      }
-
+      /* ── Tooltip global ──────────────────────────────────────────────── */
       tooltip {
         background: rgba(36, 41, 54, 0.97);
         border: 1px solid rgba(88, 192, 208, 0.35);
@@ -251,7 +264,7 @@
     settings = [{
       layer    = "top";
       position = "top";
-      height   = 40;
+      height   = 36;
       spacing  = 0;
 
       modules-left = [
@@ -263,91 +276,115 @@
       modules-center = [ "clock" ];
 
       modules-right = [
+        "hyprland/language"
+        "hyprland/keyboard-state"
         "temperature"
         "cpu"
+        "custom/gpu-intel"
+        "custom/gpu-nvidia"
         "memory"
-        "custom/gpu"
         "custom/storage"
         "backlight"
-        "pulseaudio"
         "network"
+        "pulseaudio"
         "battery"
         "tray"
       ];
 
       "hyprland/workspaces" = {
-        format   = "{id}";
-        on-click = "activate";
+        format        = "{id}";
+        on-click      = "activate";
         sort-by-number = true;
       };
 
       "hyprland/window" = {
-        max-length     = 60;
+        format           = "{}";
+        rewrite          = { "^$" = ""; };
         separate-outputs = true;
+        max-length       = 60;
+      };
+
+      "hyprland/language" = {
+        format   = "{short}";
+        on-click = "hyprctl switchxkblayout all next";
+        tooltip  = false;
+      };
+
+      "hyprland/keyboard-state" = {
+        capslock     = true;
+        numlock      = false;
+        format       = "{icon}";
+        format-icons = { locked = "CAPS"; unlocked = ""; };
+        tooltip      = false;
       };
 
       mpris = {
-        format         = "{player_icon} {title} — {artist}";
-        format-paused  = "{status_icon} {title}";
-        player-icons   = { default = ""; spotify = ""; };
-        status-icons   = { paused = ""; };
-        max-length     = 50;
+        format        = "{player_icon} {title} — {artist}";
+        format-paused = "{status_icon} {title}";
+        player-icons  = { default = ""; spotify = ""; };
+        status-icons  = { paused = ""; };
+        max-length    = 50;
         ignored-players = [ "firefox" ];
       };
 
       clock = {
-        format         = " {:%Y-%m-%d   %H:%M}";
+        format         = "{:%Y-%m-%d   %H:%M}";
         tooltip-format = "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>";
       };
 
       temperature = {
         thermal-zone       = 6;
         critical-threshold = 90;
-        format             = " {temperatureC}°C";
-        format-critical    = " {temperatureC}°C";
+        format             = "TEMP {temperatureC}°C";
+        format-critical    = "TEMP {temperatureC}°C";
         tooltip            = false;
         interval           = 5;
       };
 
       cpu = {
         interval = 5;
-        format   = " {usage}%";
+        format   = "CPU {usage}%";
         tooltip  = false;
       };
 
+      "custom/gpu-intel" = {
+        exec        = "~/.local/bin/gpu-intel.sh";
+        interval    = 5;
+        return-type = "json";
+        tooltip     = true;
+      };
+
+      "custom/gpu-nvidia" = {
+        exec        = "~/.local/bin/gpu-nvidia.sh";
+        interval    = 5;
+        return-type = "json";
+        tooltip     = true;
+      };
+
       memory = {
-        interval = 10;
-        format   = " {used:0.1f}G";
+        interval       = 10;
+        format         = "RAM {used:0.1f}G";
         tooltip-format = "RAM: {used:0.1f}G / {total:0.1f}G";
       };
 
-      "custom/gpu" = {
-        exec     = "~/.local/bin/gpu-stats.sh";
-        interval = 5;
-        return-type = "json";
-        tooltip  = true;
-      };
-
       "custom/storage" = {
-        exec     = "~/.local/bin/storage.sh";
-        interval = 30;
+        exec        = "~/.local/bin/storage.sh";
+        interval    = 30;
         return-type = "json";
-        tooltip  = true;
+        tooltip     = true;
       };
 
       backlight = {
-        device       = "intel_backlight";
-        format       = "{icon} {percent}%";
-        format-icons = [ "" "" "" "" "" "" "" "" "" ];
+        device         = "intel_backlight";
+        format         = "BRI {percent}%";
         on-scroll-up   = "brightnessctl set +2%";
         on-scroll-down = "brightnessctl set 2%-";
         tooltip        = false;
       };
 
       pulseaudio = {
-        format       = "{icon} {volume}%";
-        format-muted = " muted";
-        format-icons = { default = [ "" "" "" ]; };
+        format         = "VOL {volume}%";
+        format-muted   = "VOL muted";
         on-click       = "pavucontrol";
         on-scroll-up   = "pactl set-sink-volume @DEFAULT_SINK@ +2%";
         on-scroll-down = "pactl set-sink-volume @DEFAULT_SINK@ -2%";
@@ -355,26 +392,26 @@
       };
 
       network = {
-        format-wifi        = " {essid}";
-        format-ethernet    = " {ipaddr}";
-        format-disconnected = "󰤭 off";
+        format-wifi        = "WIFI";
+        format-ethernet    = "ETH";
+        format-disconnected = "off";
         tooltip-format-wifi = "{essid} — {signalStrength}%\n{ipaddr}";
+        tooltip-format-ethernet = "{ipaddr}";
         on-click           = "nm-connection-editor";
         interval           = 10;
       };
 
       battery = {
-        states = { warning = 30; critical = 15; };
-        format          = "{icon} {capacity}%";
-        format-charging = " {capacity}%";
-        format-icons    = [ "" "" "" "" "" ];
+        states          = { warning = 30; critical = 15; };
+        format          = "BAT {capacity}%";
+        format-charging = "CHR {capacity}%";
         tooltip-format  = "{timeTo}\n{power:.1f}W";
         interval        = 30;
       };
 
       tray = {
-        spacing    = 8;
-        icon-size  = 16;
+        spacing   = 8;
+        icon-size = 16;
       };
     }];
   };

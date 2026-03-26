@@ -23,6 +23,16 @@
   # Laisser Home Manager gérer lui-même
   programs.home-manager.enable = true;
 
+  # Firefox avec scaling HiDPI forcé
+  programs.firefox = {
+    enable = true;
+    profiles.default = {
+      settings = {
+        "layout.css.devPixelsPerPx" = "1.6";
+      };
+    };
+  };
+
   # Thème GTK global
   gtk = {
     enable = true;

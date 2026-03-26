@@ -18,7 +18,10 @@
   # Portail desktop requis pour Hyprland (partage d'écran, fichiers, etc.)
   xdg.portal = {
     enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
+    extraPortals = [
+      pkgs.xdg-desktop-portal-hyprland
+      pkgs.xdg-desktop-portal-gtk  # file picker GTK (dialogs de téléchargement)
+    ];
   };
 
   # SDDM reste le display manager
@@ -29,8 +32,8 @@
     settings = {
       General = {
         EnableHiDPI = true;
-        # Scale explicite pour le greeter Qt (sinon trop petit sur HiDPI)
-        GreeterEnvironment = "QT_SCREEN_SCALE_FACTORS=1.6";
+        # QT_SCALE_FACTOR pour Qt6 (QT_SCREEN_SCALE_FACTORS est Qt5)
+        GreeterEnvironment = "QT_SCALE_FACTOR=1.6";
       };
     };
   };

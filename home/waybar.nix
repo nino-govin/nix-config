@@ -249,13 +249,11 @@
       modules-left = [
         "hyprland/workspaces"
         "hyprland/window"
-        "mpris"
       ];
 
       modules-center = [ "clock" ];
 
       modules-right = [
-        "hyprland/language"
         "custom/cpu-stats"
         "custom/gpu-intel"
         "custom/gpu-nvidia"
@@ -278,21 +276,6 @@
         rewrite          = { "^$" = ""; };
         separate-outputs = true;
         max-length       = 60;
-      };
-
-      "hyprland/language" = {
-        format   = " {}";
-        on-click = "hyprctl switchxkblayout all next";
-        tooltip  = false;
-      };
-
-      mpris = {
-        format        = "{player_icon} {title} — {artist}";
-        format-paused = "{status_icon} {title}";
-        player-icons  = { default = ""; spotify = ""; };
-        status-icons  = { paused = ""; };
-        max-length    = 50;
-        ignored-players = [ "firefox" ];
       };
 
       clock = {

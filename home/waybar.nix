@@ -97,7 +97,6 @@
         margin: 6px 4px;
         padding: 0 12px;
         color: #d8dee9;
-        text-transform: uppercase;
       }
 
       #keyboard-state {

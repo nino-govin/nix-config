@@ -99,39 +99,43 @@
         color: #d8dee9;
       }
 
+      /* Capslock : island visible seulement quand actif */
       #keyboard-state {
+        color: #ebcb8b;
+        font-weight: bold;
+      }
+
+      #keyboard-state.locked {
         background: rgba(46, 52, 64, 0.88);
         border: 1px solid rgba(235, 203, 139, 0.5);
         border-radius: 12px;
         margin: 6px 4px;
         padding: 0 10px;
-        color: #ebcb8b;
-        font-weight: bold;
       }
 
-      /* ── Îlot CPU (température + usage) ─────────────────────────────── */
-      #temperature {
+      /* ── Îlot CPU (usage + température) ─────────────────────────────── */
+      #cpu {
         background: rgba(46, 52, 64, 0.88);
         border: 1px solid rgba(76, 86, 106, 0.5);
         border-right: none;
         border-radius: 12px 0 0 12px;
         margin: 6px 0 6px 4px;
         padding: 0 10px 0 14px;
-        color: #a3be8c;
+        color: #81a1c1;
       }
 
-      #temperature.critical {
-        color: #bf616a;
-      }
-
-      #cpu {
+      #temperature {
         background: rgba(46, 52, 64, 0.88);
         border: 1px solid rgba(76, 86, 106, 0.5);
         border-left: none;
         border-radius: 0 12px 12px 0;
         margin: 6px 4px 6px 0;
         padding: 0 14px 0 10px;
-        color: #81a1c1;
+        color: #a3be8c;
+      }
+
+      #temperature.critical {
+        color: #bf616a;
       }
 
       /* ── Îlot GPU (Intel + NVIDIA) ───────────────────────────────────── */
@@ -277,14 +281,13 @@
       modules-right = [
         "hyprland/language"
         "hyprland/keyboard-state"
-        "temperature"
         "cpu"
+        "temperature"
         "custom/gpu-intel"
         "custom/gpu-nvidia"
         "memory"
         "custom/storage"
         "backlight"
-        "network"
         "pulseaudio"
         "battery"
         "tray"
@@ -304,7 +307,7 @@
       };
 
       "hyprland/language" = {
-        format   = " {short}";
+        format   = " {}";
         on-click = "hyprctl switchxkblayout all next";
         tooltip  = false;
       };
@@ -406,8 +409,9 @@
 
       battery = {
         states          = { warning = 30; critical = 15; };
-        format          = "{icon} {capacity}%";
-        format-charging = "󰂄 {capacity}%";
+        format          = "{icon} {status} {capacity}%";
+        format-charging = "󰂄 Charging {capacity}%";
+        format-full     = "󰁹 Full";
         format-icons    = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
         tooltip-format  = "{timeTo}\n{power:.1f}W";
         interval        = 30;

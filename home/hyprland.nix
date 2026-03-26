@@ -46,7 +46,7 @@
       # ── Apparence générale ───────────────────────────────────────────────
       general = {
         gaps_in          = 5;
-        gaps_out         = 10;
+        gaps_out         = "4 8 8 8";
         border_size      = 2;
         "col.active_border"   = "rgba(88c0d0ff) rgba(5e81acff) 45deg";
         "col.inactive_border" = "rgba(3b4252ff)";

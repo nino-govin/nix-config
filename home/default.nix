@@ -12,6 +12,7 @@
     ./dunst.nix
     ./git.nix
     ./hypridle.nix
+    ./media.nix
   ];
 
   home = {

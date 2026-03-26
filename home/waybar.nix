@@ -325,7 +325,7 @@
         device         = "intel_backlight";
         format         = "󰖨 {percent}%";
         on-scroll-up   = "brightnessctl set +2%";
-        on-scroll-down = "brightnessctl set 2%-";
+        on-scroll-down = "sh -c 'brightnessctl set 2%-; [ $(brightnessctl get) -eq 0 ] && brightnessctl set 1'";
         tooltip        = false;
       };
 

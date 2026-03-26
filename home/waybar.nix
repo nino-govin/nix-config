@@ -99,20 +99,6 @@
         color: #d8dee9;
       }
 
-      /* Capslock : island visible seulement quand actif */
-      #keyboard-state {
-        color: #ebcb8b;
-        font-weight: bold;
-      }
-
-      #keyboard-state.locked {
-        background: rgba(46, 52, 64, 0.88);
-        border: 1px solid rgba(235, 203, 139, 0.5);
-        border-radius: 12px;
-        margin: 6px 4px;
-        padding: 0 10px;
-      }
-
       /* ── Îlot CPU (usage + température) ─────────────────────────────── */
       #cpu {
         background: rgba(46, 52, 64, 0.88);
@@ -280,7 +266,6 @@
 
       modules-right = [
         "hyprland/language"
-        "hyprland/keyboard-state"
         "cpu"
         "temperature"
         "custom/gpu-intel"
@@ -312,14 +297,6 @@
         tooltip  = false;
       };
 
-      "hyprland/keyboard-state" = {
-        capslock     = true;
-        numlock      = false;
-        format       = "{icon}";
-        format-icons = { locked = "󰪛 CAPS"; unlocked = ""; };
-        tooltip      = false;
-      };
-
       mpris = {
         format        = "{player_icon} {title} — {artist}";
         format-paused = "{status_icon} {title}";
@@ -330,7 +307,7 @@
       };
 
       clock = {
-        format         = "󰃭 {:%Y-%m-%d}   {:%H:%M}";
+        format         = "󰃭 {:%Y-%m-%d   %H:%M}";
         tooltip-format = "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>";
       };
 
@@ -408,13 +385,14 @@
       };
 
       battery = {
-        states          = { warning = 30; critical = 15; };
-        format          = "{icon} {status} {capacity}%";
-        format-charging = "󰂄 Charging {capacity}%";
-        format-full     = "󰁹 Full";
-        format-icons    = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
-        tooltip-format  = "{timeTo}\n{power:.1f}W";
-        interval        = 30;
+        states           = { warning = 30; critical = 15; };
+        format           = "{icon} Discharging {capacity}%";
+        format-charging  = "󰂄 Charging {capacity}%";
+        format-plugged   = "󰁹 Plugged {capacity}%";
+        format-full      = "󰁹 Full";
+        format-icons     = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
+        tooltip-format   = "{timeTo}\n{power:.1f}W";
+        interval         = 30;
       };
 
       tray = {

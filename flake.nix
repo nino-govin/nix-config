@@ -18,8 +18,9 @@
         home-manager.nixosModules.home-manager
         {
           home-manager = {
-            useGlobalPkgs   = true;
-            useUserPackages = true;
+            useGlobalPkgs        = true;
+            useUserPackages      = true;
+            backupFileExtension  = "backup";  # évite les erreurs si un fichier géré existe déjà
             users.nino-nixos = import ./home/default.nix;
           };
         }

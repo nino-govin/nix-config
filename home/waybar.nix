@@ -69,6 +69,10 @@
         font-style: italic;
       }
 
+      #window.empty {
+        display: none;
+      }
+
       /* ── Horloge ─────────────────────────────────────────────────────── */
       #clock {
         background: rgba(46, 52, 64, 0.88);

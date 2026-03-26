@@ -12,10 +12,10 @@
 
       listener = [
         {
-          # Éteindre l'écran après 3 minutes d'inactivité
-          timeout  = 120;
-          on-timeout = "brightnessctl set 0";
-          on-resume  = "brightnessctl set 100%";
+          # Éteindre l'écran après 2 minutes d'inactivité
+          timeout    = 120;
+          on-timeout = "brightnessctl -s set 0";
+          on-resume  = "brightnessctl -r";
         }
         {
           # Verrouiller après 5 minutes

@@ -16,15 +16,16 @@
       env = [
         "XCURSOR_SIZE,24"
         "XCURSOR_THEME,Adwaita"
-	"GDK_SCALE,1.5"
-	"GDK_DPI_SCALE,1.25"
+        # GDK_SCALE et GDK_DPI_SCALE supprimés : causaient un double scaling
+        # (compositeur 1.6× + GDK 1.5× + DPI 1.25× = 3×)
       ];
 
       # ── Autostart ────────────────────────────────────────────────────────
       exec-once = [
         "swww-daemon"
         "swww img ~/Pictures/background.png"
-        "dunst"
+        # dunst supprimé : géré par le service systemd home-manager (services.dunst)
+        # le lancer ici en plus créait une instance zombie sans fonts
         "nm-applet --indicator"
         "wl-paste --type text --watch cliphist store"
         "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"

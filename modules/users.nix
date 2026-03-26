@@ -4,7 +4,7 @@
   users.users.nino-nixos = {
     isNormalUser = true;
     description  = "Nino";
-    extraGroups  = [ "wireshark" "docker" "networkmanager" "wheel" "video" "input" ];
+    extraGroups  = [ "docker" "networkmanager" "wheel" "video" "input" ];
     shell        = pkgs.zsh;
   };
 

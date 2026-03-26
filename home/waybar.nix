@@ -334,8 +334,8 @@
         format-muted   = "󰝟 muted";
         format-icons   = { default = [ "󰕿" "󰖀" "󰕾" ]; };
         on-click       = "pavucontrol";
-        on-scroll-up   = "pactl set-sink-volume @DEFAULT_SINK@ +2%";
-        on-scroll-down = "pactl set-sink-volume @DEFAULT_SINK@ -2%";
+        on-scroll-up   = "wpctl set-volume @DEFAULT_SINK@ 2%+";
+        on-scroll-down = "wpctl set-volume @DEFAULT_SINK@ 2%-";
         tooltip        = false;
       };
 

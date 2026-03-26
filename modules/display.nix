@@ -27,7 +27,11 @@
     package = pkgs.kdePackages.sddm;
     wayland.enable = true;  # SDDM en mode Wayland
     settings = {
-      General = { EnableHiDPI = true; };
+      General = {
+        EnableHiDPI = true;
+        # Scale explicite pour le greeter Qt (sinon trop petit sur HiDPI)
+        GreeterEnvironment = "QT_SCREEN_SCALE_FACTORS=1.6";
+      };
     };
   };
 
@@ -36,10 +40,11 @@
     NIXOS_OZONE_WL        = "1";   # Electron (VSCode, Discord...)
     QT_QPA_PLATFORM       = "wayland";
     QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-    QT_SCALE_FACTOR       = "1.5";
-    GDK_SCALE             = "1.5";
+    # GDK_SCALE et QT_SCALE_FACTOR supprimés : le protocole Wayland gère
+    # déjà le scale (1.6×) — les définir provoquait un double scaling
     SDL_VIDEODRIVER       = "wayland";
     MOZ_ENABLE_WAYLAND    = "1";   # Firefox
+    MOZ_DEVICE_PIXEL_RATIO = "1.6"; # Firefox : force le pixel ratio fractionnaire
     XDG_SESSION_TYPE      = "wayland";
     XDG_CURRENT_DESKTOP   = "Hyprland";
   };

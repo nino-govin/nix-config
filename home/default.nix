@@ -23,6 +23,13 @@
   # Laisser Home Manager gérer lui-même
   programs.home-manager.enable = true;
 
+  # Agent SSH persistant entre les reboots
+  services.ssh-agent.enable = true;
+  programs.ssh = {
+    enable          = true;
+    addKeysToAgent  = "yes";  # ajoute la clé à l'agent automatiquement à la première utilisation
+  };
+
   # Firefox avec scaling HiDPI forcé
   programs.firefox = {
     enable = true;

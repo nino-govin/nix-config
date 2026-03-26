@@ -305,7 +305,7 @@
       };
 
       "hyprland/language" = {
-        format   = "{short}";
+        format   = " {short}";
         on-click = "hyprctl switchxkblayout all next";
         tooltip  = false;
       };
@@ -314,7 +314,7 @@
         capslock     = true;
         numlock      = false;
         format       = "{icon}";
-        format-icons = { locked = "CAPS"; unlocked = ""; };
+        format-icons = { locked = "󰪛 CAPS"; unlocked = ""; };
         tooltip      = false;
       };
 
@@ -328,22 +328,22 @@
       };
 
       clock = {
-        format         = "{:%Y-%m-%d   %H:%M}";
+        format         = "󰃭 {:%Y-%m-%d}   {:%H:%M}";
         tooltip-format = "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>";
       };
 
       temperature = {
         thermal-zone       = 6;
         critical-threshold = 90;
-        format             = "TEMP {temperatureC}°C";
-        format-critical    = "TEMP {temperatureC}°C";
+        format             = " {temperatureC}°C";
+        format-critical    = " {temperatureC}°C";
         tooltip            = false;
         interval           = 5;
       };
 
       cpu = {
         interval = 5;
-        format   = "CPU {usage}%";
+        format   = "󰻠 {usage}%";
         tooltip  = false;
       };
 
@@ -351,6 +351,7 @@
         exec        = "~/.local/bin/gpu-intel.sh";
         interval    = 5;
         return-type = "json";
+        format      = " {}";
         tooltip     = true;
       };
 
@@ -358,12 +359,13 @@
         exec        = "~/.local/bin/gpu-nvidia.sh";
         interval    = 5;
         return-type = "json";
+        format      = "󰊴 {}";
         tooltip     = true;
       };
 
       memory = {
         interval       = 10;
-        format         = "RAM {used:0.1f}G";
+        format         = "󰍛 {used:0.1f}G";
         tooltip-format = "RAM: {used:0.1f}G / {total:0.1f}G";
       };
 
@@ -371,20 +373,22 @@
         exec        = "~/.local/bin/storage.sh";
         interval    = 30;
         return-type = "json";
+        format      = "󰋊 {}";
         tooltip     = true;
       };
 
       backlight = {
         device         = "intel_backlight";
-        format         = "BRI {percent}%";
+        format         = "󰖨 {percent}%";
         on-scroll-up   = "brightnessctl set +2%";
         on-scroll-down = "brightnessctl set 2%-";
         tooltip        = false;
       };
 
       pulseaudio = {
-        format         = "VOL {volume}%";
-        format-muted   = "VOL muted";
+        format         = "{icon} {volume}%";
+        format-muted   = "󰝟 muted";
+        format-icons   = { default = [ "󰕿" "󰖀" "󰕾" ]; };
         on-click       = "pavucontrol";
         on-scroll-up   = "pactl set-sink-volume @DEFAULT_SINK@ +2%";
         on-scroll-down = "pactl set-sink-volume @DEFAULT_SINK@ -2%";
@@ -392,19 +396,20 @@
       };
 
       network = {
-        format-wifi        = "WIFI";
-        format-ethernet    = "ETH";
-        format-disconnected = "off";
-        tooltip-format-wifi = "{essid} — {signalStrength}%\n{ipaddr}";
+        format-wifi         = "󰖩";
+        format-ethernet     = "󰈀";
+        format-disconnected = "󰤭";
+        tooltip-format-wifi     = "{essid} — {signalStrength}%\n{ipaddr}";
         tooltip-format-ethernet = "{ipaddr}";
-        on-click           = "nm-connection-editor";
-        interval           = 10;
+        on-click                = "nm-connection-editor";
+        interval                = 10;
       };
 
       battery = {
         states          = { warning = 30; critical = 15; };
-        format          = "BAT {capacity}%";
-        format-charging = "CHR {capacity}%";
+        format          = "{icon} {capacity}%";
+        format-charging = "󰂄 {capacity}%";
+        format-icons    = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
         tooltip-format  = "{timeTo}\n{power:.1f}W";
         interval        = 30;
       };

@@ -69,13 +69,6 @@
         font-style: italic;
       }
 
-      #window.empty {
-        background: transparent;
-        border-color: transparent;
-        padding: 0;
-        margin: 6px 0;
-        min-width: 0;
-      }
 
       /* ── Horloge ─────────────────────────────────────────────────────── */
       #clock {
@@ -281,7 +274,7 @@
 
       "hyprland/window" = {
         format           = "{}";
-        rewrite          = { "^$" = ""; };
+        rewrite          = { "^$" = "•⩊•"; };
         separate-outputs = true;
         max-length       = 60;
       };

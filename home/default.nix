@@ -27,7 +27,7 @@
   # et ne demande la passphrase qu'une seule fois par reboot
   programs.keychain = {
     enable    = true;
-    keys      = [ "id_ed25519" ];
+    keys      = [ "id_ed25519_github2" ];
     extraFlags = [ "--quiet" "--nogui" ];
   };
 

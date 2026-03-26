@@ -14,6 +14,7 @@
     ./modules/virtualisation.nix
     ./modules/fonts.nix
     ./modules/nvidia.nix
+    ./modules/tlp.nix
     ./modules/packages/default.nix
   ];
 

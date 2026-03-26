@@ -23,11 +23,17 @@
   # Laisser Home Manager gérer lui-même
   programs.home-manager.enable = true;
 
-  # Agent SSH persistant entre les reboots
-  services.ssh-agent.enable = true;
+  # Agent SSH persistant — keychain partage l'agent entre tous les terminaux
+  # et ne demande la passphrase qu'une seule fois par reboot
+  programs.keychain = {
+    enable    = true;
+    keys      = [ "id_ed25519" ];
+    extraFlags = [ "--quiet" "--nogui" ];
+  };
+
   programs.ssh = {
-    enable          = true;
-    addKeysToAgent  = "yes";  # ajoute la clé à l'agent automatiquement à la première utilisation
+    enable         = true;
+    addKeysToAgent = "yes";
   };
 
   # Firefox avec scaling HiDPI forcé

@@ -70,7 +70,11 @@
       }
 
       #window.empty {
-        display: none;
+        background: transparent;
+        border-color: transparent;
+        padding: 0;
+        margin: 6px 0;
+        min-width: 0;
       }
 
       /* ── Horloge ─────────────────────────────────────────────────────── */

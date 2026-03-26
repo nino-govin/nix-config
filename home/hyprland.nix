@@ -99,6 +99,13 @@
         disable_hyprland_logo   = true;
       };
 
+      # ── XWayland ─────────────────────────────────────────────────────────
+      xwayland = {
+        # Empêche XWayland de déclarer un DPI élevé → évite le double scaling
+        # des dialogs GTK/X11 (ex: fenêtre de téléchargement trop grande)
+        force_zero_scaling = true;
+      };
+
       # ── Keybindings ───────────────────────────────────────────────────────
       "$mod" = "SUPER";
 

@@ -4,7 +4,7 @@
   imports = [
     ./hyprland.nix
     ./hyprlock.nix
-    ./waybar.nix
+    ./waybar
     ./wofi.nix
     ./kitty.nix
     ./zsh.nix

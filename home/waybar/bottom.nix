@@ -11,8 +11,10 @@
     "custom/gpu-intel"
     "custom/gpu-nvidia"
   ];
-  modules-center = [ "network#ip" "network#bandwidth" ];
+  modules-center = [];
   modules-right  = [
+    "network#ip"
+    "network#bandwidth"
     "memory"
     "custom/storage"
   ];

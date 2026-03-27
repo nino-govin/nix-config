@@ -32,6 +32,7 @@
       cleanup = "sudo nix-collect-garbage -d && sudo nix-store --gc";
       trim    = "sudo nix-env --delete-generations --profile /nix/var/nix/profiles/system +3 && sudo nix-store --gc";
       nixedit = "sudo nvim /etc/nixos/configuration.nix";
+      nixconf = "cd /etc/nixos";
 
       # Git
       gs  = "git status";

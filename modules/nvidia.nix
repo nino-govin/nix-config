@@ -29,12 +29,13 @@
     };
   };
 
-  # Support OpenGL
+  # Support OpenGL + 32-bit (requis pour Steam/jeux)
   hardware.graphics = {
     enable = true;
+    enable32Bit = true;
     extraPackages = with pkgs; [
-      intel-media-driver   # VA-API Intel Arc (iHD)
-      vpl-gpu-rt     # QuickSync (QSV) pour Intel Arc via oneVPL
+      intel-media-driver
+      vpl-gpu-rt
       libva-vdpau-driver
       libvdpau-va-gl
     ];

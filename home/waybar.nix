@@ -1,10 +1,11 @@
 { config, pkgs, ... }:
 
 {
-  home.file.".local/bin/cpu-stats.sh"  = { executable = true; source = ./scripts/cpu-stats.sh; };
-  home.file.".local/bin/gpu-intel.sh"  = { executable = true; source = ./scripts/gpu-intel.sh; };
-  home.file.".local/bin/gpu-nvidia.sh" = { executable = true; source = ./scripts/gpu-nvidia.sh; };
-  home.file.".local/bin/storage.sh"    = { executable = true; source = ./scripts/storage.sh; };
+  home.file.".local/bin/cpu-stats.sh"       = { executable = true; source = ./scripts/cpu-stats.sh; };
+  home.file.".local/bin/gpu-intel.sh"       = { executable = true; source = ./scripts/gpu-intel.sh; };
+  home.file.".local/bin/gpu-nvidia.sh"      = { executable = true; source = ./scripts/gpu-nvidia.sh; };
+  home.file.".local/bin/storage.sh"         = { executable = true; source = ./scripts/storage.sh; };
+  home.file.".local/bin/keyboard-layout.sh" = { executable = true; source = ./scripts/keyboard-layout.sh; };
 
   programs.waybar = {
     enable  = true;
@@ -91,8 +92,8 @@
         color: #a3be8c;
       }
 
-      /* ── Clavier (langue + capslock) — îlot indépendant ─────────────── */
-      #language {
+      /* ── Clavier (langue) — îlot indépendant ────────────────────────── */
+      #custom-keyboard-layout {
         background: rgba(46, 52, 64, 0.88);
         border: 1px solid rgba(76, 86, 106, 0.5);
         border-radius: 12px;
@@ -255,7 +256,7 @@
       modules-center = [ "clock" ];
 
       modules-right = [
-        "hyprland/language"
+        "custom/keyboard-layout"
         "custom/cpu-stats"
         "custom/gpu-intel"
         "custom/gpu-nvidia"
@@ -267,10 +268,13 @@
         "tray"
       ];
 
-      "hyprland/language" = {
-        format   = "󰌌 {}";
-        on-click = "hyprctl switchxkblayout all next";
-        tooltip  = false;
+      "custom/keyboard-layout" = {
+        exec        = "~/.local/bin/keyboard-layout.sh";
+        interval    = 1;
+        return-type = "json";
+        format      = "󰌌 {}";
+        on-click    = "hyprctl switchxkblayout all next";
+        tooltip     = true;
       };
 
       "hyprland/workspaces" = {

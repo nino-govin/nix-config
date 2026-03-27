@@ -14,6 +14,7 @@
     ./modules/fonts.nix
     ./modules/nvidia.nix
     ./modules/ai.nix
+    ./modules/gaming.nix
     ./modules/packages/default.nix
   ];
 

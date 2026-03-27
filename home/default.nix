@@ -13,6 +13,7 @@
     ./git.nix
     ./hypridle.nix
     ./media.nix
+    ./apps.nix
   ];
 
   home = {

@@ -186,6 +186,7 @@ window#waybar {
   margin: 6px 4px 6px 0;
   padding: 0 14px 0 10px;
   color: #88c0d0;
+  min-width: 210px;
 }
 
 #network.ip.disconnected,

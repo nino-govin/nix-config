@@ -255,6 +255,7 @@
       modules-center = [ "clock" ];
 
       modules-right = [
+        "hyprland/language"
         "custom/cpu-stats"
         "custom/gpu-intel"
         "custom/gpu-nvidia"
@@ -265,6 +266,12 @@
         "battery"
         "tray"
       ];
+
+      "hyprland/language" = {
+        format   = "󰌌 {}";
+        on-click = "hyprctl switchxkblayout all next";
+        tooltip  = false;
+      };
 
       "hyprland/workspaces" = {
         format        = "{id}";

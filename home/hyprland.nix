@@ -33,7 +33,7 @@
 
       # ── Input ────────────────────────────────────────────────────────────
       input = {
-        kb_layout    = "fr";
+        kb_layout    = "fr,us";
         follow_mouse = 1;
         sensitivity  = 0;
         touchpad = {
@@ -166,6 +166,9 @@
         # Capture d'écran
         "$mod SHIFT, S, exec, grim -g \"$(slurp)\" - | wl-copy"
         ",Print, exec, grim - | wl-copy"
+
+        # Clavier — changer de layout
+        "$mod, space, exec, hyprctl switchxkblayout all next"
 
         # Verrouillage
         "$mod SHIFT, L, exec, hyprlock"

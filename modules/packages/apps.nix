@@ -5,6 +5,7 @@
     # Bureautique
     libreoffice
     zathura
+    obsidian
 
     # Réseau et intégration desktop
     xdg-utils xdg-desktop-portal networkmanagerapplet gnome-keyring

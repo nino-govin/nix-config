@@ -41,7 +41,6 @@
     QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
     # GDK_SCALE et QT_SCALE_FACTOR supprimés : le protocole Wayland gère
     # déjà le scale (1.6×) — les définir provoquait un double scaling
-    SDL_VIDEODRIVER       = "wayland";
     MOZ_ENABLE_WAYLAND    = "1";   # Firefox
     MOZ_DEVICE_PIXEL_RATIO = "1.6"; # Firefox : force le pixel ratio fractionnaire
     XDG_SESSION_TYPE      = "wayland";

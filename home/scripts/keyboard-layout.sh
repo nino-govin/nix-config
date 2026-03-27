@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Récupère le layout actif du clavier principal
 LAYOUT=$(hyprctl devices -j 2>/dev/null \
   | jq -r '.keyboards[] | select(.main == true) | .active_keymap // empty' \

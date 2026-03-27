@@ -14,6 +14,6 @@
     discord
 
     # Jeux
-    moonlight-qt
+    moonlight-qt protonup-qt
   ];
 }

@@ -14,6 +14,6 @@
     discord
 
     # Jeux
-    moonlight-qt osu-lazer
+    moonlight-qt
   ];
 }

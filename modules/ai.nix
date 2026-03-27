@@ -5,4 +5,9 @@
     enable       = true;
     acceleration = "cuda";
   };
+
+  services.comfyui = {
+    enable = true;
+    port   = 8188;
+  };
 }

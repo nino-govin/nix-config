@@ -274,7 +274,7 @@
 
       "hyprland/window" = {
         format           = "{}";
-        rewrite          = { "^$" = "•⩊•"; };
+        rewrite          = { "^$" = "ദ്ദി/ᐠ｡‸｡ᐟ\\"; };
         separate-outputs = true;
         max-length       = 60;
       };

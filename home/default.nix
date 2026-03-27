@@ -69,6 +69,8 @@
 
   home.packages = with pkgs; [
     polkit_gnome
+    jq
+    obsidian
   ];
 
   home.file.".local/bin/power-menu" = {

@@ -13,6 +13,7 @@
     ./modules/virtualisation.nix
     ./modules/fonts.nix
     ./modules/nvidia.nix
+    ./modules/ai.nix
     ./modules/packages/default.nix
   ];
 

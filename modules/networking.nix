@@ -11,7 +11,8 @@
   systemd.services.NetworkManager-wait-online.enable = false;
 
   services.tailscale = {
-    enable = true;
-    openFirewall = true;
+    enable        = true;
+    openFirewall  = true;
+    extraUpFlags  = [ "--accept-dns=false" ];
   };
 }

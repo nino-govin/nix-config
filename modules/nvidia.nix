@@ -34,7 +34,7 @@
     enable = true;
     extraPackages = with pkgs; [
       intel-media-driver   # VA-API Intel Arc (iHD)
-      onevpl-intel-gpu     # QuickSync (QSV) pour Intel Arc via oneVPL
+      vpl-gpu-rt     # QuickSync (QSV) pour Intel Arc via oneVPL
       libva-vdpau-driver
       libvdpau-va-gl
     ];

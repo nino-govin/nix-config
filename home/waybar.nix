@@ -8,7 +8,7 @@
   home.file.".local/bin/keyboard-layout.sh" = { executable = true; source = ./scripts/keyboard-layout.sh; };
 
   programs.waybar = {
-    enable  = true;
+    enable         = true;
     systemd.enable = true;
 
     style = ''
@@ -50,9 +50,7 @@
         background: transparent;
       }
 
-      #workspaces button.urgent {
-        color: #bf616a;
-      }
+      #workspaces button.urgent { color: #bf616a; }
 
       #workspaces button:hover {
         color: #d8dee9;
@@ -70,6 +68,7 @@
         font-style: italic;
       }
 
+      #window.empty { display: none; }
 
       /* ── Horloge ─────────────────────────────────────────────────────── */
       #clock {
@@ -82,17 +81,7 @@
         font-weight: bold;
       }
 
-      /* ── Médias ──────────────────────────────────────────────────────── */
-      #mpris {
-        background: rgba(46, 52, 64, 0.88);
-        border: 1px solid rgba(163, 190, 140, 0.4);
-        border-radius: 12px;
-        margin: 6px 4px;
-        padding: 0 14px;
-        color: #a3be8c;
-      }
-
-      /* ── Clavier (langue) — îlot indépendant ────────────────────────── */
+      /* ── Clavier (langue) ────────────────────────────────────────────── */
       #custom-keyboard-layout {
         background: rgba(46, 52, 64, 0.88);
         border: 1px solid rgba(76, 86, 106, 0.5);
@@ -102,78 +91,7 @@
         color: #d8dee9;
       }
 
-      /* ── Îlot CPU (usage + température fusionnés) ───────────────────── */
-      #custom-cpu-stats {
-        background: rgba(46, 52, 64, 0.88);
-        border: 1px solid rgba(76, 86, 106, 0.5);
-        border-radius: 12px;
-        margin: 6px 4px;
-        padding: 0 14px;
-        color: #81a1c1;
-      }
-
-      #custom-cpu-stats.critical {
-        color: #bf616a;
-      }
-
-      /* ── Îlot GPU (Intel + NVIDIA) ───────────────────────────────────── */
-      #custom-gpu-intel {
-        background: rgba(46, 52, 64, 0.88);
-        border: 1px solid rgba(76, 86, 106, 0.5);
-        border-right: none;
-        border-radius: 12px 0 0 12px;
-        margin: 6px 0 6px 4px;
-        padding: 0 10px 0 14px;
-        color: #88c0d0;
-      }
-
-      #custom-gpu-nvidia {
-        background: rgba(46, 52, 64, 0.88);
-        border: 1px solid rgba(76, 86, 106, 0.5);
-        border-left: none;
-        border-radius: 0 12px 12px 0;
-        margin: 6px 4px 6px 0;
-        padding: 0 14px 0 10px;
-        color: #b48ead;
-      }
-
-      #custom-gpu-nvidia.inactive {
-        color: #4c566a;
-      }
-
-      #custom-gpu-nvidia.high {
-        color: #ebcb8b;
-      }
-
-      #custom-gpu-nvidia.critical {
-        color: #bf616a;
-      }
-
-      /* ── Îlot RAM + Stockage ─────────────────────────────────────────── */
-      #memory {
-        background: rgba(46, 52, 64, 0.88);
-        border: 1px solid rgba(76, 86, 106, 0.5);
-        border-right: none;
-        border-radius: 12px 0 0 12px;
-        margin: 6px 0 6px 4px;
-        padding: 0 10px 0 14px;
-        color: #81a1c1;
-      }
-
-      #custom-storage {
-        background: rgba(46, 52, 64, 0.88);
-        border: 1px solid rgba(76, 86, 106, 0.5);
-        border-left: none;
-        border-radius: 0 12px 12px 0;
-        margin: 6px 4px 6px 0;
-        padding: 0 14px 0 10px;
-        color: #ebcb8b;
-      }
-
-      #custom-storage.warning { color: #ebcb8b; }
-      #custom-storage.critical { color: #bf616a; }
-
-      /* ── Îlot luminosité ─────────────────────────────────────────────── */
+      /* ── Luminosité ──────────────────────────────────────────────────── */
       #backlight {
         background: rgba(46, 52, 64, 0.88);
         border: 1px solid rgba(76, 86, 106, 0.5);
@@ -183,19 +101,7 @@
         color: #ebcb8b;
       }
 
-      /* ── Îlot réseau ─────────────────────────────────────────────────── */
-      #network {
-        background: rgba(46, 52, 64, 0.88);
-        border: 1px solid rgba(76, 86, 106, 0.5);
-        border-radius: 12px;
-        margin: 6px 4px;
-        padding: 0 12px;
-        color: #88c0d0;
-      }
-
-      #network.disconnected { color: #bf616a; }
-
-      /* ── Îlot volume ─────────────────────────────────────────────────── */
+      /* ── Volume ──────────────────────────────────────────────────────── */
       #pulseaudio {
         background: rgba(46, 52, 64, 0.88);
         border: 1px solid rgba(76, 86, 106, 0.5);
@@ -207,7 +113,7 @@
 
       #pulseaudio.muted { color: #4c566a; }
 
-      /* ── Îlot batterie ───────────────────────────────────────────────── */
+      /* ── Batterie ────────────────────────────────────────────────────── */
       #battery {
         background: rgba(46, 52, 64, 0.88);
         border: 1px solid rgba(76, 86, 106, 0.5);
@@ -232,6 +138,79 @@
 
       #tray > .passive { -gtk-icon-effect: dim; }
 
+      /* ── CPU ─────────────────────────────────────────────────────────── */
+      #custom-cpu-stats {
+        background: rgba(46, 52, 64, 0.88);
+        border: 1px solid rgba(76, 86, 106, 0.5);
+        border-radius: 12px;
+        margin: 6px 4px;
+        padding: 0 14px;
+        color: #81a1c1;
+      }
+
+      #custom-cpu-stats.critical { color: #bf616a; }
+
+      /* ── GPU (Intel + NVIDIA fusionnés) ──────────────────────────────── */
+      #custom-gpu-intel {
+        background: rgba(46, 52, 64, 0.88);
+        border: 1px solid rgba(76, 86, 106, 0.5);
+        border-right: none;
+        border-radius: 12px 0 0 12px;
+        margin: 6px 0 6px 4px;
+        padding: 0 10px 0 14px;
+        color: #88c0d0;
+      }
+
+      #custom-gpu-nvidia {
+        background: rgba(46, 52, 64, 0.88);
+        border: 1px solid rgba(76, 86, 106, 0.5);
+        border-left: none;
+        border-radius: 0 12px 12px 0;
+        margin: 6px 4px 6px 0;
+        padding: 0 14px 0 10px;
+        color: #b48ead;
+      }
+
+      #custom-gpu-nvidia.inactive { color: #4c566a; }
+      #custom-gpu-nvidia.high     { color: #ebcb8b; }
+      #custom-gpu-nvidia.critical { color: #bf616a; }
+
+      /* ── Réseau (IP) ─────────────────────────────────────────────────── */
+      #network {
+        background: rgba(46, 52, 64, 0.88);
+        border: 1px solid rgba(76, 86, 106, 0.5);
+        border-radius: 12px;
+        margin: 6px 4px;
+        padding: 0 12px;
+        color: #88c0d0;
+      }
+
+      #network.disconnected { color: #bf616a; }
+
+      /* ── RAM + Stockage fusionnés ─────────────────────────────────────── */
+      #memory {
+        background: rgba(46, 52, 64, 0.88);
+        border: 1px solid rgba(76, 86, 106, 0.5);
+        border-right: none;
+        border-radius: 12px 0 0 12px;
+        margin: 6px 0 6px 4px;
+        padding: 0 10px 0 14px;
+        color: #81a1c1;
+      }
+
+      #custom-storage {
+        background: rgba(46, 52, 64, 0.88);
+        border: 1px solid rgba(76, 86, 106, 0.5);
+        border-left: none;
+        border-radius: 0 12px 12px 0;
+        margin: 6px 4px 6px 0;
+        padding: 0 14px 0 10px;
+        color: #ebcb8b;
+      }
+
+      #custom-storage.warning  { color: #ebcb8b; }
+      #custom-storage.critical { color: #bf616a; }
+
       /* ── Tooltip global ──────────────────────────────────────────────── */
       tooltip {
         background: rgba(36, 41, 54, 0.97);
@@ -242,140 +221,155 @@
       }
     '';
 
-    settings = [{
-      layer    = "top";
-      position = "top";
-      height   = 36;
-      spacing  = 0;
+    settings = [
 
-      modules-left = [
-        "hyprland/workspaces"
-        "hyprland/window"
-      ];
+      # ── Barre du haut : utilitaires ─────────────────────────────────────
+      {
+        name     = "top";
+        layer    = "top";
+        position = "top";
+        height   = 36;
+        spacing  = 0;
 
-      modules-center = [ "clock" ];
+        modules-left   = [ "hyprland/workspaces" "hyprland/window" ];
+        modules-center = [ "clock" ];
+        modules-right  = [
+          "custom/keyboard-layout"
+          "backlight"
+          "pulseaudio"
+          "battery"
+          "tray"
+        ];
 
-      modules-right = [
-        "custom/keyboard-layout"
-        "custom/cpu-stats"
-        "custom/gpu-intel"
-        "custom/gpu-nvidia"
-        "memory"
-        "custom/storage"
-        "backlight"
-        "pulseaudio"
-        "battery"
-        "tray"
-      ];
+        "hyprland/workspaces" = {
+          format         = "{id}";
+          on-click       = "activate";
+          sort-by-number = true;
+        };
 
-      "custom/keyboard-layout" = {
-        exec        = "~/.local/bin/keyboard-layout.sh";
-        interval    = 1;
-        return-type = "json";
-        format      = "󰌌 {}";
-        on-click    = "hyprctl switchxkblayout all next";
-        tooltip     = true;
-      };
+        "hyprland/window" = {
+          format           = "{}";
+          rewrite          = { "^$" = "ദ്ദി/ᐠ｡‸｡ᐟ\\"; };
+          separate-outputs = true;
+          max-length       = 60;
+        };
 
-      "hyprland/workspaces" = {
-        format        = "{id}";
-        on-click      = "activate";
-        sort-by-number = true;
-      };
+        clock = {
+          format         = "󰃭 {:%Y-%m-%d   %H:%M}";
+          tooltip-format = "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>";
+        };
 
-      "hyprland/window" = {
-        format           = "{}";
-        rewrite          = { "^$" = "ദ്ദി/ᐠ｡‸｡ᐟ\\"; };
-        separate-outputs = true;
-        max-length       = 60;
-      };
+        "custom/keyboard-layout" = {
+          exec        = "~/.local/bin/keyboard-layout.sh";
+          interval    = 1;
+          return-type = "json";
+          format      = "󰌌 {}";
+          on-click    = "hyprctl switchxkblayout all next";
+          tooltip     = true;
+        };
 
-      clock = {
-        format         = "󰃭 {:%Y-%m-%d   %H:%M}";
-        tooltip-format = "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>";
-      };
+        backlight = {
+          device         = "intel_backlight";
+          format         = "󰖨 {percent}%";
+          on-scroll-up   = "brightnessctl set +2%";
+          on-scroll-down = "sh -c 'brightnessctl set 2%-; [ $(brightnessctl get) -eq 0 ] && brightnessctl set 1'";
+          tooltip        = false;
+        };
 
-      "custom/cpu-stats" = {
-        exec        = "~/.local/bin/cpu-stats.sh";
-        interval    = 5;
-        return-type = "json";
-        format      = "CPU 󰻠 {}";
-        tooltip     = true;
-      };
+        pulseaudio = {
+          format         = "{icon} {volume}%";
+          format-muted   = "󰝟 muted";
+          format-icons   = { default = [ "󰕿" "󰖀" "󰕾" ]; };
+          on-click       = "pavucontrol";
+          on-scroll-up   = "wpctl set-volume @DEFAULT_SINK@ 2%+";
+          on-scroll-down = "wpctl set-volume @DEFAULT_SINK@ 2%-";
+          tooltip        = false;
+        };
 
-      "custom/gpu-intel" = {
-        exec        = "~/.local/bin/gpu-intel.sh";
-        interval    = 5;
-        return-type = "json";
-        format      = "GPU 󰘚 {}";
-        tooltip     = true;
-      };
+        battery = {
+          states          = { warning = 30; critical = 15; };
+          format          = "{icon} {capacity}%";
+          format-charging = "󰂄 {capacity}%";
+          format-plugged  = "󰁹 {capacity}%";
+          format-full     = "󰁹 Full";
+          format-icons    = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
+          tooltip-format  = "{timeTo}\n{power:.1f}W";
+          interval        = 30;
+        };
 
-      "custom/gpu-nvidia" = {
-        exec        = "~/.local/bin/gpu-nvidia.sh";
-        interval    = 5;
-        return-type = "json";
-        format      = "󰊴 {}";
-        tooltip     = true;
-      };
+        tray = {
+          spacing   = 8;
+          icon-size = 16;
+        };
+      }
 
-      memory = {
-        interval       = 10;
-        format         = "󰍛 {used:0.1f}G";
-        tooltip-format = "RAM: {used:0.1f}G / {total:0.1f}G";
-      };
+      # ── Barre du bas : stats techniques ─────────────────────────────────
+      {
+        name     = "bottom";
+        layer    = "top";
+        position = "bottom";
+        height   = 36;
+        spacing  = 0;
 
-      "custom/storage" = {
-        exec        = "~/.local/bin/storage.sh";
-        interval    = 30;
-        return-type = "json";
-        format      = "󰋊 {}";
-        tooltip     = true;
-      };
+        modules-left   = [
+          "custom/cpu-stats"
+          "custom/gpu-intel"
+          "custom/gpu-nvidia"
+        ];
+        modules-center = [ "network" ];
+        modules-right  = [
+          "memory"
+          "custom/storage"
+        ];
 
-      backlight = {
-        device         = "intel_backlight";
-        format         = "󰖨 {percent}%";
-        on-scroll-up   = "brightnessctl set +2%";
-        on-scroll-down = "sh -c 'brightnessctl set 2%-; [ $(brightnessctl get) -eq 0 ] && brightnessctl set 1'";
-        tooltip        = false;
-      };
+        "custom/cpu-stats" = {
+          exec        = "~/.local/bin/cpu-stats.sh";
+          interval    = 5;
+          return-type = "json";
+          format      = "CPU 󰻠 {}";
+          tooltip     = true;
+        };
 
-      pulseaudio = {
-        format         = "{icon} {volume}%";
-        format-muted   = "󰝟 muted";
-        format-icons   = { default = [ "󰕿" "󰖀" "󰕾" ]; };
-        on-click       = "pavucontrol";
-        on-scroll-up   = "wpctl set-volume @DEFAULT_SINK@ 2%+";
-        on-scroll-down = "wpctl set-volume @DEFAULT_SINK@ 2%-";
-        tooltip        = false;
-      };
+        "custom/gpu-intel" = {
+          exec        = "~/.local/bin/gpu-intel.sh";
+          interval    = 5;
+          return-type = "json";
+          format      = "GPU 󰘚 {}";
+          tooltip     = true;
+        };
 
-      network = {
-        format-wifi         = "󰖩";
-        format-ethernet     = "󰈀";
-        format-disconnected = "󰤭";
-        tooltip-format-wifi     = "{essid} — {signalStrength}%\n{ipaddr}";
-        tooltip-format-ethernet = "{ipaddr}";
-        on-click                = "nm-connection-editor";
-        interval                = 10;
-      };
+        "custom/gpu-nvidia" = {
+          exec        = "~/.local/bin/gpu-nvidia.sh";
+          interval    = 5;
+          return-type = "json";
+          format      = "󰊴 {}";
+          tooltip     = true;
+        };
 
-      battery = {
-        states           = { warning = 30; critical = 15; };
-        format           = "{icon} Discharging {capacity}%";
-        format-charging  = "󰂄 Charging {capacity}%";
-        format-plugged   = "󰁹 Plugged {capacity}%";
-        format-full      = "󰁹 Full";
-        format-icons     = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
-        tooltip-format   = "{timeTo}\n{power:.1f}W";
-        interval         = 30;
-      };
+        network = {
+          format-wifi         = "󰖩  {ipaddr}";
+          format-ethernet     = "󰈀  {ipaddr}";
+          format-disconnected = "󰤭  --";
+          tooltip-format-wifi     = "{essid} — {signalStrength}%";
+          tooltip-format-ethernet = "{ifname}";
+          interval            = 10;
+        };
 
-      tray = {
-        spacing   = 8;
-        icon-size = 16;
-      };
-    }];
+        memory = {
+          interval       = 10;
+          format         = "󰍛 {used:0.1f}G";
+          tooltip-format = "RAM: {used:0.1f}G / {total:0.1f}G";
+        };
+
+        "custom/storage" = {
+          exec        = "~/.local/bin/storage.sh";
+          interval    = 30;
+          return-type = "json";
+          format      = "󰋊 {}";
+          tooltip     = true;
+        };
+      }
+
+    ];
   };
 }

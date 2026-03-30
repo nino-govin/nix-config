@@ -5,6 +5,11 @@
     enable   = true;
     xwayland.enable = true;
 
+    extraConfig = ''
+      bindgesture = swipe:3:right, workspace, e-1
+      bindgesture = swipe:3:left, workspace, e+1
+    '';
+
     settings = {
       # ── Moniteur ────────────────────────────────────────────────────────
       monitor = [
@@ -194,12 +199,6 @@
         ",XF86AudioPlay,  exec, playerctl play-pause"
         ",XF86AudioNext,  exec, playerctl next"
         ",XF86AudioPrev,  exec, playerctl previous"
-      ];
-
-      # Gestures trackpad
-      bindgesture = [
-        "swipe:3:right, workspace, e-1"
-        "swipe:3:left,  workspace, e+1"
       ];
 
       # Souris

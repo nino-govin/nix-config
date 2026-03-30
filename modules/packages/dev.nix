@@ -16,7 +16,7 @@
     jdk maven gradle
 
     # JavaScript
-    nodejs_24 yarn
+    nodejs_24 yarn pnpm
 
     # IDE
     vscode

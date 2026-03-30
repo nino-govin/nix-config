@@ -87,6 +87,15 @@
         ];
       };
 
+      # ── Gestures trackpad ────────────────────────────────────────────────
+      gestures = {
+        workspace_swipe          = true;
+        workspace_swipe_fingers  = 3;
+        workspace_swipe_distance = 300;
+        workspace_swipe_invert   = false;
+        workspace_swipe_cancel_ratio = 0.5;
+      };
+
       # ── Layout dwindle ────────────────────────────────────────────────────
       dwindle = {
         pseudotile      = true;

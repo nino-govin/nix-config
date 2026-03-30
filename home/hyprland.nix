@@ -5,11 +5,6 @@
     enable   = true;
     xwayland.enable = true;
 
-    extraConfig = ''
-      bindgesture = swipe:3:right, workspace, e-1
-      bindgesture = swipe:3:left, workspace, e+1
-    '';
-
     settings = {
       # ── Moniteur ────────────────────────────────────────────────────────
       monitor = [

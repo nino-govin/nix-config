@@ -87,15 +87,6 @@
         ];
       };
 
-      # ── Gestures trackpad ────────────────────────────────────────────────
-      gestures = {
-        workspace_swipe          = true;
-        workspace_swipe_fingers  = 3;
-        workspace_swipe_distance = 300;
-        workspace_swipe_invert   = false;
-        workspace_swipe_cancel_ratio = 0.5;
-      };
-
       # ── Layout dwindle ────────────────────────────────────────────────────
       dwindle = {
         pseudotile      = true;
@@ -203,6 +194,12 @@
         ",XF86AudioPlay,  exec, playerctl play-pause"
         ",XF86AudioNext,  exec, playerctl next"
         ",XF86AudioPrev,  exec, playerctl previous"
+      ];
+
+      # Gestures trackpad
+      bindgesture = [
+        "swipe:3:right, workspace, e-1"
+        "swipe:3:left,  workspace, e+1"
       ];
 
       # Souris

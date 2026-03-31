@@ -6,4 +6,8 @@
     acceleration = "cuda";
   };
 
+  environment.systemPackages = with pkgs; [
+    claude-code
+  ];
+
 }

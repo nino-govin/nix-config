@@ -13,6 +13,7 @@
     ./git.nix
     ./hypridle.nix
     ./media.nix
+    ./adaptive-refresh-rate.nix
   ];
 
   home = {

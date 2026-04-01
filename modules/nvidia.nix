@@ -3,6 +3,8 @@
 {
   services.xserver.videoDrivers = [ "nvidia" ];
 
+  boot.blacklistedKernelModules = [ "nvidia_uvm" ];
+
   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = true;

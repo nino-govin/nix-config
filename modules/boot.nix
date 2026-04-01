@@ -8,6 +8,6 @@
       editor = false;
       configurationLimit = 3;
     };
-    timeout = 5;
+    timeout = 0;
   };
 }

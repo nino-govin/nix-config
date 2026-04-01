@@ -1,5 +1,4 @@
 #!/bin/sh
-# Stats NVIDIA dGPU via nvidia-smi (PRIME offload — peut être hors ligne)
 
 GPU_UTIL=$(nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits 2>/dev/null | tr -d ' ')
 GPU_TEMP=$(nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits 2>/dev/null | tr -d ' ')

@@ -35,7 +35,6 @@
 
       label = [
         {
-          # Heure
           text      = "cmd[update:1000] echo \"$(date +'%H:%M')\"";
           color     = "rgba(216, 222, 233, 0.9)";
           font_size = 72;
@@ -44,7 +43,6 @@
           valign    = "center";
         }
         {
-          # Date
           text      = "cmd[update:60000] echo \"$(date +'%A %d %B %Y')\"";
           color     = "rgba(136, 192, 208, 0.8)";
           font_size = 20;

@@ -1,5 +1,4 @@
 #!/bin/sh
-# CPU usage (delta /proc/stat) + température
 
 read -r _ u1 n1 s1 i1 w1 r1 f1 _ < /proc/stat
 sleep 1

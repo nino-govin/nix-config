@@ -9,5 +9,4 @@
   };
 
   programs.zsh.enable = true;
-  # i3lock retiré — remplacé par hyprlock
 }

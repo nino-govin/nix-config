@@ -13,7 +13,6 @@ window#waybar {
   color: #d8dee9;
 }
 
-/* ── Workspaces ───────────────────────────────────────────────────── */
 #workspaces {
   background: rgba(46, 52, 64, 0.88);
   border: 1px solid rgba(76, 86, 106, 0.5);
@@ -43,7 +42,6 @@ window#waybar {
   background: rgba(76, 86, 106, 0.2);
 }
 
-/* ── Titre fenêtre ───────────────────────────────────────────────── */
 #window {
   background: rgba(46, 52, 64, 0.88);
   border: 1px solid rgba(76, 86, 106, 0.5);
@@ -62,7 +60,6 @@ window#waybar {
   border-color: transparent;
 }
 
-/* ── Horloge ─────────────────────────────────────────────────────── */
 #clock {
   background: rgba(46, 52, 64, 0.88);
   border: 1px solid rgba(88, 192, 208, 0.4);
@@ -73,7 +70,6 @@ window#waybar {
   font-weight: bold;
 }
 
-/* ── Clavier (langue) ────────────────────────────────────────────── */
 #custom-keyboard-layout {
   background: rgba(46, 52, 64, 0.88);
   border: 1px solid rgba(76, 86, 106, 0.5);
@@ -83,7 +79,6 @@ window#waybar {
   color: #d8dee9;
 }
 
-/* ── Luminosité ──────────────────────────────────────────────────── */
 #backlight {
   background: rgba(46, 52, 64, 0.88);
   border: 1px solid rgba(76, 86, 106, 0.5);
@@ -93,7 +88,6 @@ window#waybar {
   color: #ebcb8b;
 }
 
-/* ── Volume ──────────────────────────────────────────────────────── */
 #pulseaudio {
   background: rgba(46, 52, 64, 0.88);
   border: 1px solid rgba(76, 86, 106, 0.5);
@@ -105,7 +99,6 @@ window#waybar {
 
 #pulseaudio.muted { color: #4c566a; }
 
-/* ── Batterie ────────────────────────────────────────────────────── */
 #battery {
   background: rgba(46, 52, 64, 0.88);
   border: 1px solid rgba(76, 86, 106, 0.5);
@@ -119,7 +112,6 @@ window#waybar {
 #battery.critical { color: #bf616a; }
 #battery.charging { color: #a3be8c; }
 
-/* ── Tray ────────────────────────────────────────────────────────── */
 #tray {
   background: rgba(46, 52, 64, 0.88);
   border: 1px solid rgba(76, 86, 106, 0.5);
@@ -130,7 +122,6 @@ window#waybar {
 
 #tray > .passive { -gtk-icon-effect: dim; }
 
-/* ── CPU ─────────────────────────────────────────────────────────── */
 #custom-cpu-stats {
   background: rgba(46, 52, 64, 0.88);
   border: 1px solid rgba(76, 86, 106, 0.5);
@@ -142,7 +133,6 @@ window#waybar {
 
 #custom-cpu-stats.critical { color: #bf616a; }
 
-/* ── GPU (Intel + NVIDIA fusionnés) ──────────────────────────────── */
 #custom-gpu-intel {
   background: rgba(46, 52, 64, 0.88);
   border: 1px solid rgba(76, 86, 106, 0.5);
@@ -167,7 +157,6 @@ window#waybar {
 #custom-gpu-nvidia.high     { color: #ebcb8b; }
 #custom-gpu-nvidia.critical { color: #bf616a; }
 
-/* ── Réseau IP + débit (îlot fusionné) ───────────────────────────── */
 #network.ip {
   background: rgba(46, 52, 64, 0.88);
   border: 1px solid rgba(76, 86, 106, 0.5);
@@ -192,7 +181,6 @@ window#waybar {
 #network.ip.disconnected,
 #network.bandwidth.disconnected { color: #bf616a; }
 
-/* ── RAM + Stockage fusionnés ────────────────────────────────────── */
 #memory {
   background: rgba(46, 52, 64, 0.88);
   border: 1px solid rgba(76, 86, 106, 0.5);
@@ -216,7 +204,6 @@ window#waybar {
 #custom-storage.warning  { color: #ebcb8b; }
 #custom-storage.critical { color: #bf616a; }
 
-/* ── Tooltip global ──────────────────────────────────────────────── */
 tooltip {
   background: rgba(36, 41, 54, 0.97);
   border: 1px solid rgba(88, 192, 208, 0.35);

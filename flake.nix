@@ -20,7 +20,7 @@
           home-manager = {
             useGlobalPkgs        = true;
             useUserPackages      = true;
-            backupFileExtension  = "backup";  # évite les erreurs si un fichier géré existe déjà
+            backupFileExtension  = "backup";
             users.nino-nixos = import ./home/default.nix;
           };
         }

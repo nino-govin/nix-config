@@ -1,30 +1,25 @@
 { config, pkgs, ... }:
 
 {
-  # Xserver reste nécessaire pour le clavier et XWayland
   services.xserver = {
     enable = true;
     xkb.layout  = "fr";
     xkb.variant = "";
-    # i3 supprimé
   };
 
-  # Hyprland
   programs.hyprland = {
     enable        = true;
-    xwayland.enable = true;  # compatibilité apps X11
+    xwayland.enable = true;
   };
 
-  # Portail desktop requis pour Hyprland (partage d'écran, fichiers, etc.)
   xdg.portal = {
     enable = true;
     extraPortals = [
       pkgs.xdg-desktop-portal-hyprland
-      pkgs.xdg-desktop-portal-gtk  # file picker GTK (dialogs de téléchargement)
+      pkgs.xdg-desktop-portal-gtk
     ];
   };
 
-  # greetd + tuigreet : greeter natif Wayland, pas de flash TTY, pas de scaling Qt
   services.greetd = {
     enable = true;
     settings.default_session = {
@@ -33,16 +28,12 @@
     };
   };
 
-
   environment.sessionVariables = {
-    # Forcer Wayland sur les apps compatibles
-    NIXOS_OZONE_WL        = "1";   # Electron (VSCode, Discord...)
+    NIXOS_OZONE_WL        = "1";
     QT_QPA_PLATFORM       = "wayland";
     QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-    # GDK_SCALE et QT_SCALE_FACTOR supprimés : le protocole Wayland gère
-    # déjà le scale (1.6×) — les définir provoquait un double scaling
-    MOZ_ENABLE_WAYLAND    = "1";   # Firefox
-    MOZ_DEVICE_PIXEL_RATIO = "1.6"; # Firefox : force le pixel ratio fractionnaire
+    MOZ_ENABLE_WAYLAND    = "1";
+    MOZ_DEVICE_PIXEL_RATIO = "1.6";
     XDG_SESSION_TYPE      = "wayland";
     XDG_CURRENT_DESKTOP   = "Hyprland";
   };

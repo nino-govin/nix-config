@@ -22,11 +22,8 @@
     stateVersion  = "25.11";
   };
 
-  # Laisser Home Manager gérer lui-même
   programs.home-manager.enable = true;
 
-  # Agent SSH persistant — keychain partage l'agent entre tous les terminaux
-  # et ne demande la passphrase qu'une seule fois par reboot
   programs.keychain = {
     enable    = true;
     keys      = [ "id_ed25519_github2" ];
@@ -39,7 +36,6 @@
     matchBlocks."*".addKeysToAgent = "yes";
   };
 
-  # Firefox avec scaling HiDPI forcé
   programs.firefox = {
     enable = true;
     profiles.default = {
@@ -49,7 +45,6 @@
     };
   };
 
-  # Thème GTK global
   gtk = {
     enable = true;
     theme = {
@@ -62,7 +57,6 @@
     };
   };
 
-  # Variables d'environnement utilisateur
   home.sessionVariables = {
     EDITOR = "nvim";
     VISUAL = "nvim";

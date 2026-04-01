@@ -1,4 +1,3 @@
-# Barre du haut : utilitaires
 {
   name     = "top";
   layer    = "top";

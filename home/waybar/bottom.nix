@@ -1,4 +1,3 @@
-# Barre du bas : stats techniques
 {
   name     = "bottom";
   layer    = "top";

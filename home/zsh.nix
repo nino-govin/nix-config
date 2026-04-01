@@ -26,7 +26,6 @@
       top  = "btop";
       ff   = "fastfetch";
 
-      # NixOS
       rebuild = "sudo nixos-rebuild switch --flake /etc/nixos#nixos";
       update  = "sudo nix-channel --update && sudo nixos-rebuild switch --flake /etc/nixos#nixos";
       cleanup = "sudo nix-collect-garbage -d && sudo nix-store --gc";
@@ -34,7 +33,6 @@
       nixedit = "sudo nvim /etc/nixos/configuration.nix";
       nixconf = "cd /etc/nixos";
 
-      # Git
       gs  = "git status";
       ga  = "git add";
       gc  = "git commit";

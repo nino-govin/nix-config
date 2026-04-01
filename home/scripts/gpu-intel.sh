@@ -1,5 +1,4 @@
 #!/bin/sh
-# Stats Intel iGPU via sysfs (fréquence comme proxy d'activité)
 
 INTEL_CARD=""
 for card in /sys/class/drm/card*/; do

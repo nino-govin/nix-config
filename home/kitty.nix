@@ -16,7 +16,6 @@
       scrollback_lines    = 10000;
       copy_on_select      = "clipboard";
 
-      # Thème Nord
       background  = "#2e3440";
       foreground  = "#d8dee9";
       color0      = "#3b4252";

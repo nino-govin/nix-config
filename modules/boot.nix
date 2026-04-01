@@ -10,9 +10,4 @@
     };
     timeout = 5;
   };
-
-  # Supprimer les messages kernel au boot (évite le TTY visible derrière tuigreet)
-  boot.kernelParams    = [ "quiet" "rd.systemd.show_status=false" "rd.udev.log_level=3" ];
-  boot.initrd.verbose  = false;
-  boot.consoleLogLevel = 0;
 }

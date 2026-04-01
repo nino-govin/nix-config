@@ -12,26 +12,25 @@
       After = [ "graphical-session.target" ];
       PartOf = [ "graphical-session.target" ];
     };
-
     Service = {
       Type = "oneshot";
       ExecStart = "${config.home.homeDirectory}/.local/bin/adaptive-refresh-rate";
-      Environment = "PATH=/run/current-system/sw/bin";
+      Environment = "PATH=/run/current-system/sw/bin:${config.home.homeDirectory}/.nix-profile/bin";
     };
   };
 
   systemd.user.timers.adaptive-refresh-rate = {
     Unit = {
       Description = "Timer for adaptive refresh rate";
+      After = [ "graphical-session.target" ];
+      PartOf = [ "graphical-session.target" ];
     };
-
     Timer = {
-      OnBootSec = "5s";
+      OnBootSec = "30s";
       OnUnitActiveSec = "10s";
     };
-
     Install = {
-      WantedBy = [ "timers.target" ];
+      WantedBy = [ "graphical-session.target" ];
     };
   };
 }

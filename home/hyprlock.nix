@@ -50,6 +50,14 @@
           halign    = "center";
           valign    = "center";
         }
+        {
+          text      = "Layout: $LAYOUT[FR,EN]";
+          color     = "rgba(136, 192, 208, 0.8)";
+          font_size = 16;
+          position  = "30, 30";
+          halign    = "left";
+          valign    = "bottom";
+        }
       ];
     };
   };

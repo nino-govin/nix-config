@@ -16,6 +16,7 @@
     ./modules/ai.nix
     ./modules/gaming.nix
     ./modules/packages/default.nix
+    ./modules/powersave.nix
   ];
 
   nixpkgs.config.allowUnfree = true;

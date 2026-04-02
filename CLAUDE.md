@@ -79,3 +79,8 @@ nix-collect-garbage -d
 - Weekly garbage collection (deletes >7d old generations)
 - State version: 25.11
 - SSH keychain configured for `id_ed25519_github2`
+
+## Code Style
+
+- Do not add comments to configuration files to minimize token usage during future reads
+- Keep code concise and self-documenting

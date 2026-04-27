@@ -10,6 +10,9 @@
     nodejs_24 yarn pnpm nodePackages."@angular/cli"
     vscode
     jetbrains.idea
+    android-studio
     postgresql
   ];
+
+  nixpkgs.config.android_sdk.accept_license = true;
 }

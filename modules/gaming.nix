@@ -26,5 +26,6 @@
 
   environment.systemPackages = with pkgs; [
     desmume
+    appimage-run icu
   ];
 }

@@ -15,4 +15,9 @@
   ];
 
   nixpkgs.config.android_sdk.accept_license = true;
+
+  services.postgresql = {
+    enable = true;
+    package = pkgs.postgresql_17;
+};
 }

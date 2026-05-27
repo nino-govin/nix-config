@@ -38,6 +38,8 @@
       gc  = "git commit";
       gp  = "git push";
       gl  = "git log --oneline --graph";
+
+      phone = "SDL_VIDEODRIVER=x11 DISPLAY=:0 scrcpy --render-driver=opengl";
     };
 
     initContent = ''

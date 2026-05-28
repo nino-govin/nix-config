@@ -138,8 +138,8 @@
         "$mod, mouse_down, workspace, e+1"
         "$mod, mouse_up,   workspace, e-1"
 
-        "$mod SHIFT, S, exec, grim -g \"$(slurp)\" ~/Pictures/$(date +%Y%m%d_%H%M%S).png"
-        ",Print, exec, grim ~/Pictures/$(date +%Y%m%d_%H%M%S).png"
+        "$mod SHIFT, S, exec, grim -g \"$(slurp)\" - | tee ~/Pictures/$(date +%Y%m%d_%H%M%S).png | wl-copy"
+        ",Print, exec, grim - | tee ~/Pictures/$(date +%Y%m%d_%H%M%S).png | wl-copy"
 
         "$mod, space, exec, hyprctl switchxkblayout all next"
 

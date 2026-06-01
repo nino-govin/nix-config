@@ -173,6 +173,9 @@
         "float, class:^(lxappearance)$"
         "float, title:^(Picture-in-Picture)$"
         "pin,   title:^(Picture-in-Picture)$"
+        "nofocus, class:^(jetbrains-.*)$, title:^(win.*)$"
+        "noinitialfocus, class:^(jetbrains-.*)$, title:^(win.*)$"
+        "noanim, class:^(jetbrains-.*)$, title:^(win.*)$"
       ];
     };
   };

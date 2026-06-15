@@ -4,7 +4,7 @@
   environment.systemPackages = with pkgs; [
     waybar
     wofi
-    swww
+    awww
     grim slurp
     hyprlock hypridle
     dunst libnotify

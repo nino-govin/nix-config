@@ -7,7 +7,7 @@
     python3 black pylint mypy libpq uv
     gcc valgrind gdb clang clang-tools cmake ninja bear gnumake flex bison
     jdk maven gradle
-    nodejs_24 yarn pnpm nodePackages."@angular/cli"
+    nodejs_24 yarn pnpm
     vscode
     jetbrains.idea
     postgresql

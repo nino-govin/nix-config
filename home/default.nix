@@ -31,13 +31,14 @@
   };
 
   programs.ssh = {
-    enable                = true;
-    enableDefaultConfig   = false;
-    matchBlocks."*".addKeysToAgent = "yes";
+    enable              = true;
+    enableDefaultConfig = false;
+    settings."Host *".AddKeysToAgent = "yes";
   };
 
   programs.firefox = {
-    enable = true;
+    enable      = true;
+    configPath  = ".mozilla/firefox";
     profiles.default = {
       settings = {
         "layout.css.devPixelsPerPx" = "1.6";
@@ -55,6 +56,7 @@
       name    = "Papirus-Dark";
       package = pkgs.papirus-icon-theme;
     };
+    gtk4.theme = config.gtk.theme;
   };
 
   home.sessionVariables = {

@@ -1,8 +1,8 @@
 { config, pkgs, ... }:
 {
   services.ollama = {
-    enable       = true;
-    acceleration = "cuda";
+    enable  = true;
+    package = pkgs.ollama-cuda;
   };
 
   systemd.services.ollama.environment = {

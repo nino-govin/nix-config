@@ -2,7 +2,8 @@
 
 {
   wayland.windowManager.hyprland = {
-    enable   = true;
+    enable     = true;
+    configType = "hyprlang";
     xwayland.enable = true;
 
     settings = {
@@ -16,8 +17,8 @@
       ];
 
       exec-once = [
-        "swww-daemon"
-        "swww img ~/Pictures/background.png"
+        "awww-daemon"
+        "awww img ~/Pictures/background.png"
         "nm-applet --indicator"
         "wl-paste --type text --watch cliphist store"
         "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
@@ -76,8 +77,7 @@
       };
 
       dwindle = {
-        pseudotile      = true;
-        preserve_split  = true;
+        preserve_split = true;
       };
 
       misc = {
@@ -101,7 +101,7 @@
         "$mod, F, fullscreen"
         "$mod SHIFT, space, togglefloating"
         "$mod, P, pseudo"
-        "$mod, J, togglesplit"
+        "$mod, J, layoutmsg, togglesplit"
 
         "$mod, left,  movefocus, l"
         "$mod, right, movefocus, r"
@@ -142,12 +142,10 @@
         ",Print, exec, grim - | tee ~/Pictures/$(date +%Y%m%d_%H%M%S).png | wl-copy"
 
         "$mod, space, exec, hyprctl switchxkblayout all next"
-
         "$mod SHIFT, L, exec, hyprlock"
-
-	      "$mod SHIFT, E, exec, ~/.local/bin/power-menu"
+        "$mod SHIFT, E, exec, ~/.local/bin/power-menu"
       ];
-	
+
       binde = [
         ",XF86AudioRaiseVolume, exec, pactl set-sink-volume @DEFAULT_SINK@ +5%"
         ",XF86AudioLowerVolume, exec, pactl set-sink-volume @DEFAULT_SINK@ -5%"
@@ -166,17 +164,16 @@
         "$mod, mouse:272, movewindow"
         "$mod, mouse:273, resizewindow"
       ];
-
-      windowrulev2 = [
-        "float, class:^(pavucontrol)$"
-        "float, class:^(nm-connection-editor)$"
-        "float, class:^(lxappearance)$"
-        "float, title:^(Picture-in-Picture)$"
-        "pin,   title:^(Picture-in-Picture)$"
-        "nofocus, class:^(jetbrains-.*)$, title:^(win.*)$"
-        "noinitialfocus, class:^(jetbrains-.*)$, title:^(win.*)$"
-        "noanim, class:^(jetbrains-.*)$, title:^(win.*)$"
-      ];
+        windowrule = [
+          "match:class ^(pavucontrol), float on"
+          "match:class ^(nm-connection-editor), float on"
+          "match:class ^(lxappearance), float on"
+          "match:title ^(Picture-in-Picture), float on"
+          "match:title ^(Picture-in-Picture), pin on"
+          "match:class ^(jetbrains-.*), match:title ^(win.*), no_focus on"
+          "match:class ^(jetbrains-.*), match:title ^(win.*), no_initial_focus on"
+          "match:class ^(jetbrains-.*), match:title ^(win.*), no_anim on"
+        ];
     };
   };
 }

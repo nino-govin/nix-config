@@ -16,10 +16,10 @@
     libGLU
     libpulseaudio
     alsa-lib
-    xorg.libX11
-    xorg.libXcursor
-    xorg.libXrandr
-    xorg.libXi
-    xorg.libXext
+    libX11
+    libXcursor
+    libXrandr
+    libXi
+    libXext
   ];
 }

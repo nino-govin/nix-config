@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 {
   programs.steam = {
@@ -27,5 +27,6 @@
   environment.systemPackages = with pkgs; [
     desmume
     appimage-run icu
+    inputs.nix-gaming.packages.${pkgs.system}.osu-stable
   ];
 }

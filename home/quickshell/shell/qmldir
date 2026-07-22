@@ -1,0 +1,6 @@
+module shell
+Rail 1.0 Rail.qml
+TopBar 1.0 TopBar.qml
+QuickSettings 1.0 QuickSettings.qml
+PowerMenu 1.0 PowerMenu.qml
+NotificationCenter 1.0 NotificationCenter.qml

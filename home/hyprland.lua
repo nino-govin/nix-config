@@ -30,7 +30,7 @@ hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
 hl.config({
   general = {
     gaps_in      = 5,
-    gaps_out     = { top = 4, right = 8, bottom = 8, left = 8 },
+    gaps_out     = 8,
     border_size  = 2,
     ["col.active_border"]   = { colors = { "rgba(88c0d0ff)", "rgba(5e81acff)" }, angle = 45 },
     ["col.inactive_border"] = "rgba(3b4252ff)",
@@ -130,7 +130,7 @@ hl.bind("Print",               hl.dsp.exec_cmd('grim - | tee ~/Pictures/$(date +
 
 hl.bind(mod .. " + space",     hl.dsp.exec_cmd("hyprctl switchxkblayout all next"))
 hl.bind(mod .. " + SHIFT + L", hl.dsp.exec_cmd("hyprlock"))
-hl.bind(mod .. " + SHIFT + E", hl.dsp.exec_cmd("~/.local/bin/power-menu"))
+hl.bind(mod .. " + SHIFT + E", hl.dsp.exec_cmd("quickshell ipc call showPowerMenu show"))
 
 hl.bind(mod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
 hl.bind(mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
@@ -146,6 +146,12 @@ hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 5%-"), { rep
 hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"),        { locked = true })
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"),    { locked = true })
+
+hl.layer_rule({ match = { namespace = "quickshell-rail" },     blur = true, ignore_alpha = 0.3 })
+hl.layer_rule({ match = { namespace = "quickshell-topbar" },   blur = true, ignore_alpha = 0.2 })
+hl.layer_rule({ match = { namespace = "quickshell-qs" },       blur = true, ignore_alpha = 0.2, blur_popups = true })
+hl.layer_rule({ match = { namespace = "quickshell-powermenu"}, blur = true, ignore_alpha = 0.2, dim_around = true })
+hl.layer_rule({ match = { namespace = "quickshell-notifs" },   blur = true, ignore_alpha = 0.2 })
 
 hl.window_rule({ match = { class = "^pavucontrol$" },          float = true })
 hl.window_rule({ match = { class = "^nm-connection-editor$" }, float = true })

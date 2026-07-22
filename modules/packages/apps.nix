@@ -3,7 +3,7 @@
 {
   environment.systemPackages = with pkgs; [
     obsidian
-    xdg-utils xdg-desktop-portal networkmanagerapplet gnome-keyring
+    xdg-utils
     discord
     moonlight-qt protonup-qt
   ];

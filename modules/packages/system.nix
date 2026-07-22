@@ -5,7 +5,7 @@
     git wget curl vim neovim zsh
     kitty
     fastfetch htop btop powertop ncdu duf bat bc
-    file lsof ripgrep fuse
+    file lsof ripgrep fuse jq
     p7zip unzip zip
     tree
     yazi

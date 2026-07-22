@@ -2,7 +2,7 @@
 
 {
   environment.systemPackages = with pkgs; [
-    fzf tmux
+    fzf tmux claude-code
     # Utiliser : python3 -m venv, ou nix shell, ou un devShell par projet
     python3 black pylint mypy libpq uv
     gcc valgrind gdb clang clang-tools cmake ninja bear gnumake flex bison

@@ -14,4 +14,8 @@
     openFirewall  = true;
     extraUpFlags  = [ "--accept-dns=false" ];
   };
+
+  environment.systemPackages = with pkgs; [
+    networkmanagerapplet
+  ];
 }

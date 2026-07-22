@@ -65,4 +65,5 @@
     VISUAL = "nvim";
   };
 
+  services.hyprpolkitagent.enable = true;
 }

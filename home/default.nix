@@ -4,12 +4,11 @@
   imports = [
     ./hyprland.nix
     ./hyprlock.nix
-    ./waybar
+    ./quickshell.nix
     ./wofi.nix
     ./kitty.nix
     ./zsh.nix
     ./starship.nix
-    ./dunst.nix
     ./git.nix
     ./hypridle.nix
     ./media.nix

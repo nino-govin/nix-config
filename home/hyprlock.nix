@@ -5,58 +5,78 @@
     enable = true;
     settings = {
       general = {
-        disable_loading_bar = false;
+        disable_loading_bar = true;
         hide_cursor         = true;
         grace               = 0;
       };
 
       background = [{
-        path         = "~/Pictures/background.png";
-        blur_passes  = 3;
-        blur_size    = 8;
-        brightness   = 0.6;
+        path        = "~/Pictures/background.png";
+        blur_passes = 3;
+        blur_size   = 7;
+        brightness  = 0.55;
       }];
 
       input-field = [{
-        size              = "300, 50";
-        position          = "0, -100";
+        size              = "280, 48";
+        position          = "0, -60";
         halign            = "center";
         valign            = "center";
         outline_thickness = 2;
-        dots_size         = 0.33;
-        dots_spacing      = 0.15;
-        outer_color       = "rgb(88c0d0)";
-        inner_color       = "rgb(46, 52, 64)";
+        dots_size         = 0.28;
+        dots_spacing      = 0.18;
+        outer_color       = "rgba(129, 161, 193, 0.8)";
+        inner_color       = "rgba(46, 52, 64, 0.75)";
         font_color        = "rgb(216, 222, 233)";
+        font_family       = "Manrope";
         fade_on_empty     = true;
-        placeholder_text  = "<i>Mot de passe...</i>";
+        placeholder_text  = "<span foreground='##7d879e'><i>Mot de passe</i></span>";
+        fail_color        = "rgba(191, 97, 106, 0.8)";
+        fail_text         = "<span foreground='##d99aa1'><i>Mot de passe incorrect</i></span>";
+        fail_transition   = 200;
+        rounding          = 10;
         shadow_passes     = 2;
+        shadow_color      = "rgba(0, 0, 0, 0.45)";
       }];
 
       label = [
         {
-          text      = "cmd[update:1000] echo \"$(date +'%H:%M')\"";
-          color     = "rgba(216, 222, 233, 0.9)";
-          font_size = 72;
-          position  = "0, 80";
-          halign    = "center";
-          valign    = "center";
+          text        = "cmd[update:1000] date +'%H:%M'";
+          color       = "rgba(236, 239, 244, 0.95)";
+          font_size   = 64;
+          font_family = "Manrope";
+          position    = "0, 120";
+          halign      = "center";
+          valign      = "center";
+          shadow_passes = 2;
+          shadow_color  = "rgba(0, 0, 0, 0.4)";
         }
         {
-          text      = "cmd[update:60000] echo \"$(date +'%A %d %B %Y')\"";
-          color     = "rgba(136, 192, 208, 0.8)";
-          font_size = 20;
-          position  = "0, 0";
-          halign    = "center";
-          valign    = "center";
+          text        = "cmd[update:60000] date +'%A %d %B %Y'";
+          color       = "rgba(166, 172, 205, 0.85)";
+          font_size   = 13;
+          font_family = "Manrope";
+          position    = "0, 54";
+          halign      = "center";
+          valign      = "center";
         }
         {
-          text      = "Layout: $LAYOUT[FR,EN]";
-          color     = "rgba(136, 192, 208, 0.8)";
-          font_size = 16;
-          position  = "30, 30";
-          halign    = "left";
-          valign    = "bottom";
+          text        = "$LAYOUT[FR,EN]";
+          color       = "rgba(166, 172, 205, 0.7)";
+          font_size   = 11;
+          font_family = "Manrope";
+          position    = "24, 24";
+          halign      = "left";
+          valign      = "bottom";
+        }
+        {
+          text        = "cmd[update:30000] cat /sys/class/power_supply/BAT0/capacity 2>/dev/null | xargs printf '%s%%'";
+          color       = "rgba(163, 190, 140, 0.7)";
+          font_size   = 11;
+          font_family = "Manrope";
+          position    = "-24, 24";
+          halign      = "right";
+          valign      = "bottom";
         }
       ];
     };

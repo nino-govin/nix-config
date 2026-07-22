@@ -1,0 +1,9 @@
+module widgets
+Icon 1.0 Icon.qml
+WorkspaceTile 1.0 WorkspaceTile.qml
+AppTile 1.0 AppTile.qml
+GaugeStat 1.0 GaugeStat.qml
+ToggleTile 1.0 ToggleTile.qml
+SliderRow 1.0 SliderRow.qml
+NotificationCard 1.0 NotificationCard.qml
+PowerAction 1.0 PowerAction.qml

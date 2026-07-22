@@ -24,13 +24,19 @@
   };
 
   hardware.graphics = {
-    enable = true;
+    enable      = true;
     enable32Bit = true;
     extraPackages = with pkgs; [
       intel-media-driver
       vpl-gpu-rt
       libva-vdpau-driver
       libvdpau-va-gl
+      mesa
+      vulkan-loader
+      vulkan-validation-layers
+    ];
+    extraPackages32 = with pkgs; [
+      driversi686Linux.mesa
     ];
   };
 }

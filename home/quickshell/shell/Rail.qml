@@ -146,7 +146,7 @@ PanelWindow {
                         width: parent.width; height: 32
                         AppTile {
                             anchors.centerIn: parent
-                            iconPath: "/run/current-system/sw/share/icons/hicolor/1024x1024/apps/vscode.png"
+                            iconPath: "/home/nino-nixos/.local/share/icons/vscode-128.png"
                             appCmd:   "code"
                         }
                     }
@@ -165,6 +165,41 @@ PanelWindow {
                 id: bottomSection
                 anchors { bottom: parent.bottom; left: parent.left; right: parent.right }
                 spacing: 10
+
+                Rectangle {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    width: 26; height: 1
+                    color: Tokens.color.separator
+                }
+
+                Column {
+                    width: parent.width
+                    spacing: 3
+
+                    Text {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text:               "DSK"
+                        font.family:        Tokens.font.sans
+                        font.pixelSize:     Tokens.font.label
+                        font.letterSpacing: 0.5
+                        color:              Tokens.color.fg3
+                    }
+                    Text {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text:           rail.sysInfo?.diskUsed ?? "—"
+                        font.family:    Tokens.font.sans
+                        font.pixelSize: Tokens.font.chip
+                        font.weight:    Font.DemiBold
+                        color:          Tokens.color.fg2
+                    }
+                    Text {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text:           "/" + (rail.sysInfo?.diskTotal ?? "—")
+                        font.family:    Tokens.font.sans
+                        font.pixelSize: Tokens.font.sub
+                        color:          Tokens.color.fg4
+                    }
+                }
 
                 Rectangle {
                     anchors.horizontalCenter: parent.horizontalCenter

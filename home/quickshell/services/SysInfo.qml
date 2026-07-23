@@ -9,6 +9,8 @@ QtObject {
     readonly property string gpuTemp:    _gpuTemp
     readonly property string ramUsed:    _ramUsed
     readonly property string ramTotal:   _ramTotal
+    readonly property string diskUsed:   _diskUsed
+    readonly property string diskTotal:  _diskTotal
 
     property int    _cpuPct:   0
     property int    _gpuPct:   0
@@ -17,6 +19,8 @@ QtObject {
     property string _gpuTemp:  "—"
     property string _ramUsed:  "—"
     property string _ramTotal: "—"
+    property string _diskUsed:  "—"
+    property string _diskTotal: "—"
 
     property var _prevCpu: null
 
@@ -80,11 +84,24 @@ QtObject {
         }
     }
 
+    property Process _diskProc: Process {
+        command: ["bash", "-c", "df -h / | awk 'NR==2{printf \"%s|%s\",$3,$2}'"]
+        running: false
+        stdout: SplitParser {
+            onRead: data => {
+                const p = data.trim().split("|")
+                _diskUsed  = p[0] || "—"
+                _diskTotal = p[1] || "—"
+            }
+        }
+    }
+
     function _refresh() {
         _cpuProc.running     = true
         _cpuTempProc.running = true
         _gpuProc.running     = true
         _ramProc.running     = true
+        _diskProc.running    = true
     }
 
     property Timer _t: Timer {

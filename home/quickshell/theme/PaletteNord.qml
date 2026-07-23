@@ -21,12 +21,12 @@ QtObject {
     readonly property color netUp:   "#bf7d85"
 
     // #AARRGGBB — format hex garanti par Qt
-    readonly property color railBg:      "#E84C566A"
-    readonly property color railBorder:  "#303B4252"
-    readonly property color topbarBg:    "#E83B4252"
-    readonly property color topbarBorder:"#20D8DEE9"
+    readonly property color railBg:      "#993B4252"
+    readonly property color railBorder:  "#1AD8DEE9"
+    readonly property color topbarBg:    "#592E3440"
+    readonly property color topbarBorder:"#14D8DEE9"
     readonly property color cardBg:      "#EE434C5E"
-    readonly property color panelBg:     "#F0434C5E"
+    readonly property color panelBg:     "#D12E3440"
     readonly property color modalBg:     "#EE2E3440"
     readonly property color itemBg:      "#1AD8DEE9"
     readonly property color trackBg:     "#22D8DEE9"

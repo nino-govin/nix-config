@@ -17,7 +17,7 @@ Column {
         font.family:        Tokens.font.sans
         font.pixelSize:     Tokens.font.label
         font.letterSpacing: 0.5
-        color:              Tokens.color.fg5
+        color:              Tokens.color.fg3
     }
 
     Item {

@@ -9,6 +9,7 @@ PanelWindow {
     id: root
 
     property bool open: false
+    signal panelClosed
 
     WlrLayershell.namespace:     "quickshell-powermenu"
     WlrLayershell.layer:         WlrLayer.Overlay
@@ -18,11 +19,9 @@ PanelWindow {
     color: "transparent"
     visible: open
 
-    function close() { open = false }
+    Keys.onEscapePressed: root.panelClosed()
 
-    Keys.onEscapePressed: close()
-
-    MouseArea { anchors.fill: parent; onClicked: root.close() }
+    MouseArea { anchors.fill: parent; onClicked: root.panelClosed() }
 
     Rectangle {
         anchors.centerIn: parent
@@ -41,23 +40,23 @@ PanelWindow {
 
             PowerAction {
                 iconName: "lock";    label: "Verrouiller"
-                onTriggered: { root.close(); _run("hyprlock") }
+                onTriggered: { root.panelClosed(); _run("hyprlock") }
             }
             PowerAction {
                 iconName: "logout";  label: "Déconnexion"
-                onTriggered: { root.close(); _run("hyprctl dispatch exit") }
+                onTriggered: { root.panelClosed(); _run("hyprctl dispatch exit") }
             }
             PowerAction {
                 iconName: "restart"; label: "Redémarrer"
-                onTriggered: { root.close(); _run("systemctl reboot") }
+                onTriggered: { root.panelClosed(); _run("systemctl reboot") }
             }
             PowerAction {
                 iconName: "suspend"; label: "Suspendre"
-                onTriggered: { root.close(); _run("systemctl suspend") }
+                onTriggered: { root.panelClosed(); _run("systemctl suspend") }
             }
             PowerAction {
                 iconName: "power"; label: "Éteindre"; primary: true
-                onTriggered: { root.close(); _run("systemctl poweroff") }
+                onTriggered: { root.panelClosed(); _run("systemctl poweroff") }
             }
         }
     }

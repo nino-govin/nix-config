@@ -6,8 +6,11 @@ Row {
     property string iconName: "sun"
     property color  barColor: Tokens.color.yellow
     property real   value:    0.6
+    property real   minValue: 0.0
 
     signal moved(real value)
+
+    onValueChanged: if (value < minValue) value = minValue
 
     spacing: 12
     height:  20
@@ -24,6 +27,8 @@ Row {
         anchors.verticalCenter: parent.verticalCenter
         width:  parent.width - 18 - 12 - 28 - 12
         height: 8
+
+        HoverHandler { cursorShape: Qt.PointingHandCursor }
 
         Rectangle {
             anchors.fill: parent
@@ -46,18 +51,33 @@ Row {
             layer.enabled: true
         }
 
+        Timer {
+            id: _throttle
+            interval: 100
+            running:  false
+            repeat:   true
+            property real pendingValue: root.value
+            onTriggered: root.moved(pendingValue)
+        }
+
         DragHandler {
             target: null
+            cursorShape: Qt.PointingHandCursor
             onActiveChanged: {
-                if (active) return
-                const pct = Math.max(0, Math.min(1, centroid.position.x / track.width))
-                root.value = pct
-                root.moved(pct)
+                if (active) {
+                    _throttle.start()
+                } else {
+                    _throttle.stop()
+                    const pct = Math.max(root.minValue, Math.min(1, centroid.position.x / track.width))
+                    root.value = pct
+                    root.moved(pct)
+                }
             }
             onCentroidChanged: {
                 if (!active) return
-                const pct = Math.max(0, Math.min(1, centroid.position.x / track.width))
+                const pct = Math.max(root.minValue, Math.min(1, centroid.position.x / track.width))
                 root.value = pct
+                _throttle.pendingValue = pct
             }
         }
     }

@@ -40,7 +40,7 @@ QtObject {
 
     property PowerMenu pm: PowerMenu {
         open: root._pmOpen
-        onOpenChanged: if (!open) root._pmOpen = false
+        onPanelClosed: root._pmOpen = false
     }
 
     property NotificationCenter notifCenter: NotificationCenter {}

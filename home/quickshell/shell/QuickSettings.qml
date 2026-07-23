@@ -2,6 +2,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Io
+import QtQuick.Effects
 import "../theme"
 import "../widgets"
 
@@ -18,30 +19,36 @@ PanelWindow {
     WlrLayershell.layer:         WlrLayer.Overlay
     WlrLayershell.keyboardFocus: open ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
 
-    anchors { right: true; top: true }
-    implicitWidth:  Tokens.size.qsW + 16
-    implicitHeight: _panel.implicitHeight + 24
+    anchors { left: true; right: true; top: true; bottom: true }
+    exclusionMode: ExclusionMode.Ignore
     color: "transparent"
     visible: open
 
-    function close() { open = false; root.panelClosed() }
-
-    Keys.onEscapePressed: close()
+    Keys.onEscapePressed: root.panelClosed()
 
     MouseArea {
         anchors.fill: parent
-        onClicked: root.close()
+        onClicked: root.panelClosed()
     }
 
     Rectangle {
         id: _panel
         anchors { top: parent.top; right: parent.right; topMargin: 12; rightMargin: 12 }
-        width:  Tokens.size.qsW
+        width:         Tokens.size.qsW
         implicitHeight: _col.implicitHeight + 28
         radius: Tokens.radius.xl5
         color:  Tokens.color.panelBg
         border.color: Tokens.color.borderNorm
         border.width: 1
+
+        layer.enabled: true
+        layer.effect: MultiEffect {
+            shadowEnabled:           true
+            shadowColor:             "#CC000000"
+            shadowVerticalOffset:    4
+            shadowHorizontalOffset: -4
+            shadowBlur:              2.5
+        }
 
         MouseArea { anchors.fill: parent }
 
@@ -50,31 +57,24 @@ PanelWindow {
             anchors { top: parent.top; left: parent.left; right: parent.right; margins: 14 }
             spacing: 12
 
-            Row {
+            Item {
                 width: parent.width
                 height: 46
 
-                Column {
-                    anchors.verticalCenter: parent.verticalCenter
-                    spacing: 1
-
-                    Text {
-                        text:           "Bonjour"
-                        font.family:    Tokens.font.sans
-                        font.pixelSize: Tokens.font.lg
-                        font.weight:    Font.DemiBold
-                        color:          Tokens.color.fg0
-                    }
-                    Text {
-                        text:           _username
-                        font.family:    Tokens.font.sans
-                        font.pixelSize: Tokens.font.xs
-                        color:          Tokens.color.fg4
-                    }
+                Text {
+                    anchors { left: parent.left; verticalCenter: parent.verticalCenter }
+                    text:           "Bonjour, " + _username
+                    font.family:    Tokens.font.sans
+                    font.pixelSize: Tokens.font.lg
+                    font.weight:    Font.DemiBold
+                    color:          Tokens.color.fg0
+                    elide:          Text.ElideRight
+                    width:          parent.width - _powerIcon.implicitWidth - 16
                 }
-                Item { width: parent.width - parent.children[0].width - 24; height: 1 }
+
                 Icon {
-                    anchors.verticalCenter: parent.verticalCenter
+                    id: _powerIcon
+                    anchors { right: parent.right; verticalCenter: parent.verticalCenter }
                     icon:  "power"
                     size:  19
                     color: Tokens.color.fg2
@@ -82,7 +82,7 @@ PanelWindow {
                     MouseArea {
                         anchors.fill: parent
                         cursorShape:  Qt.PointingHandCursor
-                        onClicked: { root.close(); root.openPowerMenu() }
+                        onClicked: root.openPowerMenu()
                     }
                 }
             }
@@ -111,7 +111,7 @@ PanelWindow {
 
             SliderRow {
                 width: parent.width
-                iconName: "sun";   barColor: Tokens.color.yellow; value: 0.64
+                iconName: "sun";   barColor: Tokens.color.yellow; value: 0.64; minValue: 0.05
                 onMoved: v => _runCmd("brightnessctl set " + Math.round(v * 100) + "%")
             }
             SliderRow {

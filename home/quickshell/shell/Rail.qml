@@ -146,6 +146,14 @@ PanelWindow {
                         width: parent.width; height: 32
                         AppTile {
                             anchors.centerIn: parent
+                            iconPath: "/run/current-system/sw/share/icons/hicolor/1024x1024/apps/vscode.png"
+                            appCmd:   "code"
+                        }
+                    }
+                    Item {
+                        width: parent.width; height: 32
+                        AppTile {
+                            anchors.centerIn: parent
                             iconPath: "/run/current-system/sw/share/icons/hicolor/256x256/apps/kitty.png"
                             appCmd:   "kitty"
                         }

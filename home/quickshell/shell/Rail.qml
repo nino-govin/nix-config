@@ -2,6 +2,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Io
+import Quickshell.Hyprland
 import "../theme"
 import "../widgets"
 
@@ -17,59 +18,112 @@ PanelWindow {
 
     WlrLayershell.namespace:     "quickshell-rail"
     WlrLayershell.layer:         WlrLayer.Overlay
-    WlrLayershell.exclusiveZone: Tokens.size.railW
+    WlrLayershell.exclusiveZone: 0
     WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
 
     anchors { left: true; top: true; bottom: true }
+    exclusionMode: ExclusionMode.Ignore
     implicitWidth: Tokens.size.railW
     color: "transparent"
 
+    property var _wsItems: [{id: 1, ellipsis: false}]
+
+    function _rebuildWs() {
+        const vals = Hyprland.workspaces?.values
+        if (!vals) return
+        const arr = []
+        for (let i = 0; i < vals.length; i++) arr.push({id: vals[i].id})
+        arr.sort((a, b) => a.id - b.id)
+        if (arr.length === 0) { _wsItems = [{id: 1, ellipsis: false}]; return }
+        if (arr.length <= 5) { _wsItems = arr.map(w => ({id: w.id, ellipsis: false})); return }
+        if (arr.length <= 6) { _wsItems = arr.slice(0, 5).map(w => ({id: w.id, ellipsis: false})); return }
+        _wsItems = [
+            {id: arr[0].id,              ellipsis: false},
+            {id: arr[1].id,              ellipsis: false},
+            {id: -1,                     ellipsis: true},
+            {id: arr[arr.length-2].id,   ellipsis: false},
+            {id: arr[arr.length-1].id,   ellipsis: false},
+        ]
+    }
+
+    Connections {
+        target: Hyprland.workspaces
+        function onValuesChanged() { rail._rebuildWs() }
+    }
+
+    Component.onCompleted: _rebuildWs()
+
     Rectangle {
         anchors.fill: parent
-        color:        Tokens.color.railBg
-        border.color: Tokens.color.railBorder
-        border.width: 1
+        color: Tokens.color.railBg
+
+        Rectangle {
+            anchors { top: parent.top; bottom: parent.bottom; right: parent.right }
+            width: 1
+            color: Tokens.color.railBorder
+        }
 
         Item {
             id: _inner
             anchors {
                 top: parent.top; bottom: parent.bottom
                 left: parent.left; right: parent.right
-                topMargin: 6; bottomMargin: 14
+                topMargin: 14; bottomMargin: 14
             }
 
-            Column {
+            Item {
                 id: topSection
                 anchors { top: parent.top; left: parent.left; right: parent.right }
-                spacing: 14
 
-                Column {
+                Item {
+                    id: _wsContainer
                     width: parent.width
-                    spacing: Tokens.spacing.tileGap
+                    y: 0
+                    height: rail._wsItems.length * Tokens.size.tile +
+                            Math.max(0, rail._wsItems.length - 1) * Tokens.spacing.tileGap
+                    Behavior on height { NumberAnimation { duration: 200; easing.type: Easing.OutCubic } }
 
-                    Repeater {
-                        model: 5
-                        Item {
-                            width: parent.width
-                            height: Tokens.size.tile
-                            WorkspaceTile {
-                                anchors.centerIn: parent
-                                wsId:     modelData + 1
-                                active:   rail.hyprland?.activeWorkspace === (modelData + 1)
-                                hyprland: rail.hyprland
+                    Column {
+                        anchors { top: parent.top; left: parent.left; right: parent.right }
+                        spacing: Tokens.spacing.tileGap
+
+                        Repeater {
+                            model: rail._wsItems
+                            Item {
+                                width: parent.width
+                                height: Tokens.size.tile
+
+                                Text {
+                                    visible: modelData.ellipsis
+                                    anchors.centerIn: parent
+                                    text: "…"
+                                    font.family:    Tokens.font.sans
+                                    font.pixelSize: Tokens.font.xs
+                                    color: Tokens.color.fg4
+                                }
+                                WorkspaceTile {
+                                    visible: !modelData.ellipsis
+                                    anchors.centerIn: parent
+                                    wsId:   modelData.id
+                                    active: (Hyprland.focusedWorkspace?.id ?? -1) === modelData.id
+                                }
                             }
                         }
                     }
                 }
 
                 Rectangle {
+                    id: _topSep
                     anchors.horizontalCenter: parent.horizontalCenter
+                    y: _wsContainer.height + 14
                     width: 26; height: 1
                     color: Tokens.color.separator
                 }
 
                 Column {
-                    width: parent.width
+                    id: _appsSection
+                    anchors { left: parent.left; right: parent.right }
+                    y: _topSep.y + 1 + 14
                     spacing: 10
 
                     Item {
@@ -97,6 +151,12 @@ PanelWindow {
                         }
                     }
                 }
+            }
+
+            Column {
+                id: bottomSection
+                anchors { bottom: parent.bottom; left: parent.left; right: parent.right }
+                spacing: 10
 
                 Rectangle {
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -106,7 +166,7 @@ PanelWindow {
 
                 Column {
                     width: parent.width
-                    spacing: 26
+                    spacing: 18
 
                     GaugeStat {
                         width: parent.width
@@ -133,18 +193,18 @@ PanelWindow {
                         barColor: Tokens.color.yellow
                     }
                 }
-            }
 
-            Column {
-                id: bottomSection
-                anchors { bottom: parent.bottom; left: parent.left; right: parent.right }
-                spacing: 10
+                Rectangle {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    width: 26; height: 1
+                    color: Tokens.color.separator
+                }
 
                 Text {
                     anchors.horizontalCenter: parent.horizontalCenter
                     text:           rail.hyprland?.keyboardLayout ?? "FR"
                     font.family:    Tokens.font.sans
-                    font.pixelSize: Tokens.font.chip
+                    font.pixelSize: Tokens.font.sm
                     font.weight:    Font.DemiBold
                     color:          Tokens.color.fg3
                 }
@@ -180,7 +240,7 @@ PanelWindow {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text:           (rail.battery?.percent ?? 0) + "%"
                         font.family:    Tokens.font.sans
-                        font.pixelSize: Tokens.font.badge
+                        font.pixelSize: Tokens.font.xs
                         color:          Tokens.color.fg3
                     }
                 }

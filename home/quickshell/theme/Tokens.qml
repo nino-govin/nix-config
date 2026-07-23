@@ -29,15 +29,15 @@ QtObject {
 
     readonly property QtObject font: QtObject {
         readonly property string sans: "Manrope"
-        readonly property int label:   7
-        readonly property int sub:     7
-        readonly property int badge:   8
-        readonly property int chip:    9
-        readonly property int xs:     10
-        readonly property int sm:     11
-        readonly property int md:     12
-        readonly property int base:   13
-        readonly property int lg:     14
+        readonly property int label:   9
+        readonly property int sub:     9
+        readonly property int badge:   9
+        readonly property int chip:   10
+        readonly property int xs:     11
+        readonly property int sm:     12
+        readonly property int md:     13
+        readonly property int base:   14
+        readonly property int lg:     15
         readonly property int clock:  64
     }
 

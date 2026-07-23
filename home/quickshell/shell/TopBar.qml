@@ -12,7 +12,7 @@ PanelWindow {
 
     WlrLayershell.namespace:     "quickshell-topbar"
     WlrLayershell.layer:         WlrLayer.Top
-    WlrLayershell.exclusiveZone: Tokens.size.topbarH
+    WlrLayershell.exclusiveZone: 0
     WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
 
     anchors { left: true; right: true; top: true }
@@ -72,38 +72,47 @@ PanelWindow {
             }
         }
 
-        Row {
+        Item {
             anchors { right: parent.right; rightMargin: 14; verticalCenter: parent.verticalCenter }
-            spacing: 10
+            height: parent.height
 
-            Text {
-                anchors.verticalCenter: parent.verticalCenter
-                text:           topbar.network?.ip ?? "—"
-                font.family:    Tokens.font.sans
-                font.pixelSize: Tokens.font.xs
-                color:          Tokens.color.fg4
-            }
-            Rectangle {
-                width: 1; height: 12
-                anchors.verticalCenter: parent.verticalCenter
-                color: Tokens.color.borderNorm
-            }
             Row {
-                anchors.verticalCenter: parent.verticalCenter
+                id: _speedRow
+                anchors { right: parent.right; verticalCenter: parent.verticalCenter }
                 spacing: 4
 
                 Text {
+                    anchors.verticalCenter: parent.verticalCenter
                     text:           "↓" + (topbar.network?.downStr ?? "—")
                     font.family:    Tokens.font.sans
                     font.pixelSize: Tokens.font.xs
                     color:          Tokens.color.green
                 }
                 Text {
+                    anchors.verticalCenter: parent.verticalCenter
                     text:           "↑" + (topbar.network?.upStr ?? "—")
                     font.family:    Tokens.font.sans
                     font.pixelSize: Tokens.font.xs
                     color:          Tokens.color.netUp
                 }
+            }
+
+            Rectangle {
+                id: _netSep
+                width: 1; height: 12
+                x: _speedRow.x - 10 - width
+                Behavior on x { NumberAnimation { duration: 150; easing.type: Easing.OutCubic } }
+                anchors.verticalCenter: parent.verticalCenter
+                color: Tokens.color.borderNorm
+            }
+
+            Text {
+                x: _netSep.x - 10 - implicitWidth
+                anchors.verticalCenter: parent.verticalCenter
+                text:           topbar.network?.ip ?? "—"
+                font.family:    Tokens.font.sans
+                font.pixelSize: Tokens.font.xs
+                color:          Tokens.color.fg4
             }
         }
     }

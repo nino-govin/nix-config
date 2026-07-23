@@ -1,12 +1,11 @@
 import QtQuick
-import Quickshell.Io
+import Quickshell.Hyprland
 import "../theme"
 
 Rectangle {
     id: root
-    property int wsId:   1
+    property int  wsId:   1
     property bool active: false
-    property var  hyprland: null
 
     implicitWidth:  Tokens.size.tile
     implicitHeight: Tokens.size.tile
@@ -19,8 +18,8 @@ Rectangle {
         font.family:    Tokens.font.sans
         font.pixelSize: 10
         font.weight:    active || _ma.containsMouse ? Font.Bold : Font.Normal
-        color: active              ? Tokens.color.bg0
-             : _ma.containsMouse  ? Tokens.color.fg0
+        color: active             ? Tokens.color.bg0
+             : _ma.containsMouse ? Tokens.color.fg0
              : Tokens.color.fg3
     }
 
@@ -29,12 +28,6 @@ Rectangle {
         anchors.fill: parent
         hoverEnabled: true
         cursorShape:  Qt.PointingHandCursor
-        onClicked:    _proc.running = true
-    }
-
-    Process {
-        id: _proc
-        command: ["hyprctl", "dispatch", "workspace", root.wsId.toString()]
-        running: false
+        onClicked:    Hyprland.dispatch('hl.dsp.focus({ workspace = ' + root.wsId + ' })')
     }
 }

@@ -30,7 +30,7 @@ hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
 hl.config({
   general = {
     gaps_in      = 5,
-    gaps_out     = 8,
+    gaps_out     = { top = 34, right = 8, bottom = 8, left = 58 },
     border_size  = 2,
     ["col.active_border"]   = { colors = { "rgba(88c0d0ff)", "rgba(5e81acff)" }, angle = 45 },
     ["col.inactive_border"] = "rgba(3b4252ff)",

@@ -272,19 +272,38 @@ PanelWindow {
                                 width: (parent.width - 2) *
                                        Math.max(0, Math.min(1, (rail.battery?.percent ?? 0) / 100))
                                 radius: 2
-                                color: (rail.battery?.percent ?? 100) < 20
-                                       ? Tokens.color.red : Tokens.color.green
+                                color: (rail.battery?.charging ?? false) ? Tokens.color.cyan :
+                                       (rail.battery?.percent ?? 100) < 20 ? Tokens.color.red :
+                                       (rail.battery?.percent ?? 100) < 50 ? Tokens.color.orange :
+                                       (rail.battery?.percent ?? 100) < 80 ? Tokens.color.yellow :
+                                       Tokens.color.green
                                 Behavior on width { NumberAnimation { duration: 500 } }
                             }
                         }
                     }
 
-                    Text {
+                    Row {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        text:           (rail.battery?.percent ?? 0) + "%"
-                        font.family:    Tokens.font.sans
-                        font.pixelSize: Tokens.font.xs
-                        color:          Tokens.color.fg3
+                        spacing: 2
+
+                        Icon {
+                            visible: rail.battery?.charging ?? false
+                            icon:    "zap"
+                            size:    Tokens.font.xs
+                            color:   Tokens.color.cyan
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
+
+                        Text {
+                            text:           (rail.battery?.percent ?? 0) + "%"
+                            font.family:    Tokens.font.sans
+                            font.pixelSize: Tokens.font.xs
+                            color: (rail.battery?.charging ?? false) ? Tokens.color.cyan :
+                                   (rail.battery?.percent ?? 100) < 20 ? Tokens.color.red :
+                                   (rail.battery?.percent ?? 100) < 50 ? Tokens.color.orange :
+                                   (rail.battery?.percent ?? 100) < 80 ? Tokens.color.yellow :
+                                   Tokens.color.fg3
+                        }
                     }
                 }
 

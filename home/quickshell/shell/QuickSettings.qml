@@ -17,27 +17,36 @@ PanelWindow {
 
     WlrLayershell.namespace:     "quickshell-qs"
     WlrLayershell.layer:         WlrLayer.Overlay
-    WlrLayershell.keyboardFocus: open ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
+    WlrLayershell.keyboardFocus: open ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
 
     anchors { left: true; right: true; top: true; bottom: true }
     exclusionMode: ExclusionMode.Ignore
     color: "transparent"
     visible: open
 
-    Keys.onEscapePressed: root.panelClosed()
-
-    MouseArea {
+    Item {
         anchors.fill: parent
-        onClicked: root.panelClosed()
+        focus: true
+        Keys.onEscapePressed: root.panelClosed()
+
+        Rectangle {
+            anchors.fill: parent
+            color: "#3a000000"
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: root.panelClosed()
+        }
     }
 
     Rectangle {
         id: _panel
-        anchors { top: parent.top; right: parent.right; topMargin: 12; rightMargin: 12 }
+        anchors { top: parent.top; right: parent.right; topMargin: 38; rightMargin: 12 }
         width:         Tokens.size.qsW
         implicitHeight: _col.implicitHeight + 28
         radius: Tokens.radius.xl5
-        color:  Tokens.color.panelBg
+        color:  Tokens.color.modalBg
         border.color: Tokens.color.borderNorm
         border.width: 1
 
@@ -143,12 +152,29 @@ PanelWindow {
 
             Rectangle { width: parent.width; height: 1; color: Tokens.color.separator }
 
-            Text {
-                text:           "Batterie " + (root.battery?.percent ?? "—") + "%"
-                font.family:    Tokens.font.sans
-                font.pixelSize: Tokens.font.xs
-                color:          Tokens.color.fg4
-                bottomPadding:  2
+            Row {
+                spacing: 4
+                bottomPadding: 2
+
+                Icon {
+                    visible: root.battery?.charging ?? false
+                    icon:    "zap"
+                    size:    Tokens.font.xs
+                    color:   Tokens.color.cyan
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+
+                Text {
+                    text:           "Batterie " + (root.battery?.percent ?? "—") + "%" + ((root.battery?.charging ?? false) ? " — charge" : "")
+                    font.family:    Tokens.font.sans
+                    font.pixelSize: Tokens.font.xs
+                    color: (root.battery?.charging ?? false) ? Tokens.color.cyan :
+                           (root.battery?.percent ?? 100) < 20 ? Tokens.color.red :
+                           (root.battery?.percent ?? 100) < 50 ? Tokens.color.orange :
+                           (root.battery?.percent ?? 100) < 80 ? Tokens.color.yellow :
+                           Tokens.color.fg4
+                    anchors.verticalCenter: parent.verticalCenter
+                }
             }
         }
     }

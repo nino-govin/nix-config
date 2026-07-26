@@ -19,44 +19,53 @@ PanelWindow {
     color: "transparent"
     visible: open
 
-    Keys.onEscapePressed: root.panelClosed()
+    Item {
+        anchors.fill: parent
+        focus: true
+        Keys.onEscapePressed: root.panelClosed()
 
-    MouseArea { anchors.fill: parent; onClicked: root.panelClosed() }
+        Rectangle {
+            anchors.fill: parent
+            color: "#3a000000"
+        }
 
-    Rectangle {
-        anchors.centerIn: parent
-        width:  560
-        height: 158
-        radius: Tokens.radius.xl6
-        color:  Tokens.color.modalBg
-        border.color: Tokens.color.borderNorm
-        border.width: 1
+        MouseArea { anchors.fill: parent; onClicked: root.panelClosed() }
 
-        MouseArea { anchors.fill: parent }
-
-        Row {
+        Rectangle {
             anchors.centerIn: parent
-            spacing: 10
+            width:  560
+            height: 158
+            radius: Tokens.radius.xl6
+            color:  Tokens.color.modalBg
+            border.color: Tokens.color.borderNorm
+            border.width: 1
 
-            PowerAction {
-                iconName: "lock";    label: "Verrouiller"
-                onTriggered: { root.panelClosed(); _run("hyprlock") }
-            }
-            PowerAction {
-                iconName: "logout";  label: "Déconnexion"
-                onTriggered: { root.panelClosed(); _run("hyprctl dispatch exit") }
-            }
-            PowerAction {
-                iconName: "restart"; label: "Redémarrer"
-                onTriggered: { root.panelClosed(); _run("systemctl reboot") }
-            }
-            PowerAction {
-                iconName: "suspend"; label: "Suspendre"
-                onTriggered: { root.panelClosed(); _run("systemctl suspend") }
-            }
-            PowerAction {
-                iconName: "power"; label: "Éteindre"; primary: true
-                onTriggered: { root.panelClosed(); _run("systemctl poweroff") }
+            MouseArea { anchors.fill: parent }
+
+            Row {
+                anchors.centerIn: parent
+                spacing: 10
+
+                PowerAction {
+                    iconName: "lock";    label: "Verrouiller"
+                    onTriggered: { root.panelClosed(); _run("hyprlock") }
+                }
+                PowerAction {
+                    iconName: "logout";  label: "Déconnexion"
+                    onTriggered: { root.panelClosed(); _run("hyprctl dispatch exit") }
+                }
+                PowerAction {
+                    iconName: "restart"; label: "Redémarrer"
+                    onTriggered: { root.panelClosed(); _run("systemctl reboot") }
+                }
+                PowerAction {
+                    iconName: "suspend"; label: "Suspendre"
+                    onTriggered: { root.panelClosed(); _run("systemctl suspend") }
+                }
+                PowerAction {
+                    iconName: "power"; label: "Éteindre"; primary: true
+                    onTriggered: { root.panelClosed(); _run("systemctl poweroff") }
+                }
             }
         }
     }

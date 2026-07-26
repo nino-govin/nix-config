@@ -130,7 +130,7 @@ hl.bind("Print",               hl.dsp.exec_cmd('grim - | tee ~/Pictures/$(date +
 
 hl.bind(mod .. " + space",     hl.dsp.exec_cmd("hyprctl switchxkblayout all next"))
 hl.bind(mod .. " + SHIFT + L", hl.dsp.exec_cmd("hyprlock"))
-hl.bind(mod .. " + SHIFT + E", hl.dsp.exec_cmd("quickshell ipc call showPowerMenu show"))
+hl.bind(mod .. " + SHIFT + E", hl.dsp.exec_cmd("quickshell ipc --newest call showPowerMenu onSignalTriggered"))
 
 hl.bind(mod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
 hl.bind(mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })

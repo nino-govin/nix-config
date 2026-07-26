@@ -47,6 +47,6 @@ QtObject {
 
     property IpcHandler _ipc: IpcHandler {
         target: "showPowerMenu"
-        function onSignalTriggered(signal, value) { root._pmOpen = true }
+        function onSignalTriggered() { root._pmOpen = true }
     }
 }

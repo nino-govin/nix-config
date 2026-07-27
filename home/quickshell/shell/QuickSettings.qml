@@ -12,6 +12,8 @@ PanelWindow {
     property bool open:    false
     property var  battery: null
     property var  network: null
+    property var  audio:   null
+    property var  brightness: null
     signal panelClosed
     signal openPowerMenu
 
@@ -120,13 +122,18 @@ PanelWindow {
 
             SliderRow {
                 width: parent.width
-                iconName: "sun";   barColor: Tokens.color.yellow; value: 0.64; minValue: 0.05
-                onMoved: v => _runCmd("brightnessctl set " + Math.round(v * 100) + "%")
+                iconName: "sun"
+                barColor: Tokens.color.yellow
+                value:    root.brightness?.value ?? 0
+                minValue: 0.05
+                onMoved: v => root.brightness?.setValue(v)
             }
             SliderRow {
                 width: parent.width
-                iconName: "music"; barColor: Tokens.color.blue; value: 0.78
-                onMoved: v => _runCmd("pactl set-sink-volume @DEFAULT_SINK@ " + Math.round(v * 100) + "%")
+                iconName: (root.audio?.muted ?? false) ? "speaker" : "music"
+                barColor: (root.audio?.muted ?? false) ? Tokens.color.fg4 : Tokens.color.blue
+                value:    root.audio?.volume ?? 0
+                onMoved: v => root.audio?.setVolume(v)
             }
 
             Rectangle { width: parent.width; height: 1; color: Tokens.color.separator }

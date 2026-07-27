@@ -4,3 +4,6 @@ Battery 1.0 Battery.qml
 SysInfo 1.0 SysInfo.qml
 Network 1.0 Network.qml
 HyprlandService 1.0 HyprlandService.qml
+IdleInhibitor 1.0 IdleInhibitor.qml
+Audio 1.0 Audio.qml
+Brightness 1.0 Brightness.qml

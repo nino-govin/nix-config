@@ -204,7 +204,7 @@ PanelWindow {
 
                         Text {
                             anchors.horizontalCenter: parent.horizontalCenter
-                            text:               "DSK"
+                            text:               "DISK"
                             font.family:        Tokens.font.sans
                             font.pixelSize:     Tokens.font.label
                             font.letterSpacing: 0.5
@@ -278,8 +278,7 @@ PanelWindow {
                         percent:  rail.sysInfo?.ramPercent ?? 0
                         barColor: Tokens.color.yellow
                         tooltipText: "Utilisée: " + (rail.sysInfo?.ramUsed ?? "—") + " / " + (rail.sysInfo?.ramTotal ?? "—") + " (" + (rail.sysInfo?.ramPercent ?? 0) + "%)\n" +
-                                     "Libre: " + (rail.sysInfo?.ramFree ?? "—") + " • Cache: " + (rail.sysInfo?.ramCached ?? "—") + "\n" +
-                                     "Swap: " + (rail.sysInfo?.swapUsed ?? "—") + " / " + (rail.sysInfo?.swapTotal ?? "—")
+                                     "Libre: " + (rail.sysInfo?.ramFree ?? "—") + " • Cache: " + (rail.sysInfo?.ramCached ?? "—")
                     }
                 }
 
@@ -320,8 +319,7 @@ PanelWindow {
                     }
 
                     Tooltip {
-                        text: "Layout: " + (rail.hyprland?.keyboardLayoutFull ?? "French") + "\n" +
-                              "Clic pour changer"
+                        text: "Layout: " + (rail.hyprland?.keyboardLayoutFull ?? "French")
                         side: "right"
                     }
                 }
@@ -388,13 +386,12 @@ PanelWindow {
                     }
 
                     Tooltip {
-                        text: (rail.battery?.model ?? "—") + "\n" +
-                              (rail.battery?.percent ?? 0) + "% • " + (rail.battery?.status ?? "—") +
+                        text: (rail.battery?.percent ?? 0) + "% • " + (rail.battery?.status ?? "—") +
                               ((rail.battery?.timeStr ?? "—") !== "—"
                                   ? "\n" + ((rail.battery?.charging ?? false) ? "Plein dans " : "Reste ") + rail.battery.timeStr
                                   : "") + "\n" +
                               "Puissance: " + (rail.battery?.powerStr ?? "—") + "\n" +
-                              "Cycles: " + (rail.battery?.cycles ?? 0) + " • Santé: " + (rail.battery?.healthPct ?? 0) + "%"
+                              "Santé: " + (rail.battery?.healthPct ?? 0) + "%"
                         side: "right"
                     }
                 }
@@ -430,7 +427,7 @@ PanelWindow {
 
                     Tooltip {
                         text: (rail.idle?.inhibited ?? false)
-                            ? "Veille désactivée (clic pour réactiver)"
+                            ? "Veille désactivée"
                             : "Empêcher la mise en veille"
                         side: "right"
                     }
@@ -464,7 +461,7 @@ PanelWindow {
                     }
 
                     Tooltip {
-                        text: "Quick settings"
+                        text: "Menu rapide"
                         side: "right"
                     }
                 }

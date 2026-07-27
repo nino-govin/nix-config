@@ -44,6 +44,12 @@ Rectangle {
         }
     }
 
-    HoverHandler { onHoveredChanged: root._hover = hovered }
-    TapHandler   { onTapped: root.triggered() }
+    MouseArea {
+        anchors.fill: parent
+        cursorShape: Qt.PointingHandCursor
+        hoverEnabled: true
+        onEntered: root._hover = true
+        onExited:  root._hover = false
+        onClicked: root.triggered()
+    }
 }

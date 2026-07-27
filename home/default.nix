@@ -56,7 +56,11 @@
       name    = "Papirus-Dark";
       package = pkgs.papirus-icon-theme;
     };
-    gtk4.theme = config.gtk.theme;
+    gtk3.extraConfig = { "gtk-enable-primary-paste" = false; };
+    gtk4 = {
+      theme = config.gtk.theme;
+      extraConfig = { "gtk-enable-primary-paste" = false; };
+    };
   };
 
   home.sessionVariables = {

@@ -16,6 +16,17 @@ PanelWindow {
     property bool qsVisible: false
     signal qsToggled(bool visible)
 
+    property bool _fullscreen: false
+    visible: !_fullscreen
+
+    Connections {
+        target: Hyprland
+        function onRawEvent(event) {
+            if (event.name === "fullscreen")
+                rail._fullscreen = event.data.trim() === "1"
+        }
+    }
+
     WlrLayershell.namespace:     "quickshell-rail"
     WlrLayershell.layer:         WlrLayer.Overlay
     WlrLayershell.exclusiveZone: 0

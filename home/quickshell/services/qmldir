@@ -7,3 +7,6 @@ HyprlandService 1.0 HyprlandService.qml
 IdleInhibitor 1.0 IdleInhibitor.qml
 Audio 1.0 Audio.qml
 Brightness 1.0 Brightness.qml
+Bluetooth 1.0 Bluetooth.qml
+Media 1.0 Media.qml
+Wifi 1.0 Wifi.qml

@@ -7,19 +7,48 @@ Row {
     property color  barColor: Tokens.color.yellow
     property real   value:    0.6
     property real   minValue: 0.0
+    property bool   iconClickable: false
+    property bool   muted: false
 
     signal moved(real value)
+    signal iconClicked
 
     onValueChanged: if (value < minValue) value = minValue
 
     spacing: 12
     height:  20
 
-    Icon {
+    Item {
         anchors.verticalCenter: parent.verticalCenter
-        icon:  root.iconName
-        size:  Tokens.size.iconXl
-        color: root.barColor
+        width:  Tokens.size.iconXl
+        height: Tokens.size.iconXl
+
+        Icon {
+            id: _ico
+            anchors.centerIn: parent
+            icon:  root.iconName
+            size:  Tokens.size.iconXl
+            color: root.muted ? Tokens.color.fg4 : root.barColor
+            opacity: root.muted ? 0.7 : 1.0
+        }
+
+        Rectangle {
+            visible: root.muted
+            width:  Tokens.size.iconXl * 1.15
+            height: 1.5
+            radius: 1
+            color:  Tokens.color.fg4
+            anchors.centerIn: parent
+            rotation: -45
+        }
+
+        MouseArea {
+            visible: root.iconClickable
+            enabled: root.iconClickable
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+            onClicked: root.iconClicked()
+        }
     }
 
     Item {

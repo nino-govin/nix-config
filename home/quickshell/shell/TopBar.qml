@@ -10,6 +10,7 @@ PanelWindow {
     property var clock:    null
     property var network:  null
     property var hyprland: null
+    property var audio:    null
 
     WlrLayershell.namespace:     "quickshell-topbar"
     WlrLayershell.layer:         WlrLayer.Top
@@ -101,9 +102,78 @@ PanelWindow {
             anchors { right: parent.right; rightMargin: 14; verticalCenter: parent.verticalCenter }
             height: parent.height
 
+            Item {
+                id: _volRow
+                anchors { right: parent.right; verticalCenter: parent.verticalCenter }
+                width:  _volIcon.width + 4 + _volTxt.width
+                height: parent.height
+
+                Item {
+                    id: _volIcon
+                    width: 12; height: 12
+                    anchors { left: parent.left; verticalCenter: parent.verticalCenter }
+
+                    Icon {
+                        anchors.centerIn: parent
+                        icon:  (topbar.audio?.muted ?? false) ? "speaker" : "music"
+                        size:  12
+                        color: (topbar.audio?.muted ?? false) ? Tokens.color.fg5 : Tokens.color.fg3
+                    }
+                    Rectangle {
+                        visible: topbar.audio?.muted ?? false
+                        width: 14; height: 1.5
+                        radius: 1
+                        color: Tokens.color.red
+                        anchors.centerIn: parent
+                        rotation: -45
+                    }
+                }
+
+                Text {
+                    id: _volTxt
+                    anchors { left: _volIcon.right; leftMargin: 4; verticalCenter: parent.verticalCenter }
+                    width:          28
+                    horizontalAlignment: Text.AlignRight
+                    text:           (topbar.audio?.muted ?? false) ? "OFF" : ((topbar.audio?.volumePercent ?? 0) + "%")
+                    font.family:    Tokens.font.sans
+                    font.pixelSize: Tokens.font.xs
+                    color:          (topbar.audio?.muted ?? false) ? Tokens.color.fg5 : Tokens.color.fg3
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: topbar.audio?.toggleMute()
+                    onWheel: (w) => {
+                        if (!topbar.audio) return
+                        const step = 0.05
+                        const nv = topbar.audio.volume + (w.angleDelta.y > 0 ? step : -step)
+                        topbar.audio.setVolume(Math.max(0, Math.min(1, nv)))
+                    }
+                }
+
+                Tooltip {
+                    text: (topbar.audio?.sinkName ?? "Audio") + "\n" +
+                          "Volume: " + (topbar.audio?.volumePercent ?? 0) + "%" +
+                          ((topbar.audio?.muted ?? false) ? " (muté)" : "") + "\n" +
+                          "Clic = mute • Molette = ajuster"
+                    side: "bottom"
+                }
+            }
+
+            Rectangle {
+                id: _volSep
+                width: 1; height: 12
+                x: _volRow.x - 10 - width
+                anchors.verticalCenter: parent.verticalCenter
+                color: Tokens.color.borderNorm
+            }
+
             Row {
                 id: _speedRow
-                anchors { right: parent.right; verticalCenter: parent.verticalCenter }
+                x: _volSep.x - 10 - width
+                anchors.verticalCenter: parent.verticalCenter
                 spacing: 4
 
                 Text {

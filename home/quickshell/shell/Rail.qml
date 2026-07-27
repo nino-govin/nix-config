@@ -289,17 +289,39 @@ PanelWindow {
                     color: Tokens.color.separator
                 }
 
-                Text {
-                    id: _kbdLbl
+                Item {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    text:           rail.hyprland?.keyboardLayout ?? "FR"
-                    font.family:    Tokens.font.sans
-                    font.pixelSize: Tokens.font.sm
-                    font.weight:    Font.DemiBold
-                    color:          Tokens.color.fg3
+                    implicitWidth:  _kbdLbl.implicitWidth + 10
+                    implicitHeight: _kbdLbl.implicitHeight + 4
+
+                    Rectangle {
+                        anchors.fill: parent
+                        radius: Tokens.radius.sm
+                        color:  _kbdMa.containsMouse ? Tokens.color.itemBg : "transparent"
+                        Behavior on color { ColorAnimation { duration: 120 } }
+                    }
+
+                    Text {
+                        id: _kbdLbl
+                        anchors.centerIn: parent
+                        text:           rail.hyprland?.keyboardLayout ?? "FR"
+                        font.family:    Tokens.font.sans
+                        font.pixelSize: Tokens.font.sm
+                        font.weight:    Font.DemiBold
+                        color:          _kbdMa.containsMouse ? Tokens.color.fg0 : Tokens.color.fg3
+                    }
+
+                    MouseArea {
+                        id: _kbdMa
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape:  Qt.PointingHandCursor
+                        onClicked:    rail.hyprland?.cycleKeyboardLayout()
+                    }
 
                     Tooltip {
-                        text: "Layout clavier: " + (rail.hyprland?.keyboardLayoutFull ?? "French")
+                        text: "Layout: " + (rail.hyprland?.keyboardLayoutFull ?? "French") + "\n" +
+                              "Clic pour changer"
                         side: "right"
                     }
                 }

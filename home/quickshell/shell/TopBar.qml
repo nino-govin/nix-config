@@ -156,8 +156,7 @@ PanelWindow {
                 Tooltip {
                     text: (topbar.audio?.sinkName ?? "Audio") + "\n" +
                           "Volume: " + (topbar.audio?.volumePercent ?? 0) + "%" +
-                          ((topbar.audio?.muted ?? false) ? " (muté)" : "") + "\n" +
-                          "Clic = mute • Molette = ajuster"
+                          ((topbar.audio?.muted ?? false) ? " (mute)" : "")
                     side: "bottom"
                 }
             }
@@ -226,8 +225,7 @@ PanelWindow {
                     text: "Interface: " + (topbar.network?.iface ?? "—") +
                           ((topbar.network?.ssid ?? "—") !== "—" ? " • SSID: " + topbar.network.ssid : "") + "\n" +
                           "IP: " + (topbar.network?.ip ?? "—") + "\n" +
-                          "Gateway: " + (topbar.network?.gateway ?? "—") + "\n" +
-                          "DNS: " + (topbar.network?.dns ?? "—")
+                          "Gateway: " + (topbar.network?.gateway ?? "—")
                     side: "bottom"
                 }
             }

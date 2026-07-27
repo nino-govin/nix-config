@@ -40,7 +40,9 @@ PanelWindow {
             border.color: Tokens.color.borderNorm
             border.width: 1
 
-            MouseArea { anchors.fill: parent }
+            MouseArea { 
+                anchors.fill: parent
+            }
 
             Row {
                 anchors.centerIn: parent

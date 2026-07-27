@@ -14,8 +14,13 @@ PanelWindow {
     property var  network: null
     property var  audio:   null
     property var  brightness: null
+    property var  bluetooth: null
+    property var  media:     null
+    property var  wifi:      null
     signal panelClosed
     signal openPowerMenu
+    signal openWifiPopup
+    signal openBtPopup
 
     WlrLayershell.namespace:     "quickshell-qs"
     WlrLayershell.layer:         WlrLayer.Overlay
@@ -108,15 +113,29 @@ PanelWindow {
                     width: (parent.width - 10) / 2
                     iconName: "wifi"
                     label:    "Wi-Fi"
-                    sublabel: root.network?.ssid ?? "—"
-                    active:   true
+                    sublabel: !(root.wifi?.available ?? false) ? "Indisponible"
+                            : (root.wifi?.enabled ?? false)
+                                ? ((root.wifi?.activeSsid ?? "") !== "" ? root.wifi.activeSsid : "Activé")
+                                : "Désactivé"
+                    active:     root.wifi?.enabled ?? false
+                    expandable: root.wifi?.available ?? false
+                    onToggled: if (root.wifi?.available) root.wifi.toggle()
+                    onExpand:  root.openWifiPopup()
                 }
                 ToggleTile {
                     width: (parent.width - 10) / 2
                     iconName: "bluetooth"
                     label:    "Bluetooth"
-                    sublabel: "Désactivé"
-                    active:   false
+                    sublabel: !(root.bluetooth?.available ?? false) ? "Indisponible"
+                            : (root.bluetooth?.powered ?? false)
+                                ? ((root.bluetooth?.connectedCount ?? 0) > 0
+                                    ? (root.bluetooth.connectedCount + " connecté" + (root.bluetooth.connectedCount > 1 ? "s" : ""))
+                                    : "Activé")
+                                : "Désactivé"
+                    active:     root.bluetooth?.powered ?? false
+                    expandable: root.bluetooth?.available ?? false
+                    onToggled: if (root.bluetooth?.available) root.bluetooth.togglePower()
+                    onExpand:  root.openBtPopup()
                 }
             }
 
@@ -130,10 +149,26 @@ PanelWindow {
             }
             SliderRow {
                 width: parent.width
-                iconName: (root.audio?.muted ?? false) ? "speaker" : "music"
-                barColor: (root.audio?.muted ?? false) ? Tokens.color.fg4 : Tokens.color.blue
+                iconName: "music"
+                barColor: Tokens.color.blue
                 value:    root.audio?.volume ?? 0
+                muted:    root.audio?.muted ?? false
+                iconClickable: true
                 onMoved: v => root.audio?.setVolume(v)
+                onIconClicked: root.audio?.toggleMute()
+            }
+
+            Rectangle {
+                visible: root.media?.available ?? false
+                width: parent.width
+                height: 1
+                color: Tokens.color.separator
+            }
+
+            MediaPlayer {
+                visible: root.media?.available ?? false
+                width: parent.width
+                media: root.media
             }
 
             Rectangle { width: parent.width; height: 1; color: Tokens.color.separator }

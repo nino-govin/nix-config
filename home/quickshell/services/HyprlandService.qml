@@ -36,4 +36,17 @@ QtObject {
         _wsDsp.command = ["hyprctl", "dispatch", "workspace", id.toString()]
         _wsDsp.running = true
     }
+
+    property Process _kbdProc: Process { running: false }
+
+    function cycleKeyboardLayout() {
+        _kbdProc.command = ["bash", "-c",
+            "kb=$(hyprctl -j devices 2>/dev/null | " +
+            "jq -r '.keyboards[] | select(.main == true) | .name' | head -1); " +
+            "[ -z \"$kb\" ] && kb=$(hyprctl -j devices 2>/dev/null | " +
+            "jq -r '.keyboards[0].name'); " +
+            "[ -n \"$kb\" ] && hyprctl switchxkblayout \"$kb\" next"
+        ]
+        _kbdProc.running = true
+    }
 }

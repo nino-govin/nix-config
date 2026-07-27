@@ -8,6 +8,7 @@
     ./modules/locale.nix
     ./modules/display.nix
     ./modules/audio.nix
+    ./modules/bluetooth.nix
     ./modules/users.nix
     ./modules/security.nix
     ./modules/virtualisation.nix

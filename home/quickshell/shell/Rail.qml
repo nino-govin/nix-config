@@ -12,6 +12,7 @@ PanelWindow {
     property var hyprland: null
     property var battery:  null
     property var sysInfo:  null
+    property var idle:     null
 
     property bool qsVisible: false
     signal qsToggled(bool visible)
@@ -105,12 +106,17 @@ PanelWindow {
                                 height: Tokens.size.tile
 
                                 Text {
+                                    id: _ellipsis
                                     visible: modelData.ellipsis
                                     anchors.centerIn: parent
                                     text: "…"
                                     font.family:    Tokens.font.sans
                                     font.pixelSize: Tokens.font.xs
                                     color: Tokens.color.fg4
+                                    Tooltip {
+                                        text: (Hyprland.workspaces?.values?.length ?? 0) + " workspaces"
+                                        side: "right"
+                                    }
                                 }
                                 WorkspaceTile {
                                     visible: !modelData.ellipsis
@@ -143,6 +149,7 @@ PanelWindow {
                             anchors.centerIn: parent
                             iconPath: "/etc/profiles/per-user/nino-nixos/share/icons/hicolor/128x128/apps/firefox.png"
                             appCmd:   "firefox"
+                            tooltipText: "Firefox"
                         }
                     }
                     Item {
@@ -151,6 +158,7 @@ PanelWindow {
                             anchors.centerIn: parent
                             iconPath: "/run/current-system/sw/share/icons/hicolor/256x256/apps/discord.png"
                             appCmd:   "discord"
+                            tooltipText: "Discord"
                         }
                     }
                     Item {
@@ -159,6 +167,7 @@ PanelWindow {
                             anchors.centerIn: parent
                             iconPath: "/home/nino-nixos/.local/share/icons/vscode-128.png"
                             appCmd:   "code"
+                            tooltipText: "VS Code"
                         }
                     }
                     Item {
@@ -167,6 +176,7 @@ PanelWindow {
                             anchors.centerIn: parent
                             iconPath: "/run/current-system/sw/share/icons/hicolor/256x256/apps/kitty.png"
                             appCmd:   "kitty"
+                            tooltipText: "Kitty terminal"
                         }
                     }
                 }
@@ -183,32 +193,45 @@ PanelWindow {
                     color: Tokens.color.separator
                 }
 
-                Column {
+                Item {
                     width: parent.width
-                    spacing: 3
+                    implicitHeight: _dskCol.implicitHeight
 
-                    Text {
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        text:               "DSK"
-                        font.family:        Tokens.font.sans
-                        font.pixelSize:     Tokens.font.label
-                        font.letterSpacing: 0.5
-                        color:              Tokens.color.fg3
+                    Column {
+                        id: _dskCol
+                        width: parent.width
+                        spacing: 3
+
+                        Text {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            text:               "DSK"
+                            font.family:        Tokens.font.sans
+                            font.pixelSize:     Tokens.font.label
+                            font.letterSpacing: 0.5
+                            color:              Tokens.color.fg3
+                        }
+                        Text {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            text:           rail.sysInfo?.diskUsed ?? "—"
+                            font.family:    Tokens.font.sans
+                            font.pixelSize: Tokens.font.chip
+                            font.weight:    Font.DemiBold
+                            color:          Tokens.color.fg2
+                        }
+                        Text {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            text:           "/" + (rail.sysInfo?.diskTotal ?? "—")
+                            font.family:    Tokens.font.sans
+                            font.pixelSize: Tokens.font.sub
+                            color:          Tokens.color.fg4
+                        }
                     }
-                    Text {
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        text:           rail.sysInfo?.diskUsed ?? "—"
-                        font.family:    Tokens.font.sans
-                        font.pixelSize: Tokens.font.chip
-                        font.weight:    Font.DemiBold
-                        color:          Tokens.color.fg2
-                    }
-                    Text {
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        text:           "/" + (rail.sysInfo?.diskTotal ?? "—")
-                        font.family:    Tokens.font.sans
-                        font.pixelSize: Tokens.font.sub
-                        color:          Tokens.color.fg4
+
+                    Tooltip {
+                        text: "Disque " + (rail.sysInfo?.diskMount ?? "/") + "\n" +
+                              "Utilisé: " + (rail.sysInfo?.diskUsed ?? "—") + " / " + (rail.sysInfo?.diskTotal ?? "—") + "\n" +
+                              "Libre: " + (rail.sysInfo?.diskFree ?? "—")
+                        side: "right"
                     }
                 }
 
@@ -229,6 +252,11 @@ PanelWindow {
                         sub:      rail.sysInfo?.cpuTemp ?? "—"
                         percent:  rail.sysInfo?.cpuPercent ?? 0
                         barColor: Tokens.color.blue
+                        tooltipText: (rail.sysInfo?.cpuModel ?? "—") + "\n" +
+                                     (rail.sysInfo?.cpuCores ?? 0) + " cores • " +
+                                     (rail.sysInfo?.cpuFreq ?? "—") + "\n" +
+                                     "Usage: " + (rail.sysInfo?.cpuPercent ?? 0) + "% • Temp: " + (rail.sysInfo?.cpuTemp ?? "—") + "\n" +
+                                     "Load: " + (rail.sysInfo?.cpuLoad ?? "—")
                     }
                     GaugeStat {
                         width: parent.width
@@ -237,6 +265,10 @@ PanelWindow {
                         sub:      rail.sysInfo?.gpuTemp ?? "—"
                         percent:  rail.sysInfo?.gpuPercent ?? 0
                         barColor: Tokens.color.green
+                        tooltipText: (rail.sysInfo?.gpuName ?? "—") + "\n" +
+                                     "Usage: " + (rail.sysInfo?.gpuPercent ?? 0) + "% • Temp: " + (rail.sysInfo?.gpuTemp ?? "—") + "\n" +
+                                     "VRAM: " + (rail.sysInfo?.vramUsed ?? "—") + " / " + (rail.sysInfo?.vramTotal ?? "—") + "\n" +
+                                     "Power: " + (rail.sysInfo?.gpuPower ?? "—")
                     }
                     GaugeStat {
                         width: parent.width
@@ -245,6 +277,9 @@ PanelWindow {
                         sub:      "/" + (rail.sysInfo?.ramTotal ?? "—")
                         percent:  rail.sysInfo?.ramPercent ?? 0
                         barColor: Tokens.color.yellow
+                        tooltipText: "Utilisée: " + (rail.sysInfo?.ramUsed ?? "—") + " / " + (rail.sysInfo?.ramTotal ?? "—") + " (" + (rail.sysInfo?.ramPercent ?? 0) + "%)\n" +
+                                     "Libre: " + (rail.sysInfo?.ramFree ?? "—") + " • Cache: " + (rail.sysInfo?.ramCached ?? "—") + "\n" +
+                                     "Swap: " + (rail.sysInfo?.swapUsed ?? "—") + " / " + (rail.sysInfo?.swapTotal ?? "—")
                     }
                 }
 
@@ -255,17 +290,29 @@ PanelWindow {
                 }
 
                 Text {
+                    id: _kbdLbl
                     anchors.horizontalCenter: parent.horizontalCenter
                     text:           rail.hyprland?.keyboardLayout ?? "FR"
                     font.family:    Tokens.font.sans
                     font.pixelSize: Tokens.font.sm
                     font.weight:    Font.DemiBold
                     color:          Tokens.color.fg3
+
+                    Tooltip {
+                        text: "Layout clavier: " + (rail.hyprland?.keyboardLayoutFull ?? "French")
+                        side: "right"
+                    }
                 }
 
-                Column {
+                Item {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    spacing: 3
+                    implicitWidth:  _battCol.implicitWidth
+                    implicitHeight: _battCol.implicitHeight
+
+                    Column {
+                        id: _battCol
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        spacing: 3
 
                     Item {
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -316,6 +363,55 @@ PanelWindow {
                                    Tokens.color.fg3
                         }
                     }
+                    }
+
+                    Tooltip {
+                        text: (rail.battery?.model ?? "—") + "\n" +
+                              (rail.battery?.percent ?? 0) + "% • " + (rail.battery?.status ?? "—") +
+                              ((rail.battery?.timeStr ?? "—") !== "—"
+                                  ? "\n" + ((rail.battery?.charging ?? false) ? "Plein dans " : "Reste ") + rail.battery.timeStr
+                                  : "") + "\n" +
+                              "Puissance: " + (rail.battery?.powerStr ?? "—") + "\n" +
+                              "Cycles: " + (rail.battery?.cycles ?? 0) + " • Santé: " + (rail.battery?.healthPct ?? 0) + "%"
+                        side: "right"
+                    }
+                }
+
+                Item {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    width: 34; height: 34
+
+                    Rectangle {
+                        anchors.fill: parent
+                        radius: Tokens.radius.lg
+                        color: (rail.idle?.inhibited ?? false)
+                            ? Tokens.color.itemBg
+                            : (_idleArea.containsMouse ? Tokens.color.itemBg : "#00000000")
+                        border.color: (rail.idle?.inhibited ?? false) ? Tokens.color.cyan : Tokens.color.borderStr
+                        border.width: 1
+                    }
+
+                    Icon {
+                        anchors.centerIn: parent
+                        icon:  (rail.idle?.inhibited ?? false) ? "eye" : "eyeOff"
+                        size:  Tokens.size.iconLg
+                        color: (rail.idle?.inhibited ?? false) ? Tokens.color.cyan : Tokens.color.fg3
+                    }
+
+                    MouseArea {
+                        id: _idleArea
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape:  Qt.PointingHandCursor
+                        onClicked: rail.idle?.toggle()
+                    }
+
+                    Tooltip {
+                        text: (rail.idle?.inhibited ?? false)
+                            ? "Veille désactivée (clic pour réactiver)"
+                            : "Empêcher la mise en veille"
+                        side: "right"
+                    }
                 }
 
                 Item {
@@ -343,6 +439,11 @@ PanelWindow {
                         hoverEnabled: true
                         cursorShape:  Qt.PointingHandCursor
                         onClicked: rail.qsToggled(!rail.qsVisible)
+                    }
+
+                    Tooltip {
+                        text: "Quick settings"
+                        side: "right"
                     }
                 }
             }

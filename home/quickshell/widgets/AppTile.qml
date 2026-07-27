@@ -6,6 +6,7 @@ Rectangle {
     id: root
     property string iconPath: ""
     property string appCmd:   ""
+    property string tooltipText: ""
 
     implicitWidth:  32
     implicitHeight: 32
@@ -35,5 +36,10 @@ Rectangle {
         id: _proc
         command: ["bash", "-c", root.appCmd + " &"]
         running: false
+    }
+
+    Tooltip {
+        text: root.tooltipText !== "" ? root.tooltipText : root.appCmd
+        side: "right"
     }
 }

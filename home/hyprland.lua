@@ -80,7 +80,7 @@ hl.config({ xwayland = { force_zero_scaling = true } })
 local mod = "SUPER"
 
 hl.bind(mod .. " + Return",        hl.dsp.exec_cmd("kitty"))
-hl.bind(mod .. " + D",             hl.dsp.exec_cmd("wofi --show run"))
+hl.bind(mod .. " + D",             hl.dsp.exec_cmd("qs ipc call launcher toggle"))
 hl.bind(mod .. " + E",             hl.dsp.exec_cmd("kitty -e yazi"))
 hl.bind(mod .. " + B",             hl.dsp.exec_cmd("firefox"))
 

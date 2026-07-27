@@ -6,6 +6,7 @@ Rectangle {
     id: root
     property int  wsId:   1
     property bool active: false
+    property string tooltipText: ""
 
     implicitWidth:  Tokens.size.tile
     implicitHeight: Tokens.size.tile
@@ -29,5 +30,11 @@ Rectangle {
         hoverEnabled: true
         cursorShape:  Qt.PointingHandCursor
         onClicked:    Hyprland.dispatch('hl.dsp.focus({ workspace = ' + root.wsId + ' })')
+    }
+
+    Tooltip {
+        text: root.tooltipText !== "" ? root.tooltipText
+            : (root.active ? "Workspace " + root.wsId + " (actif)" : "Workspace " + root.wsId)
+        side: "right"
     }
 }

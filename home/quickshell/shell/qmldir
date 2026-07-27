@@ -4,3 +4,5 @@ TopBar 1.0 TopBar.qml
 QuickSettings 1.0 QuickSettings.qml
 PowerMenu 1.0 PowerMenu.qml
 NotificationCenter 1.0 NotificationCenter.qml
+OSD 1.0 OSD.qml
+Launcher 1.0 Launcher.qml

@@ -2,6 +2,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Wayland
 import "../theme"
+import "../widgets"
 
 PanelWindow {
     id: topbar
@@ -33,6 +34,7 @@ PanelWindow {
         }
 
         Text {
+            id: _titleText
             anchors {
                 left: parent.left; leftMargin: Tokens.size.railW + 14
                 verticalCenter: parent.verticalCenter
@@ -44,18 +46,33 @@ PanelWindow {
             color:          Tokens.color.fg3
             elide:          Text.ElideRight
             width:          parent.width / 4
+
+            Tooltip {
+                text: (topbar.hyprland?.activeClass ?? "") !== ""
+                    ? (topbar.hyprland?.activeClass ?? "") + "\n" + (topbar.hyprland?.activeTitle ?? "")
+                    : (topbar.hyprland?.activeTitle ?? "")
+                side: "bottom"
+            }
         }
 
         Row {
+            id: _clockRow
             anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
             spacing: 6
 
             Text {
+                id: _timeText
                 anchors.verticalCenter: parent.verticalCenter
                 text:           topbar.clock?.time ?? "--:--"
                 font.family:    Tokens.font.sans
                 font.pixelSize: Tokens.font.xs
                 color:          Tokens.color.fg0
+
+                Tooltip {
+                    text: (topbar.clock?.time ?? "--:--") + " (" + (topbar.clock?.timezone ?? "—") + ")\n" +
+                          "Uptime: " + (topbar.clock?.uptime ?? "—")
+                    side: "bottom"
+                }
             }
             Text {
                 anchors.verticalCenter: parent.verticalCenter
@@ -64,11 +81,19 @@ PanelWindow {
                 color:          Tokens.color.fg5
             }
             Text {
+                id: _dateText
                 anchors.verticalCenter: parent.verticalCenter
                 text:           topbar.clock?.date ?? ""
                 font.family:    Tokens.font.sans
                 font.pixelSize: Tokens.font.xs
                 color:          Tokens.color.fg4
+
+                Tooltip {
+                    text: (topbar.clock?.dayOfWeek ?? "—") + "\n" +
+                          "Semaine ISO " + (topbar.clock?.isoWeek ?? 0) + "\n" +
+                          (topbar.clock?.dateShort ?? "—")
+                    side: "bottom"
+                }
             }
         }
 
@@ -87,6 +112,12 @@ PanelWindow {
                     font.family:    Tokens.font.sans
                     font.pixelSize: Tokens.font.xs
                     color:          Tokens.color.green
+
+                    Tooltip {
+                        text: "Download: " + (topbar.network?.downStr ?? "—") + "/s\n" +
+                              "Total reçu: " + (topbar.network?.totalRxStr ?? "—")
+                        side: "bottom"
+                    }
                 }
                 Text {
                     anchors.verticalCenter: parent.verticalCenter
@@ -94,6 +125,12 @@ PanelWindow {
                     font.family:    Tokens.font.sans
                     font.pixelSize: Tokens.font.xs
                     color:          Tokens.color.netUp
+
+                    Tooltip {
+                        text: "Upload: " + (topbar.network?.upStr ?? "—") + "/s\n" +
+                              "Total envoyé: " + (topbar.network?.totalTxStr ?? "—")
+                        side: "bottom"
+                    }
                 }
             }
 
@@ -107,12 +144,22 @@ PanelWindow {
             }
 
             Text {
+                id: _ipText
                 x: _netSep.x - 10 - implicitWidth
                 anchors.verticalCenter: parent.verticalCenter
                 text:           topbar.network?.ip ?? "—"
                 font.family:    Tokens.font.sans
                 font.pixelSize: Tokens.font.xs
                 color:          Tokens.color.fg4
+
+                Tooltip {
+                    text: "Interface: " + (topbar.network?.iface ?? "—") +
+                          ((topbar.network?.ssid ?? "—") !== "—" ? " • SSID: " + topbar.network.ssid : "") + "\n" +
+                          "IP: " + (topbar.network?.ip ?? "—") + "\n" +
+                          "Gateway: " + (topbar.network?.gateway ?? "—") + "\n" +
+                          "DNS: " + (topbar.network?.dns ?? "—")
+                    side: "bottom"
+                }
             }
         }
     }

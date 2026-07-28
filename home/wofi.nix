@@ -61,20 +61,20 @@
     '';
 
     settings = {
-      width        = 500;
-      height       = 400;
-      location     = "center";
-      show         = "run";
-      prompt       = "Lancer...";
-      filter_rate  = 100;
+      width = 500;
+      height = 400;
+      location = "center";
+      show = "run";
+      prompt = "Lancer...";
+      filter_rate = 100;
       allow_markup = true;
-      no_actions   = true;
-      halign       = "fill";
-      orientation  = "vertical";
+      no_actions = true;
+      halign = "fill";
+      orientation = "vertical";
       content_halign = "fill";
-      insensitive  = true;
+      insensitive = true;
       allow_images = true;
-      image_size   = 24;
+      image_size = 24;
     };
   };
 }

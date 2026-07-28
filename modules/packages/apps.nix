@@ -5,6 +5,7 @@
     obsidian
     xdg-utils
     discord
-    moonlight-qt protonup-qt
+    moonlight-qt
+    protonup-qt
   ];
 }

@@ -9,12 +9,12 @@
   systemd.user.services.quickshell = {
     Unit = {
       Description = "Quickshell desktop shell";
-      After       = [ "hyprland-session.target" ];
-      PartOf      = [ "graphical-session.target" ];
+      After = [ "hyprland-session.target" ];
+      PartOf = [ "graphical-session.target" ];
     };
     Service = {
       ExecStart = "${pkgs.quickshell}/bin/quickshell";
-      Restart   = "on-failure";
+      Restart = "on-failure";
       RestartSec = "2s";
     };
     Install = {

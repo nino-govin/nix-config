@@ -2,17 +2,20 @@
 
 {
   networking = {
-    hostName     = "nixos";
-    nameservers  = [ "1.1.1.1" "1.0.0.1" ];
+    hostName = "nixos";
+    nameservers = [
+      "1.1.1.1"
+      "1.0.0.1"
+    ];
     networkmanager.enable = true;
   };
 
   systemd.services.NetworkManager-wait-online.enable = false;
 
   services.tailscale = {
-    enable        = true;
-    openFirewall  = true;
-    extraUpFlags  = [ "--accept-dns=false" ];
+    enable = true;
+    openFirewall = true;
+    extraUpFlags = [ "--accept-dns=false" ];
   };
 
   environment.systemPackages = with pkgs; [

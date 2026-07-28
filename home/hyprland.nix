@@ -2,14 +2,14 @@
 
 {
   wayland.windowManager.hyprland = {
-    enable        = true;
-    configType    = "lua";
-    package       = null;
+    enable = true;
+    configType = "lua";
+    package = null;
     portalPackage = null;
     xwayland.enable = true;
 
     systemd = {
-      enable    = true;
+      enable = true;
       variables = [ "--all" ];
     };
 

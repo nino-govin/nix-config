@@ -20,6 +20,7 @@
 
   boot.kernelParams = [
     "nmi_watchdog=0"
+    "nvme_core.default_ps_max_latency_us=0"
   ];
 
   boot.kernel.sysctl = {
@@ -41,6 +42,6 @@
 
   powerManagement = {
     enable = false;
-    powertop.enable = true;
+    powertop.enable = false;
   };
 }

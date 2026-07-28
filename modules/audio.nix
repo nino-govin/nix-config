@@ -2,10 +2,10 @@
 
 {
   services.pipewire = {
-    enable       = true;
+    enable = true;
     audio.enable = true;
-    alsa.enable  = true;
+    alsa.enable = true;
     pulse.enable = true;
-    jack.enable  = true;
+    jack.enable = true;
   };
 }

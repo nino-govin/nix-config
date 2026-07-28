@@ -5,23 +5,23 @@
     enable = true;
     settings = {
       general = {
-        after_sleep_cmd   = "hyprctl dispatch dpms on";
+        after_sleep_cmd = "hyprctl dispatch dpms on";
         ignore_dbus_inhibit = false;
-        lock_cmd          = "hyprlock";
+        lock_cmd = "hyprlock";
       };
 
       listener = [
         {
-          timeout    = 120;
+          timeout = 120;
           on-timeout = "brightnessctl -s set 0";
-          on-resume  = "brightnessctl -r";
+          on-resume = "brightnessctl -r";
         }
         {
-          timeout  = 180;
+          timeout = 180;
           on-timeout = "hyprlock";
         }
         {
-          timeout  = 600;
+          timeout = 600;
           on-timeout = "systemctl suspend";
         }
       ];

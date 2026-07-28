@@ -4,12 +4,12 @@
   programs.kitty = {
     enable = true;
     font = {
-      name = "Noto Sans Mono";
+      name = "Manrope";
       size = 11;
     };
     settings = {
       symbol_map = "U+3000-U+30FF,U+31F0-U+31FF,U+32D0-U+32FE,U+3300-U+4DBF,U+4E00-U+9FFF,U+F900-U+FAFF,U+FF00-U+FFEF Noto Sans Mono CJK JP";
-      background_opacity = "0.92";
+      background_opacity = "0.50";
       background_blur = 1;
       window_padding_width = 12;
       cursor_shape = "block";

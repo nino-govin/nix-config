@@ -67,18 +67,18 @@
         {
           text = "$LAYOUT[FR,EN]";
           color = "rgba(166, 172, 205, 0.7)";
-          font_size = 20;
+          font_size = 18;
           font_family = "Manrope";
-          position = "24, 24";
+          position = "26, 26";
           halign = "left";
           valign = "bottom";
         }
         {
           text = "cmd[update:30000] cat /sys/class/power_supply/BAT*/capacity 2>/dev/null | head -1 | xargs -r printf '%s%%'";
           color = "rgba(163, 190, 140, 0.7)";
-          font_size = 20;
+          font_size = 18;
           font_family = "Manrope";
-          position = "-24, 24";
+          position = "-26, 26";
           halign = "right";
           valign = "bottom";
         }

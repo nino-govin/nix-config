@@ -153,20 +153,6 @@ hl.layer_rule({ match = { namespace = "quickshell-qs" },       blur = true, igno
 hl.layer_rule({ match = { namespace = "quickshell-powermenu"}, blur = true, ignore_alpha = 0.2, dim_around = true })
 hl.layer_rule({ match = { namespace = "quickshell-notifs" },   blur = true, ignore_alpha = 0.2 })
 
-hl.window_rule({ match = { class = "^wofi$" }, float = true })
-
-do
-  local _wofiActive = false
-  hl.on("window.active", function(w)
-    if w ~= nil and w.class == "wofi" then
-      _wofiActive = true
-    elseif _wofiActive then
-      _wofiActive = false
-      hl.exec_cmd("hyprctl dispatch closewindow class:wofi")
-    end
-  end)
-end
-
 hl.window_rule({ match = { class = "^pavucontrol$" },          float = true })
 hl.window_rule({ match = { class = "^nm-connection-editor$" }, float = true })
 hl.window_rule({ match = { class = "^lxappearance$" },         float = true })

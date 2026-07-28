@@ -5,12 +5,12 @@
     enable = true;
     settings = {
       user = {
-        name  = "nino.govin";
+        name = "nino.govin";
         email = "nino.govin@epita.fr";
       };
-      core.editor      = "nvim";
+      core.editor = "nvim";
       init.defaultBranch = "main";
-      pull.rebase      = false;
+      pull.rebase = false;
     };
   };
 }

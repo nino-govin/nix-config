@@ -17,28 +17,31 @@
   ];
 
   home = {
-    username      = "nino-nixos";
+    username = "nino-nixos";
     homeDirectory = "/home/nino-nixos";
-    stateVersion  = "25.11";
+    stateVersion = "25.11";
   };
 
   programs.home-manager.enable = true;
 
   programs.keychain = {
-    enable    = true;
-    keys      = [ "id_ed25519_github2" ];
-    extraFlags = [ "--quiet" "--nogui" ];
+    enable = true;
+    keys = [ "id_ed25519_github2" ];
+    extraFlags = [
+      "--quiet"
+      "--nogui"
+    ];
   };
 
   programs.ssh = {
-    enable              = true;
+    enable = true;
     enableDefaultConfig = false;
     settings."Host *".AddKeysToAgent = "yes";
   };
 
   programs.firefox = {
-    enable      = true;
-    configPath  = ".mozilla/firefox";
+    enable = true;
+    configPath = ".mozilla/firefox";
     profiles.default = {
       settings = {
         "layout.css.devPixelsPerPx" = "1.6";
@@ -49,17 +52,21 @@
   gtk = {
     enable = true;
     theme = {
-      name    = "Arc-Dark";
+      name = "Arc-Dark";
       package = pkgs.arc-theme;
     };
     iconTheme = {
-      name    = "Papirus-Dark";
+      name = "Papirus-Dark";
       package = pkgs.papirus-icon-theme;
     };
-    gtk3.extraConfig = { "gtk-enable-primary-paste" = false; };
+    gtk3.extraConfig = {
+      "gtk-enable-primary-paste" = false;
+    };
     gtk4 = {
       theme = config.gtk.theme;
-      extraConfig = { "gtk-enable-primary-paste" = false; };
+      extraConfig = {
+        "gtk-enable-primary-paste" = false;
+      };
     };
   };
 

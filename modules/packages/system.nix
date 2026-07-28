@@ -2,11 +2,29 @@
 
 {
   environment.systemPackages = with pkgs; [
-    git wget curl vim neovim zsh
+    git
+    wget
+    curl
+    vim
+    neovim
+    zsh
     kitty
-    fastfetch htop btop powertop ncdu duf bat bc
-    file lsof ripgrep fuse jq
-    p7zip unzip zip
+    fastfetch
+    htop
+    btop
+    powertop
+    ncdu
+    duf
+    bat
+    bc
+    file
+    lsof
+    ripgrep
+    fuse
+    jq
+    p7zip
+    unzip
+    zip
     tree
     yazi
   ];

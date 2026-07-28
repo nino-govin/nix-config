@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
   services.ollama = {
-    enable  = true;
+    enable = true;
     package = pkgs.ollama-cuda;
   };
 

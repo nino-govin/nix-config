@@ -12,7 +12,8 @@
 
   environment.systemPackages = with pkgs; [
     desmume
-    appimage-run icu
+    appimage-run
+    icu
     inputs.nix-gaming.packages.${pkgs.stdenv.hostPlatform.system}.osu-stable
   ];
 }

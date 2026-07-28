@@ -1,4 +1,9 @@
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   imports = [
@@ -25,13 +30,16 @@
 
   nix.gc = {
     automatic = true;
-    dates     = "weekly";
-    options   = "--delete-older-than 7d";
+    dates = "weekly";
+    options = "--delete-older-than 7d";
   };
 
   nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
-    auto-optimise-store   = true;
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+    auto-optimise-store = true;
   };
 
   system.stateVersion = "25.11";

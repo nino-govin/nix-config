@@ -62,7 +62,6 @@ PanelWindow {
             spacing: 6
 
             Text {
-                id: _timeText
                 anchors.verticalCenter: parent.verticalCenter
                 text:           topbar.clock?.time ?? "--:--"
                 font.family:    Tokens.font.sans
@@ -82,7 +81,6 @@ PanelWindow {
                 color:          Tokens.color.fg5
             }
             Text {
-                id: _dateText
                 anchors.verticalCenter: parent.verticalCenter
                 text:           topbar.clock?.date ?? ""
                 font.family:    Tokens.font.sans
@@ -98,14 +96,73 @@ PanelWindow {
             }
         }
 
-        Item {
+        Row {
             anchors { right: parent.right; rightMargin: 14; verticalCenter: parent.verticalCenter }
             height: parent.height
+            spacing: 10
+
+            Text {
+                anchors.verticalCenter: parent.verticalCenter
+                text:           topbar.network?.ip ?? "—"
+                font.family:    Tokens.font.sans
+                font.pixelSize: Tokens.font.xs
+                color:          Tokens.color.fg4
+
+                Tooltip {
+                    text: "Interface: " + (topbar.network?.iface ?? "—") +
+                          ((topbar.network?.ssid ?? "—") !== "—" ? " • SSID: " + topbar.network.ssid : "") + "\n" +
+                          "IP: " + (topbar.network?.ip ?? "—") + "\n" +
+                          "Gateway: " + (topbar.network?.gateway ?? "—")
+                    side: "bottom"
+                }
+            }
+
+            Rectangle {
+                width: 1; height: 12
+                anchors.verticalCenter: parent.verticalCenter
+                color: Tokens.color.borderNorm
+            }
+
+            Row {
+                anchors.verticalCenter: parent.verticalCenter
+                spacing: 4
+
+                Text {
+                    anchors.verticalCenter: parent.verticalCenter
+                    text:           "↓" + (topbar.network?.downStr ?? "—")
+                    font.family:    Tokens.font.sans
+                    font.pixelSize: Tokens.font.xs
+                    color:          Tokens.color.green
+
+                    Tooltip {
+                        text: "Download: " + (topbar.network?.downStr ?? "—") + "/s\n" +
+                              "Total reçu: " + (topbar.network?.totalRxStr ?? "—")
+                        side: "bottom"
+                    }
+                }
+                Text {
+                    anchors.verticalCenter: parent.verticalCenter
+                    text:           "↑" + (topbar.network?.upStr ?? "—")
+                    font.family:    Tokens.font.sans
+                    font.pixelSize: Tokens.font.xs
+                    color:          Tokens.color.netUp
+
+                    Tooltip {
+                        text: "Upload: " + (topbar.network?.upStr ?? "—") + "/s\n" +
+                              "Total envoyé: " + (topbar.network?.totalTxStr ?? "—")
+                        side: "bottom"
+                    }
+                }
+            }
+
+            Rectangle {
+                width: 1; height: 12
+                anchors.verticalCenter: parent.verticalCenter
+                color: Tokens.color.borderNorm
+            }
 
             Item {
-                id: _volRow
-                anchors { right: parent.right; verticalCenter: parent.verticalCenter }
-                width:  _volIcon.width + 4 + _volTxt.width
+                width: _volIcon.width + 4 + _volTxt.width
                 height: parent.height
 
                 Item {
@@ -157,75 +214,6 @@ PanelWindow {
                     text: (topbar.audio?.sinkName ?? "Audio") + "\n" +
                           "Volume: " + (topbar.audio?.volumePercent ?? 0) + "%" +
                           ((topbar.audio?.muted ?? false) ? " (mute)" : "")
-                    side: "bottom"
-                }
-            }
-
-            Rectangle {
-                id: _volSep
-                width: 1; height: 12
-                x: _volRow.x - 10 - width
-                anchors.verticalCenter: parent.verticalCenter
-                color: Tokens.color.borderNorm
-            }
-
-            Row {
-                id: _speedRow
-                x: _volSep.x - 10 - width
-                anchors.verticalCenter: parent.verticalCenter
-                spacing: 4
-
-                Text {
-                    anchors.verticalCenter: parent.verticalCenter
-                    text:           "↓" + (topbar.network?.downStr ?? "—")
-                    font.family:    Tokens.font.sans
-                    font.pixelSize: Tokens.font.xs
-                    color:          Tokens.color.green
-
-                    Tooltip {
-                        text: "Download: " + (topbar.network?.downStr ?? "—") + "/s\n" +
-                              "Total reçu: " + (topbar.network?.totalRxStr ?? "—")
-                        side: "bottom"
-                    }
-                }
-                Text {
-                    anchors.verticalCenter: parent.verticalCenter
-                    text:           "↑" + (topbar.network?.upStr ?? "—")
-                    font.family:    Tokens.font.sans
-                    font.pixelSize: Tokens.font.xs
-                    color:          Tokens.color.netUp
-
-                    Tooltip {
-                        text: "Upload: " + (topbar.network?.upStr ?? "—") + "/s\n" +
-                              "Total envoyé: " + (topbar.network?.totalTxStr ?? "—")
-                        side: "bottom"
-                    }
-                }
-            }
-
-            Rectangle {
-                id: _netSep
-                width: 1; height: 12
-                x: _speedRow.x - 10 - width
-                Behavior on x { NumberAnimation { duration: 150; easing.type: Easing.OutCubic } }
-                anchors.verticalCenter: parent.verticalCenter
-                color: Tokens.color.borderNorm
-            }
-
-            Text {
-                id: _ipText
-                x: _netSep.x - 10 - implicitWidth
-                anchors.verticalCenter: parent.verticalCenter
-                text:           topbar.network?.ip ?? "—"
-                font.family:    Tokens.font.sans
-                font.pixelSize: Tokens.font.xs
-                color:          Tokens.color.fg4
-
-                Tooltip {
-                    text: "Interface: " + (topbar.network?.iface ?? "—") +
-                          ((topbar.network?.ssid ?? "—") !== "—" ? " • SSID: " + topbar.network.ssid : "") + "\n" +
-                          "IP: " + (topbar.network?.ip ?? "—") + "\n" +
-                          "Gateway: " + (topbar.network?.gateway ?? "—")
                     side: "bottom"
                 }
             }

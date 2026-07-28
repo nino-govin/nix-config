@@ -8,7 +8,6 @@ hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
 hl.on("hyprland.start", function()
   hl.exec_cmd("awww-daemon")
   hl.exec_cmd("awww img ~/Pictures/background.png")
-  hl.exec_cmd("nm-applet --indicator")
   hl.exec_cmd("wl-paste --type text --watch cliphist store")
 end)
 

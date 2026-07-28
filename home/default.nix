@@ -5,7 +5,6 @@
     ./hyprland.nix
     ./hyprlock.nix
     ./quickshell.nix
-    ./wofi.nix
     ./kitty.nix
     ./zsh.nix
     ./starship.nix

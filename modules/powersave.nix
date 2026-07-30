@@ -86,6 +86,9 @@ in
 
   boot.extraModprobeConfig = ''
     options snd_hda_intel power_save=1
+  '';
+
+  environment.etc."modprobe.d/zz-nvidia-fbdev-off.conf".text = ''
     options nvidia-drm fbdev=0
   '';
 

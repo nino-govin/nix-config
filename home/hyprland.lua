@@ -161,3 +161,27 @@ hl.window_rule({ match = { title = "^Picture-in-Picture$" },   pin   = true })
 hl.window_rule({ match = { class = "^jetbrains-", title = "^win" }, no_focus         = true })
 hl.window_rule({ match = { class = "^jetbrains-", title = "^win" }, no_initial_focus = true })
 hl.window_rule({ match = { class = "^jetbrains-", title = "^win" }, no_anim          = true })
+hl.window_rule({ match = { class = "^osu!%.exe$", title = "^osu!$" }, tile = true })
+hl.window_rule({ 
+  match = { 
+    class = "^osu!%.exe$", 
+    title = "^.*Setup.*$|^.*Timing.*$|^.*Design.*$|^.*Options.*$|^.*Compose.*$" 
+  }, 
+  float = true 
+})
+
+hl.window_rule({ 
+  match = { 
+    class = "^osu!%.exe$", 
+    title = "^.*Setup.*$|^.*Timing.*$|^.*Design.*$|^.*Options.*$|^.*Compose.*$" 
+  }, 
+  center = true 
+})
+
+hl.window_rule({ 
+  match = { 
+    class = "^osu!%.exe$", 
+    title = "^.*Setup.*$|^.*Timing.*$|^.*Design.*$|^.*Options.*$|^.*Compose.*$" 
+  }, 
+  size = "800 600" 
+})

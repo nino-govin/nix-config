@@ -17,6 +17,7 @@ PanelWindow {
     property var  bluetooth: null
     property var  media:     null
     property var  wifi:      null
+    property var  powerProfile: null
     signal panelClosed
     signal openPowerMenu
     signal openWifiPopup
@@ -137,6 +138,12 @@ PanelWindow {
                     onToggled: if (root.bluetooth?.available) root.bluetooth.togglePower()
                     onExpand:  root.openBtPopup()
                 }
+            }
+
+            PowerProfileTile {
+                width: parent.width
+                currentMode: root.powerProfile?.mode ?? "balanced"
+                onModeSelected: m => root.powerProfile?.setMode(m)
             }
 
             SliderRow {

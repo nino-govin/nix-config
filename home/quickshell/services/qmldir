@@ -10,3 +10,4 @@ Brightness 1.0 Brightness.qml
 Bluetooth 1.0 Bluetooth.qml
 Media 1.0 Media.qml
 Wifi 1.0 Wifi.qml
+PowerProfile 1.0 PowerProfile.qml

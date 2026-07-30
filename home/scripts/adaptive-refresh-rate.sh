@@ -15,7 +15,7 @@ is_on_ac() {
 }
 
 if is_on_ac; then
-    hyprctl keyword monitor "$MONITOR,$RESOLUTION@240,$POSITION,$SCALE"
+    hyprctl eval "hl.monitor({ output = '$MONITOR', mode = '${RESOLUTION}@240', position = '$POSITION', scale = $SCALE })"
 else
-    hyprctl keyword monitor "$MONITOR,$RESOLUTION@60,$POSITION,$SCALE"
+    hyprctl eval "hl.monitor({ output = '$MONITOR', mode = '${RESOLUTION}@60', position = '$POSITION', scale = $SCALE })"
 fi

@@ -12,8 +12,8 @@
 
   environment.systemPackages = with pkgs; [
     desmume
-    appimage-run
     icu
     inputs.nix-gaming.packages.${pkgs.stdenv.hostPlatform.system}.osu-stable
+    (pkgs.appimage-run.override { extraPkgs = p: [ p.icu ]; })
   ];
 }

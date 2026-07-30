@@ -10,3 +10,4 @@ PowerAction 1.0 PowerAction.qml
 Tooltip 1.0 Tooltip.qml
 MediaPlayer 1.0 MediaPlayer.qml
 Switch 1.0 Switch.qml
+PowerProfileTile 1.0 PowerProfileTile.qml

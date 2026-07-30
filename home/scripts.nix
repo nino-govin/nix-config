@@ -9,6 +9,11 @@
       "$HOME/.local/share/icons/vscode-128.png"
   '';
 
+  home.file.".local/bin/set-power-profile" = {
+    source = ./scripts/set-power-profile.sh;
+    executable = true;
+  };
+
   home.file.".local/share/applications/steam-nvidia.desktop" = {
     text = ''
       [Desktop Entry]

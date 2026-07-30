@@ -25,6 +25,7 @@ QtObject {
     property Bluetooth       bluetooth: Bluetooth {}
     property Media           media:    Media {}
     property Wifi            wifi:     Wifi {}
+    property PowerProfile    powerProfile: PowerProfile {}
 
     property Rail rail: Rail {
         hyprland:  root.hypr
@@ -49,8 +50,9 @@ QtObject {
         audio:      root.audio
         brightness: root.brightness
         bluetooth:  root.bluetooth
-        wifi:       root.wifi
-        media:      root.media
+        wifi:         root.wifi
+        media:        root.media
+        powerProfile: root.powerProfile
         onPanelClosed:     root._qsOpen = false
         onOpenPowerMenu:   { root._qsOpen = false; root._pmOpen = true }
         onOpenWifiPopup:   root._wifiPopupOpen = true

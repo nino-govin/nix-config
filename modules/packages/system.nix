@@ -19,6 +19,7 @@
     bc
     file
     lsof
+    nvme-cli
     ripgrep
     fuse
     jq

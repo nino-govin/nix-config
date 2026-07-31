@@ -2,8 +2,6 @@
 
 {
 
-  boot.kernelParams = [ "intel_iommu=off" ];
-
   boot.loader = {
     efi.canTouchEfiVariables = true;
     systemd-boot = {

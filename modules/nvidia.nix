@@ -1,6 +1,13 @@
 { config, pkgs, ... }:
 
 {
+  hardware.firmware = [
+    (pkgs.runCommandNoCC "edid-eDP-1" {} ''
+      mkdir -p $out/lib/firmware/edid
+      cp ${../hardware/edid-eDP-1.bin} $out/lib/firmware/edid/edid-eDP-1.bin
+    '')
+  ];
+
   services.xserver.videoDrivers = [ "nvidia" ];
 
   #boot.blacklistedKernelModules = [ "nvidia_uvm" ];
@@ -9,7 +16,7 @@
     modesetting.enable = true;
     powerManagement.enable = true;
     powerManagement.finegrained = true;
-    open = true;
+    open = false;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
 

@@ -8,6 +8,7 @@
       "1.0.0.1"
     ];
     networkmanager.enable = true;
+    firewall.trustedInterfaces = [ "docker0" ];
   };
 
   systemd.services.NetworkManager-wait-online.enable = false;

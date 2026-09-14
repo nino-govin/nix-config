@@ -1,6 +1,7 @@
 import QtQuick
 import Quickshell
 import Quickshell.Wayland
+import Quickshell.Hyprland
 import "../theme"
 import "../widgets"
 
@@ -11,6 +12,18 @@ PanelWindow {
     property var network:  null
     property var hyprland: null
     property var audio:    null
+
+    property var _myMonitor: {
+        if (!screen) return null
+        const mons = Hyprland.monitors?.values
+        if (!mons) return null
+        for (let i = 0; i < mons.length; i++) {
+            if (mons[i].name === screen.name) return mons[i]
+        }
+        return null
+    }
+
+    visible: !(_myMonitor?.activeWorkspace?.hasFullscreen ?? false)
 
     WlrLayershell.namespace:     "quickshell-topbar"
     WlrLayershell.layer:         WlrLayer.Top

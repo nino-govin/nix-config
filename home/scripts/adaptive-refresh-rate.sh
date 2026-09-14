@@ -14,6 +14,14 @@ is_on_ac() {
     return 1
 }
 
+is_gaming() {
+    pgrep -x "osu!.exe" > /dev/null 2>&1 || pgrep -x "wine" > /dev/null 2>&1
+}
+
+if is_gaming; then
+    exit 0
+fi
+
 if is_on_ac; then
     hyprctl eval "hl.monitor({ output = '$MONITOR', mode = '${RESOLUTION}@240', position = '$POSITION', scale = $SCALE })"
 else

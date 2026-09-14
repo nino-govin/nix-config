@@ -5,6 +5,10 @@
     package = pkgs.ollama-cuda;
   };
 
+  environment.systemPackages = with pkgs; [
+    opencode
+  ];
+
   systemd.services.ollama.environment = {
     OLLAMA_HOST = lib.mkForce "0.0.0.0:11434";
     DRI_PRIME = "1";

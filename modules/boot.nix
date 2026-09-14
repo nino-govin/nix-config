@@ -2,7 +2,7 @@
 
 {
 
-  boot.kernelParams = [ "nvidia_drm.hdmi21_enable=1" "drm.edid_firmware=eDP-1:edid/edid-eDP-1.bin" ];
+  boot.kernelParams = [ "nvidia_drm.hdmi21_enable=1" ];
 
   boot.loader = {
     efi.canTouchEfiVariables = true;

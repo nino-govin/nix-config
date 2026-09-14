@@ -1,5 +1,5 @@
 hl.monitor({ output = "eDP-1", mode = "2560x1600@240", position = "0x0", scale = 1.6 })
-hl.monitor({ output = "HDMI-A-1", mode = "3840x2160@240", position = "1600x0", scale = 1.5 })
+hl.monitor({ output = "DP-1", mode = "3840x2160@240", position = "1600x0", scale = 1.5 })
 
 hl.env("XCURSOR_SIZE",              "24")
 hl.env("XCURSOR_THEME",             "Adwaita")
@@ -36,6 +36,7 @@ hl.config({
     ["col.inactive_border"] = "rgba(3b4252ff)",
     layout           = "dwindle",
     resize_on_border = true,
+    allow_tearing    = true,
   },
 })
 
@@ -73,6 +74,7 @@ hl.config({
   misc = {
     force_default_wallpaper = 0,
     disable_hyprland_logo   = true,
+    vrr                     = 1,
   },
 })
 
@@ -162,7 +164,8 @@ hl.window_rule({ match = { title = "^Picture-in-Picture$" },   pin   = true })
 hl.window_rule({ match = { class = "^jetbrains-", title = "^win" }, no_focus         = true })
 hl.window_rule({ match = { class = "^jetbrains-", title = "^win" }, no_initial_focus = true })
 hl.window_rule({ match = { class = "^jetbrains-", title = "^win" }, no_anim          = true })
-hl.window_rule({ match = { class = "^osu!%.exe$", title = "^osu!$" }, tile = true })
+hl.window_rule({ match = { class = "^osu!%.exe$", title = "^osu!$" }, no_anim = true })
+hl.window_rule({ match = { class = "^osu!%.exe$", title = "^osu!$" }, immediate = true })
 hl.window_rule({ 
   match = { 
     class = "^osu!%.exe$", 

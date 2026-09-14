@@ -17,7 +17,17 @@ PanelWindow {
     property bool qsVisible: false
     signal qsToggled(bool visible)
 
-    visible: !(Hyprland.focusedWorkspace?.hasFullscreen ?? false)
+    property var _myMonitor: {
+        if (!screen) return null
+        const mons = Hyprland.monitors?.values
+        if (!mons) return null
+        for (let i = 0; i < mons.length; i++) {
+            if (mons[i].name === screen.name) return mons[i]
+        }
+        return null
+    }
+
+    visible: !(_myMonitor?.activeWorkspace?.hasFullscreen ?? false)
 
     WlrLayershell.namespace:     "quickshell-rail"
     WlrLayershell.layer:         WlrLayer.Overlay

@@ -3,8 +3,6 @@ hl.monitor({ output = "DP-1", mode = "3840x2160@240", position = "1600x0", scale
 
 hl.env("XCURSOR_SIZE",              "24")
 hl.env("XCURSOR_THEME",             "Adwaita")
-hl.env("LIBVA_DRIVER_NAME",         "nvidia")
-hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
 
 hl.on("hyprland.start", function()
   hl.exec_cmd("awww-daemon")

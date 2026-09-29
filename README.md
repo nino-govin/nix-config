@@ -13,13 +13,12 @@ Personal NixOS configuration, built with flakes and home-manager. Hyprland (Wayl
 ## Highlights
 
 - **Flake-based**, nixpkgs 26.05, single host (`nixos`)
-- **Hyprland** window manager, configured in **Lua** (not the standard `.conf` format), AZERTY bindings, fr/us layouts
-- **NVIDIA PRIME offload** — Intel iGPU drives the display, NVIDIA dGPU only used on demand via `nvidia-offload <cmd>`
+- **Hyprland** window manager, configured in **Lua**, AZERTY bindings, fr/us layouts
+- **NVIDIA PRIME offload**, Intel iGPU drives the display, NVIDIA dGPU only used on demand via `nvidia-offload <cmd>`
 - **Quickshell** as the desktop shell (bars, widgets), config symlinked into the repo
 - **tuigreet** greeter + `greetd`, Catppuccin/Nord-ish terminal theming
 - Adaptive refresh-rate switching based on power state (AC vs. battery)
 - Gaming support (Steam with NVIDIA offload desktop entry, osu-related tweaks)
-- AI/dev tooling module (`ai.nix`) alongside standard dev packages
 
 ## Structure
 
@@ -43,19 +42,6 @@ Personal NixOS configuration, built with flakes and home-manager. Hyprland (Wayl
     ├── adaptive-refresh-rate.nix    # systemd user service/timer
     ├── scripts.nix + scripts/       # misc user scripts
     ├── git.nix, zsh.nix, starship.nix, kitty.nix, hypridle.nix, hyprlock.nix, media.nix
-```
-
-## Usage
-
-```bash
-# apply the configuration
-sudo nixos-rebuild switch --flake /etc/nixos#nixos
-
-# update flake inputs
-nix flake update
-
-# clean up old generations
-nix-collect-garbage -d
 ```
 
 ## Notes

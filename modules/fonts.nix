@@ -6,7 +6,7 @@ let
     src = pkgs.fetchurl {
       url = "https://github.com/google/fonts/raw/main/ofl/manrope/Manrope%5Bwght%5D.ttf";
       name = "Manrope-variable.ttf";
-      sha256 = "0h0aifzi27fvd6xnrdz2557vvi3ks5xrshbjh5wnxwqabpj9nqyh";
+      sha256 = "sha256-OuEcSdsEVaPMM+N9OA8g/bjH+LQdwHYlwXfj2HqdauY=";
     };
     dontUnpack = true;
     installPhase = ''

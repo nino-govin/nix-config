@@ -7,7 +7,7 @@ Personal NixOS configuration, built with flakes and home-manager. Hyprland (Wayl
 - **Laptop:** MSI Pulse 16 AI C1VGKG
 - **CPU:** Intel Core Ultra 7 155H
 - **GPU:** Intel iGPU (primary) + NVIDIA GeForce RTX 4070 Laptop GPU (PRIME offload)
-- **Displays:** internal `eDP-1` @ 2560x1600@240Hz (scale 1.6) + external `DP-1` @ 3840x2160@240Hz (scale 1.5)
+- **Display:** internal `eDP-1` @ 2560x1600@240Hz (scale 1.6)
 
 ## Highlights
 
@@ -59,4 +59,4 @@ nix-collect-garbage -d
 
 ## Notes
 
-This configuration is tailored to my specific hardware (MSI Pulse 16 AI, hybrid Intel/NVIDIA graphics, dual-monitor AZERTY setup) — feel free to browse for ideas, but expect to adapt paths, monitor names/resolutions, and bus IDs before reusing it.
+This configuration is tailored to my specific hardware (MSI Pulse 16 AI, hybrid Intel/NVIDIA graphics, AZERTY setup) — feel free to browse for ideas, but expect to adapt paths, monitor names/resolutions, and bus IDs before reusing it.

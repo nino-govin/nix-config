@@ -14,7 +14,7 @@ nix-collect-garbage -d
 
 ## Architecture
 
-**Flake:** nixpkgs 25.11, hostname `nixos`, user `nino-nixos`
+**Flake:** nixpkgs 26.05, hostname `nixos`, user `nino-nixos`
 
 **System modules** (`modules/`):
 - `boot.nix`: systemd-boot, 0 timeout, 3 gen limit

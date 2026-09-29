@@ -12,7 +12,7 @@ Personal NixOS configuration, built with flakes and home-manager. Hyprland (Wayl
 
 ## Highlights
 
-- **Flake-based**, nixpkgs 25.11, single host (`nixos`)
+- **Flake-based**, nixpkgs 26.05, single host (`nixos`)
 - **Hyprland** window manager, configured in **Lua** (not the standard `.conf` format), AZERTY bindings, fr/us layouts
 - **NVIDIA PRIME offload** — Intel iGPU drives the display, NVIDIA dGPU only used on demand via `nvidia-offload <cmd>`
 - **Quickshell** as the desktop shell (bars, widgets), config symlinked into the repo

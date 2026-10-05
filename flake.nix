@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -17,6 +18,7 @@
     {
       self,
       nixpkgs,
+      nixpkgs-unstable,
       home-manager,
       nix-gaming,
       ...
@@ -27,6 +29,17 @@
         specialArgs = { inherit inputs; };
         modules = [
           ./configuration.nix
+          {
+            nixpkgs.overlays = [
+              (final: prev: {
+                claude-code =
+                  (import nixpkgs-unstable {
+                    system = prev.system;
+                    config.allowUnfree = true;
+                  }).claude-code;
+              })
+            ];
+          }
           home-manager.nixosModules.home-manager
           {
             home-manager = {

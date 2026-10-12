@@ -34,6 +34,9 @@
     jetbrains.idea
     postgresql
     postman
+    kubectl
+    kubernetes-helm
+    go
   ];
 
   nixpkgs.config.android_sdk.accept_license = true;

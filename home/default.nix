@@ -35,7 +35,13 @@
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    settings."Host *".AddKeysToAgent = "yes";
+    settings = {
+      "Host *".AddKeysToAgent = "yes";
+      "Host github.com" = {
+        IdentityFile = "~/.ssh/id_ed25519_github2";
+        IdentitiesOnly = "yes";
+      };
+    };
   };
 
   programs.firefox = {

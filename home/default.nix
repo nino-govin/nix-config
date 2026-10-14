@@ -7,6 +7,7 @@
     ./quickshell.nix
     ./kitty.nix
     ./zsh.nix
+    ./direnv.nix
     ./starship.nix
     ./git.nix
     ./hypridle.nix

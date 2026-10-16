@@ -32,7 +32,6 @@
     pnpm
     vscode
     jetbrains.idea
-    postgresql
     postman
     kubectl
     kubernetes-helm
@@ -40,9 +39,4 @@
   ];
 
   nixpkgs.config.android_sdk.accept_license = true;
-
-  services.postgresql = {
-    enable = true;
-    package = pkgs.postgresql_17;
-  };
 }

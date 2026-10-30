@@ -18,9 +18,10 @@ nix-collect-garbage -d
 
 **System modules** (`modules/`):
 - `boot.nix`: systemd-boot, 0 timeout, 3 gen limit
-- `nvidia.nix`: PRIME offload (Intel `PCI:0:2:0`, NVIDIA `PCI:1:0:0`), open drivers, finegrained power mgmt, `nvidia_uvm` blacklisted
+- `nvidia.nix`: PRIME offload (Intel `PCI:0:2:0`, NVIDIA `PCI:1:0:0`), proprietary drivers (`open = false`), finegrained power mgmt, nvidia modules removed from `modules-load.d` and loaded async by a udev rule (`modprobe nvidia_drm`) so they don't block `sysinit.target`
 - `display.nix`: Hyprland + tuigreet + XDG portals
-- `powersave.nix`, `nix-ld.nix`, `ai.nix`, `gaming.nix`
+- `powersave.nix`: includes `nvme_core.io_timeout=2` (Intel VMD, locked on in BIOS, drops one NVMe interrupt at boot; default 30s timeout stalled initrd)
+- `nix-ld.nix`, `ai.nix`, `gaming.nix`
 - `packages/`: split into system/desktop/dev/media/apps
 
 **Home modules** (`home/`):

@@ -1,7 +1,24 @@
-{ config, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   services.xserver.videoDrivers = [ "nvidia" ];
+
+  environment.etc."modules-load.d/nixos.conf".source = lib.mkForce (
+    pkgs.writeText "nixos.conf" (
+      lib.concatStringsSep "\n" (
+        lib.subtractLists [ "nvidia" "nvidia_modeset" "nvidia_drm" ] config.boot.kernelModules
+      )
+    )
+  );
+
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030000", RUN+="${pkgs.kmod}/bin/modprobe nvidia_drm"
+  '';
 
   #boot.blacklistedKernelModules = [ "nvidia_uvm" ];
 

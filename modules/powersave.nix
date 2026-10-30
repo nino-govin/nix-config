@@ -77,6 +77,7 @@ in
   boot.kernelParams = [
     "nmi_watchdog=0"
     "nvme_core.default_ps_max_latency_us=0"
+    "nvme_core.io_timeout=2"
   ];
 
   boot.kernel.sysctl = {

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   programs.nix-ld.enable = true;
@@ -21,5 +21,6 @@
     libXrandr
     libXi
     libXext
+    config.hardware.nvidia.package
   ];
 }

@@ -18,14 +18,12 @@ let
       performance)
         echo 0 > /sys/devices/system/cpu/intel_pstate/no_turbo
         _reset_freq_cap
-        ${cpupower} frequency-set -g performance 2>/dev/null
         systemctl start auto-cpufreq 2>/dev/null || true
         [ -n "$WIFI_IFACE" ] && ${iw} dev "$WIFI_IFACE" set power_save off
         ;;
       balanced)
         echo 0 > /sys/devices/system/cpu/intel_pstate/no_turbo
         _reset_freq_cap
-        ${cpupower} frequency-set -g powersave 2>/dev/null
         systemctl start auto-cpufreq 2>/dev/null || true
         [ -n "$WIFI_IFACE" ] && ${iw} dev "$WIFI_IFACE" set power_save on
         ;;
@@ -61,7 +59,8 @@ in
     enable = true;
     settings = {
       charger = {
-        governor = "performance";
+        governor = "powersave";
+        energy_performance_preference = "performance";
         turbo = "auto";
       };
       battery = {

@@ -20,6 +20,9 @@ in
   fonts.packages = with pkgs; [
     manrope
     nerd-fonts.symbols-only
+    nerd-fonts.jetbrains-mono
+    poppins
+    material-design-icons
     terminus_font
     noto-fonts
     noto-fonts-cjk-sans

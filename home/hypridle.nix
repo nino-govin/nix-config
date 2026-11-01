@@ -5,9 +5,10 @@
     enable = true;
     settings = {
       general = {
-        after_sleep_cmd = "hyprctl dispatch dpms on";
+        after_sleep_cmd = "hyprctl dispatch 'hl.dsp.dpms({ action = \"enable\" })'";
         ignore_dbus_inhibit = false;
-        lock_cmd = "hyprlock";
+        lock_cmd = "qs ipc call lockscreen lock";
+        before_sleep_cmd = "loginctl lock-session";
       };
 
       listener = [
@@ -18,7 +19,7 @@
         }
         {
           timeout = 180;
-          on-timeout = "hyprlock";
+          on-timeout = "loginctl lock-session";
         }
         {
           timeout = 600;

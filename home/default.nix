@@ -57,10 +57,6 @@
 
   gtk = {
     enable = true;
-    theme = {
-      name = "Arc-Dark";
-      package = pkgs.arc-theme;
-    };
     iconTheme = {
       name = "Papirus-Dark";
       package = pkgs.papirus-icon-theme;
@@ -69,10 +65,26 @@
       "gtk-enable-primary-paste" = false;
     };
     gtk4 = {
-      theme = config.gtk.theme;
       extraConfig = {
         "gtk-enable-primary-paste" = false;
       };
+    };
+  };
+
+  qt = {
+    enable = true;
+    platformTheme.name = "qtct";
+    qt5ctSettings.Appearance = {
+      custom_palette = true;
+      color_scheme_path = "${config.xdg.configHome}/quickshell/qt-colors.conf";
+      style = "Fusion";
+      icon_theme = "Papirus-Dark";
+    };
+    qt6ctSettings.Appearance = {
+      custom_palette = true;
+      color_scheme_path = "${config.xdg.configHome}/quickshell/qt-colors.conf";
+      style = "Fusion";
+      icon_theme = "Papirus-Dark";
     };
   };
 

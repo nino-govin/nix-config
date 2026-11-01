@@ -1,52 +1,38 @@
-import QtQuick
+pragma Singleton
+
+import Quickshell
 import Quickshell.Hyprland
-import Quickshell.Io
+import QtQuick
 
-QtObject {
-    readonly property var    workspaces:      Hyprland.workspaces
-    readonly property int    activeWorkspace: Hyprland.focusedWorkspace?.id ?? 1
-    readonly property string activeTitle:     Hyprland.activeToplevel?.title ?? ""
-    readonly property string activeClass:     Hyprland.activeToplevel?.wmClass ?? ""
-    readonly property string keyboardLayout:  _layout
-    readonly property string keyboardLayoutFull: _layoutFull
+Singleton {
+    readonly property bool available: true
+    readonly property bool windowsReady: true
 
-    property string _layout: "FR"
-    property string _layoutFull: "French (AZERTY)"
+    readonly property var workspaces: Hyprland.workspaces.values
+        .filter(workspace => workspace.id > 0)
+        .sort((a, b) => a.id - b.id)
+        .map(workspace => ({
+            id: workspace.id,
+            idx: workspace.id,
+            name: workspace.name,
+            output: workspace.monitor ? workspace.monitor.name : "",
+            is_active: workspace.active,
+            is_focused: workspace.focused,
+            is_urgent: workspace.urgent
+        }))
 
-    property Connections _conn: Connections {
-        target: Hyprland
-        function onRawEvent(event) {
-            if (event.name === "activelayout") {
-                const parts = event.data.split(",")
-                if (parts.length >= 2) {
-                    const lang = parts[1].trim()
-                    const u = lang.toUpperCase()
-                    _layout = u.includes("FRENCH") || u.includes("FR")  ? "FR"
-                            : u.includes("US") || u.includes("ENGLISH") ? "EN"
-                            : u.substring(0, 2)
-                    _layoutFull = lang
-                }
-            }
-        }
+    readonly property var windows: Hyprland.toplevels.values
+        .filter(toplevel => toplevel.workspace)
+        .map(toplevel => ({
+            id: toplevel.address,
+            workspace_id: toplevel.workspace.id
+        }))
+
+    function focusWorkspace(id: int): void {
+        Hyprland.dispatch("hl.dsp.focus({ workspace = " + id + " })");
     }
 
-    property Process _wsDsp: Process { running: false }
-
-    function focusWorkspace(id) {
-        _wsDsp.command = ["hyprctl", "dispatch", "workspace", id.toString()]
-        _wsDsp.running = true
-    }
-
-    property Process _kbdProc: Process { running: false }
-
-    function cycleKeyboardLayout() {
-        _kbdProc.command = ["bash", "-c",
-            "kb=$(hyprctl -j devices 2>/dev/null | " +
-            "jq -r '.keyboards[] | select(.main == true) | .name' | head -1); " +
-            "[ -z \"$kb\" ] && kb=$(hyprctl -j devices 2>/dev/null | " +
-            "jq -r '.keyboards[0].name'); " +
-            "[ -n \"$kb\" ] && hyprctl switchxkblayout \"$kb\" next"
-        ]
-        _kbdProc.running = true
+    function focusWindow(address: string): void {
+        Hyprland.dispatch("hl.dsp.focus({ window = \"address:0x" + address + "\" })");
     }
 }

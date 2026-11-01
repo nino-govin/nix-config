@@ -1,102 +1,70 @@
-//@ pragma UseQApplication
-import QtQuick
+//@ pragma IconTheme Papirus-Dark
 import Quickshell
-import Quickshell.Io
-import "./services"
-import "./shell"
+import QtQuick
+import "components/core"
+import "components/state"
+import "components/windows"
+import "integrations"
+import "services"
+import "widgets/statusbar"
 
-QtObject {
-    id: root
-
-    property bool _qsOpen: false
-    property bool _pmOpen: false
-    property bool _lchOpen: false
-    property bool _wifiPopupOpen: false
-    property bool _btPopupOpen:   false
-
-    property HyprlandService hypr:    HyprlandService {}
-    property Battery         battery: Battery {}
-    property SysInfo         sysInfo: SysInfo {}
-    property Network         network: Network {}
-    property Clock           clock:   Clock {}
-    property IdleInhibitor   idle:    IdleInhibitor {}
-    property Audio           audio:   Audio {}
-    property Brightness      brightness: Brightness {}
-    property Bluetooth       bluetooth: Bluetooth {}
-    property Media           media:    Media {}
-    property Wifi            wifi:     Wifi {}
-    property PowerProfile    powerProfile: PowerProfile {}
-
-    property Rail rail: Rail {
-        hyprland:  root.hypr
-        battery:   root.battery
-        sysInfo:   root.sysInfo
-        idle:      root.idle
-        qsVisible: root._qsOpen
-        onQsToggled: v => { root._qsOpen = v }
+ShellRoot {
+    Component.onCompleted: {
+        ThemeExportService.initialize();
+        GreeterSyncService.sync();
     }
 
-    property TopBar topbar: TopBar {
-        clock:    root.clock
-        network:  root.network
-        hyprland: root.hypr
-        audio:    root.audio
+    Binding {
+        target: NetworkService
+        property: "scanningRequested"
+        value: OverlayState.utilityCenterVisible
+            && OverlayState.utilityPage === "wifi"
     }
 
-    property QuickSettings qs: QuickSettings {
-        open:       root._qsOpen
-        battery:    root.battery
-        network:    root.network
-        audio:      root.audio
-        brightness: root.brightness
-        bluetooth:  root.bluetooth
-        wifi:         root.wifi
-        media:        root.media
-        powerProfile: root.powerProfile
-        onPanelClosed:     root._qsOpen = false
-        onOpenPowerMenu:   { root._qsOpen = false; root._pmOpen = true }
-        onOpenWifiPopup:   root._wifiPopupOpen = true
-        onOpenBtPopup:     root._btPopupOpen   = true
+    Binding {
+        target: BluetoothService
+        property: "scanningRequested"
+        value: OverlayState.utilityCenterVisible
+            && OverlayState.utilityPage === "bluetooth"
     }
 
-    property WifiPopup wifiPopup: WifiPopup {
-        open: root._wifiPopupOpen
-        wifi: root.wifi
-        onPanelClosed: root._wifiPopupOpen = false
+    Variants {
+        model: Quickshell.screens
+
+        LockTransitionOverlay {}
     }
 
-    property BluetoothPopup btPopup: BluetoothPopup {
-        open: root._btPopupOpen
-        bluetooth: root.bluetooth
-        onPanelClosed: root._btPopupOpen = false
+    LockScreen {}
+
+    Variants {
+        model: Quickshell.screens
+
+        WallpaperLayer {}
     }
 
-    property PowerMenu pm: PowerMenu {
-        open: root._pmOpen
-        onPanelClosed: root._pmOpen = false
+    Variants {
+        model: Quickshell.screens
+
+        WallpaperPickerWindow {}
     }
 
-    property NotificationCenter notifCenter: NotificationCenter {}
+    SettingsWindow {}
 
-    property OSD osd: OSD {
-        audio:      root.audio
-        brightness: root.brightness
+    Variants {
+        model: Quickshell.screens
+
+        FloatingWidgetLayer {}
     }
 
-    property Launcher launcher: Launcher {
-        open: root._lchOpen
-        onPanelClosed: root._lchOpen = false
+    Variants {
+        model: Quickshell.screens
+
+        ScreenOverlay {}
     }
 
-    property IpcHandler _ipc: IpcHandler {
-        target: "showPowerMenu"
-        function onSignalTriggered() { root._pmOpen = true }
-    }
+    Variants {
+        model: Quickshell.screens
 
-    property IpcHandler _ipcLauncher: IpcHandler {
-        target: "launcher"
-        function toggle() { root._lchOpen = !root._lchOpen }
-        function show()   { root._lchOpen = true }
-        function hide()   { root._lchOpen = false }
+        StatusBar {}
     }
 }

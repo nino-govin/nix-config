@@ -12,6 +12,7 @@
     ./modules/networking.nix
     ./modules/locale.nix
     ./modules/display.nix
+    ./modules/greeter.nix
     ./modules/audio.nix
     ./modules/bluetooth.nix
     ./modules/users.nix

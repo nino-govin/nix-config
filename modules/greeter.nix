@@ -20,8 +20,9 @@ let
 
   hyprlandConfig = pkgs.writeText "jaqc-greeter.lua" ''
     hl.monitor({ output = "eDP-1", mode = "2560x1600@240", position = "0x0", scale = 1.6 })
+    hl.env("XCURSOR_PATH", "${pkgs.bibata-cursors}/share/icons")
     hl.env("XCURSOR_SIZE", "24")
-    hl.env("XCURSOR_THEME", "Adwaita")
+    hl.env("XCURSOR_THEME", "Bibata-Modern-Ice")
     hl.config({
       input = { kb_layout = "fr,us" },
       animations = { enabled = false },

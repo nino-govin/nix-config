@@ -1,7 +1,7 @@
 hl.monitor({ output = "eDP-1", mode = "2560x1600@240", position = "0x0", scale = 1.6 })
 
 hl.env("XCURSOR_SIZE",              "24")
-hl.env("XCURSOR_THEME",             "Adwaita")
+hl.env("XCURSOR_THEME",             "Bibata-Modern-Ice")
 
 hl.on("hyprland.start", function()
   hl.exec_cmd("wl-paste --type text --watch cliphist store")

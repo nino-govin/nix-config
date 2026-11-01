@@ -33,6 +33,8 @@
       nixedit = "sudo nvim /etc/nixos/configuration.nix";
       nixconf = "cd /etc/nixos";
 
+      comfy = "(cd ~/ai/ComfyUI && SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt TRITON_LIBCUDA_PATH=/run/opengl-driver/lib nvidia-offload .venv/bin/python main.py --enable-manager)";
+
       gs = "git status";
       ga = "git add";
       gc = "git commit";

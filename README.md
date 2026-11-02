@@ -72,6 +72,8 @@ The shell is a Hyprland port of [JAQC-shell](https://github.com/MystiaFin/JAQC-s
 
 Clawd is driven by [Claude Code hooks](https://docs.anthropic.com/en/docs/claude-code/hooks). Every session reports its state, and the crab acts it out: he thinks while Claude thinks, puts on a costume for each tool (detective for reads, glasses and laptop for edits, hard hat for shell commands, explorer for the web, conductor for subagents), and peeks out of the screen corner, waving, when a session waits for your permission. Clicking him focuses the right terminal.
 
+He gets around: he chains jumps between widgets, climbs the screen edges, throws a grappling hook, or blows up a balloon and floats there. Widgets with no room on top become monkey bars he hangs from, and he opens an umbrella to glide down from high perches. Up there he sits with his legs dangling, scans the horizon with binoculars, or wobbles at the edge. His eyes follow the cursor and, if it lingers, he walks over. Shake him and he comes back dizzy; throw him hard against a screen edge and he splats and slides down.
+
 He also reacts to the machine: a fan when the CPU is hot, a battery when charging or nearly empty, an umbrella, snow hat or sunglasses depending on the weather, a nightcap when he sleeps at night, flying packets under heavy traffic, and juggling RAM sticks when memory is nearly full.
 
 <img src="docs/media/clawd-moods.png" alt="Clawd moods" width="100%">
@@ -180,7 +182,7 @@ The `adaptive-refresh-rate` user timer runs every 10 s and switches between 240 
 - Quickshell IPC drives the launcher, clipboard, wallpaper picker, power menu, lock screen, media/brightness keys and Clawd: `qs ipc call <target> <function>`.
 - hypridle: screen off after 2 min, lock after 3 min (Quickshell lock screen), suspend after 10 min.
 - greetd starts a minimal Hyprland (`modules/desktop/greeter.nix`) that runs `home/quickshell/greeter.qml`. Its state (avatar, last session) lives in `/var/lib/jaqc-greeter`. The greeter reads the QML straight from `/etc/nixos`, so the repo must stay at that path.
-- Clawd: `modules/desktop/clawd.nix` installs `clawd-hook` and registers it in the Claude Code managed settings. The hook keeps one file per session under `$XDG_RUNTIME_DIR/clawd` and merges them into `state.json` (most urgent session wins, dead sessions are dropped by PID), which `ClawdService.qml` watches. Try `qs ipc call crab perform umbrella`.
+- Clawd: `modules/desktop/clawd.nix` installs `clawd-hook` and registers it in the Claude Code managed settings. The hook keeps one file per session under `$XDG_RUNTIME_DIR/clawd` and merges them into `state.json` (most urgent session wins, dead sessions are dropped by PID), which `ClawdService.qml` watches. Try `qs ipc call crab perform umbrella` or `qs ipc call crab perch balloon` (also `jump`, `climb`, `grapple`, `dangle`).
 </details>
 
 ## Reusing this config

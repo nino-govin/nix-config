@@ -18,7 +18,8 @@ Item {
     property bool once: false
     property var pending: []
 
-    readonly property var mirrorable: ["stand", "walk", "jump", "fall", "land", "grabbed", "poke", "poke_down", "poke_up"]
+    readonly property var mirrorable: ["stand", "walk", "jump", "fall", "land", "grabbed", "poke", "poke_down", "poke_up",
+        "stagger", "teeter", "climb", "splat", "slide", "slide_fast"]
     readonly property bool mirrored: facing < 0 && mirrorable.indexOf(current) !== -1
     readonly property string target: tags[animation] ? animation : "stand"
     readonly property bool settled: current === target && !once

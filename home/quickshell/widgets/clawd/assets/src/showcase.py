@@ -47,6 +47,19 @@ CELLS = [
     ("snow", ["snow"]),
     ("packets", ["packets"]),
     ("juggle", ["juggle"]),
+    ("watch", ["watch_left", "watch_upleft", "watch_up", "watch_upright", "watch_right", "watch_down"]),
+    ("teeter", ["teeter"]),
+    ("sit", ["sit_in", "sit", "sit_out"]),
+    ("lookout", ["lookout"]),
+    ("climb", ["climb"]),
+    ("grapple", ["grapple", "hang", "hang"]),
+    ("dangle", ["dangle"]),
+    ("balloon", ["inflate", "balloon", "balloon", "balloon_out"]),
+    ("parachute", ["parachute_hold", "parachute_walk", "parachute"]),
+    ("shaken", ["shaken"]),
+    ("dizzy", ["dizzy", "stagger"]),
+    ("crash", ["crash"]),
+    ("splat", ["splat", "slide", "slide", "slide_fast", "slide_fast"]),
 ]
 
 TAGS = dict(ANIMATIONS)

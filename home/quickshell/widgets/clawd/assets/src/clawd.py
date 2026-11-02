@@ -1,4 +1,5 @@
 import json
+import math
 import os
 import subprocess
 import tempfile
@@ -55,6 +56,15 @@ def eye(c, ex, top, style, left):
     elif style == "wide":
         c.rect(ex, top + 3, ex + 2, top + 8, "E")
         c.rect(ex, top + 3, ex, top + 4, "W")
+    elif style == "upleft":
+        c.rect(ex - 1, top + 3, ex + 1, top + 5, "E")
+        c.px(ex - 1, top + 3, "W")
+    elif style == "upright":
+        c.rect(ex + 1, top + 3, ex + 3, top + 5, "E")
+        c.px(ex + 1, top + 3, "W")
+    elif style == "x":
+        for dx, dy in ((0, 0), (2, 0), (1, 1), (0, 2), (2, 2)):
+            c.px(ex + dx, top + 4 + dy, "E")
     elif style == "squint":
         points = [(0, 0), (1, 1), (2, 2), (1, 3), (0, 4)]
         for dx, dy in points:
@@ -973,6 +983,310 @@ def frame(body, extras=(), behind=(), dx=0, dy=0):
 
 SLEEP = dict(dy=5, lifts=(9, 9, 9, 9), eyes="closed")
 AIR = dict(dy=-3)
+HANG = dict(lifts=(-3, -3, -3, -3))
+GOOGLY = [("up", "down"), ("left", "right"), ("down", "up"), ("right", "left")]
+STAR = sprite([
+    "...Y...",
+    "..YYY..",
+    "YYYWYYY",
+    ".YYYYY.",
+    "..YYY..",
+    ".YY.YY.",
+    ".Y...Y.",
+])
+STAR_FAR = sprite([
+    "..y..",
+    ".yYy.",
+    "yYYYy",
+    ".yYy.",
+    ".y.y.",
+])
+
+
+def stars(phase, cy=29, count=8, rx=15, ry=4):
+    front, back = [], []
+    for k in range(3):
+        angle = 2 * math.pi * (phase / count + k / 3)
+        x, y = 32 + rx * math.cos(angle), cy + ry * math.sin(angle)
+        near = math.sin(angle) >= 0
+        trail = Canvas(FRAME, FRAME)
+        trail.px(round(32 + rx * math.cos(angle - 0.55)), round(cy + ry * math.sin(angle - 0.55)), "Y" if near else "y")
+        layer = front if near else back
+        layer.append((trail, 0, 0))
+        layer.append((STAR, round(x) - 4, round(y) - 4) if near else (STAR_FAR, round(x) - 3, round(y) - 3))
+    return front, back
+
+
+def starry(body, phase, dx=0, extras=()):
+    front, back = stars(phase)
+    return frame(body, list(extras) + front, back, dx=dx)
+
+
+def pancake(stunned=None):
+    c = Canvas(FRAME, FRAME)
+    c.rect(13, 50, 50, 58, "B")
+    for x, y in ((13, 50), (50, 50), (13, 58), (50, 58)):
+        c.px(x, y, ".")
+    c.rect(14, 50, 49, 50, "H")
+    c.rect(13, 51, 13, 57, "H")
+    c.rect(14, 58, 49, 58, "D")
+    c.rect(50, 51, 50, 57, "D")
+    for ex in (24, 37):
+        for dx, dy in ((0, 0), (2, 0), (1, 1), (0, 2), (2, 2)):
+            c.px(ex + dx, 52 + dy, "E")
+    c.rows(6, 55, CLAW_SIDE.mirrored().lines()[1:-1])
+    c.rows(52, 55, CLAW_SIDE.lines()[1:-1])
+    c.rect(10, 52, 12, 53, "D")
+    c.rect(51, 52, 53, 53, "D")
+    c.outline()
+    for item, x, y in stunned or []:
+        c.paste(item, x, y)
+    return c.lines()
+
+
+def squashed(width, eyes="squint", impact=False, speed=0, dust=0, brace=False):
+    height = 448 // width
+    right = 48
+    top = 53 - height + 1 + (16 - height) // 3
+    left, bottom = right - width + 1, top + height - 1
+    c = Canvas(FRAME, FRAME)
+    c.rect(left, top, right, bottom, "B")
+    for x, y in ((left, top), (left, bottom)):
+        c.px(x, y, ".")
+    c.rect(left + 1, top, right, top, "H")
+    c.rect(left, top + 1, left, bottom - 1, "H")
+    c.rect(left + 1, bottom, right, bottom, "D")
+    c.rect(right, top + 1, right, bottom - 1, "D")
+    middle = left + width // 2
+    eye(c, middle - 5, top - 1 + height // 4, eyes, True)
+    eye(c, middle + 2, top - 1 + height // 4, eyes, False)
+    for index, lx in enumerate((left + 3, left + 8, left + 13, left + 18)):
+        if lx + 1 < right:
+            drift = 3 - index
+            c.line(lx, bottom + 1, lx - drift, bottom + 4, "D")
+            c.line(lx + 1, bottom + 1, lx + 1 - drift, bottom + 4, "D")
+            c.px(lx - drift, bottom + 4, "M")
+    c.outline()
+    upper = (left - 1, top + 4)
+    lower = (left - 1, top + height - 6)
+    segments = [(upper, (upper[0] - 5, upper[1] - 6))]
+    claws = [claw_up(upper[0] - 5, upper[1] - 6, True)]
+    if brace:
+        segments.append(((right - 2, top - 1), (right - 2, top - 6)))
+        claws.append(claw_up(right - 3, top - 6))
+    else:
+        segments.append((lower, (lower[0] - 6, lower[1] + 1)))
+        claws.append((CLAW_SIDE.mirrored(), lower[0] - 11, lower[1] - 2))
+    c.paste(limbs(segments, 99, 99), 0, 0)
+    for item, x, y in claws:
+        c.paste(item, x, y)
+    if impact:
+        for x0, y0, x1, y1 in ((47, top - 3, 43, top - 7), (48, top - 4, 48, top - 9), (47, bottom + 3, 43, bottom + 7), (48, bottom + 4, 48, bottom + 8)):
+            c.line(x0, y0, x1, y1, "Y")
+    for index in range(speed):
+        x = left + 4 + index * 5
+        length = 2 + speed * 2 - index
+        c.rect(x, top - 10 - length, x, top - 10, "g")
+    for dx, dy in ((0, 0), (-2, -3), (1, -5))[:dust]:
+        c.px(right - 1 + dx, top - 13 + dy, "W")
+        c.px(right - 2 + dx, top - 12 + dy, "g")
+    return c.lines()
+
+
+def climbing(step):
+    reach = step < 2
+    dy = step % 2
+    c = Canvas(FRAME, FRAME)
+    left, right, top, bottom = 33, 46, 38 + dy, 54 + dy
+    feet = ((44, 49, 52), (46, 50, 53)) if reach else ((45, 50, 52), (43, 48, 53))
+    for index, y in enumerate((top + 4, top + 8, top + 11, top + 15)):
+        bend = (index + step) % 2
+        c.rect(right + 1, y - bend, right + 2, y - bend, "D")
+        c.rect(right + 3 - 0, y - bend - 1 + bend, right + 3, y - bend + 1, "M")
+    c.rect(left, top, right, bottom, "B")
+    for x, y in ((left, top), (right, top), (left, bottom), (right, bottom)):
+        c.px(x, y, ".")
+    c.rect(left + 1, top, right - 1, top, "H")
+    c.rect(left, top + 1, left, bottom - 1, "H")
+    c.rect(left + 1, bottom, right - 1, bottom, "D")
+    c.rect(right, top + 1, right, bottom - 1, "D")
+    c.rect(left + 2, top + 2, left + 2, bottom - 3, "H")
+    c.rect(right - 4, top + 3, right - 2, top + 6, "E")
+    c.px(right - 4, top + 3, "W")
+    c.outline()
+    near, far = (top - 12, top - 4) if reach else (top - 4, top - 12)
+    c.paste(wall_arm(far, top, True), 0, 0)
+    c.paste(wall_arm(near, top, False), 0, 0)
+    return c.lines()
+
+
+def shaded(item):
+    other = Canvas(item.width, item.height)
+    swap = {"H": "B", "B": "D", "D": "M"}
+    other.grid = [[swap.get(color, color) for color in row] for row in item.grid]
+    return other
+
+
+def wall_arm(y, top, back):
+    c = Canvas(FRAME, FRAME)
+    x = 41 if back else 43
+    c.rect(x, y + 5, x + 2, top + 1, "B")
+    c.rect(x + 2, y + 5, x + 2, top + 1, "D")
+    c.rows(44, y, [
+        "..BBBH",
+        ".BB...",
+        "BB....",
+        "BBB...",
+        ".BBBBD",
+    ])
+    c.outline()
+    for yy in range(top + 1, top + 4):
+        for xx in range(33, 47):
+            c.px(xx, yy, ".")
+    for yy in range(FRAME):
+        c.px(50, yy, ".")
+    return shaded(c) if back else c
+
+
+ROPE_TOP = (32, 27)
+GRIP_ROW = 27
+THROW_HAND = (48, 16)
+
+
+def rope(top, bottom):
+    c = Canvas(FRAME, FRAME)
+    c.rect(ROPE_TOP[0], top, ROPE_TOP[0], bottom, "t")
+    return c.outline()
+
+
+def arms_up(xs, top, dy=0):
+    c = Canvas(FRAME, FRAME)
+    for x in xs:
+        c.rect(x, top, x + 2, 38 + dy, "B")
+        c.rect(x + 2, top, x + 2, 38 + dy, "D")
+    c.outline()
+    for y in range(38 + dy, 54 + dy):
+        for x in range(18, 46):
+            c.px(x, y, ".")
+    return c
+
+
+def hanging(swing):
+    body = crab(lifts=(-3, -2, -3, -2) if swing else (-2, -3, -2, -3), eyes="up", arms=("none", "none"))
+    return frame(body, [(rope(ROPE_TOP[1], 37), 0, 0), (arms_up((26, 35), 32), 0, 0), (CLAW_SIDE, 26, ROPE_TOP[1]), (CLAW_SIDE.mirrored(), 32, ROPE_TOP[1])])
+
+
+def throwing(wind):
+    if wind:
+        arm = limbs([((46, 45), (51, 50))])
+        return frame(crab(dy=1, eyes="up", arms=(0, "none")), [(arm, 0, 0), (CLAW_DOWN, 49, 50)])
+    arm = limbs([((46, 45), (48, 23))])
+    return frame(crab(eyes="up", arms=(0, "none")), [(arm, 0, 0), claw_up(48, 23)])
+
+
+def hook():
+    c = Canvas(FRAME, FRAME)
+    c.rows(28, 26, [
+        "..GgggG..",
+        ".GG.g.GG.",
+        "GG..g..GG",
+        "G...g...G",
+        "....G....",
+        "....G....",
+    ])
+    return c.outline().lines()
+
+
+def balloon(radius, glint=True):
+    size = radius * 2 + 1
+    c = Canvas(size, size + radius // 2 + 1)
+    for y in range(size + radius // 2):
+        for x in range(size):
+            ry = (y - radius) * (0.85 if y > radius else 1)
+            if (x - radius) ** 2 + ry ** 2 <= radius * radius + radius:
+                c.px(x, y, "R")
+    c.px(radius, size + radius // 2, "R")
+    if glint and radius >= 3:
+        c.rect(radius - radius // 2 - 1, radius - radius // 2 - 1, radius - radius // 2, radius - radius // 2 - 1, "W")
+        c.px(radius - radius // 2 - 1, radius - radius // 2, "W")
+    return c.outline()
+
+
+def inflating(radius):
+    item = balloon(radius)
+    arm = limbs([((46, 45), (49, 44))])
+    return frame(crab(eyes="right" if radius < 5 else "squint", arms=(0, "none")),
+                 [(item, 51 - radius, 44 - item.height + 2), (arm, 0, 0), (CLAW_HOLD.mirrored(), 47, 42)])
+
+
+def floating(sway, dy=0, popped=False):
+    hx, hy = 47, 30 + dy
+    arm = limbs([((46, 45 + dy), (hx, hy))], dy)
+    extras = [(arm, 0, 0), claw_up(hx, hy)]
+    if popped:
+        c = Canvas(FRAME, FRAME)
+        for x0, y0, x1, y1 in ((47, 12, 47, 6), (42, 14, 38, 10), (52, 14, 56, 10), (41, 19, 36, 19), (53, 19, 58, 19)):
+            c.line(x0, y0, x1, y1, "Y")
+        c.rect(46, 18, 48, 20, "W")
+        extras.insert(0, (c, 0, 0))
+        extras.append((sprite(["RR", ".R"]), 40, 22))
+    else:
+        item = balloon(5)
+        bx = 43 + sway
+        extras.insert(0, (item, bx, 2 + dy))
+        knot = (bx + 6, 2 + dy + item.height - 1)
+        string = Canvas(FRAME, FRAME)
+        string.line(knot[0], knot[1], hx + 1, hy - 7, "g")
+        extras.insert(0, (string, 0, 0))
+    body = crab(dy=dy, lifts=(-3, -2, -3, -2) if sway else (-2, -3, -2, -3), eyes="wide" if popped else "up", arms=(0, "none"))
+    return frame(body, extras)
+
+
+def dangling(step):
+    dy = (0, 1, 1, 0)[step % 4]
+    eyes = ("down", "down", "left", "open", "right", "down", "closed", "open")[step]
+    body = crab(dy=dy, lifts=((-3, -1, -3, -1), (-1, -3, -1, -3))[step % 2], eyes=eyes, arms=("none", "none"))
+    claws = [(CLAW_UP.mirrored(), 20, GRIP_ROW - 2), (CLAW_UP, 38, GRIP_ROW - 2)]
+    return frame(body, [(arms_up((21, 40), GRIP_ROW + 4, dy), 0, 0)] + claws)
+
+
+def binoculars(dy=0, glint=0):
+    c = Canvas(FRAME, FRAME)
+    for bx in (22, 35):
+        c.rect(bx, 40 + dy, bx + 6, 47 + dy, "K")
+        c.rect(bx + 1, 41 + dy, bx + 5, 45 + dy, "S")
+        for x, y in ((bx + 1, 41), (bx + 5, 41), (bx + 1, 45), (bx + 5, 45)):
+            c.px(x, y + dy, "K")
+        c.px(bx + 2 + glint, 42 + dy, "W")
+    c.rect(29, 43 + dy, 34, 44 + dy, "G")
+    c.outline()
+    c.paste(CLAW_SIDE, 16, 41 + dy)
+    c.paste(CLAW_SIDE.mirrored(), 42, 41 + dy)
+    return c
+
+
+def lookout(dx=0, glint=1, lowered=False):
+    if lowered:
+        return frame(crab(eyes="wide", arms=("none", "none")), [(binoculars(9, glint), dx, 0), (ALERT, 46, 18)])
+    return frame(crab(eyes="none", arms=("none", "none")), [(binoculars(0, glint), dx, 0)], dx=dx)
+
+
+def sitting(eyes="open", swing=0):
+    lifts = (-4, -3, -4, -3) if swing else (-3, -4, -3, -4)
+    return frame(crab(dy=5, lifts=lifts, eyes=eyes, arms=("down", "down")))
+
+
+def parachute(dy=0, lifts=(0, 0, 0, 0), eyes="up", sway=0):
+    return frame(crab(dy=dy, lifts=lifts, eyes=eyes, arms=(0, "none")), [(umbrella(10 + dy, dy, 33 + sway), 0, 0)])
+
+
+def teetering(step):
+    tilt = 1 if step % 2 == 0 else -1
+    lean = 2 + step % 2
+    body = crab(lifts=(0, 0, 2, 5), eyes="wide", arms=("none", "none"))
+    return frame(body, alert(-1, False, tilt, lean) + [(SWEAT, 14, 36 - step % 2)], dx=lean)
+
+
 
 ANIMATIONS = [
     ("stand", [
@@ -1265,10 +1579,128 @@ ANIMATIONS = [
         (frame(crab(eyes="left"), dx=30), 70),
         (frame(crab(eyes="left"), dx=40), 70),
     ]),
+] + [
+    ("watch_" + gaze, [
+        (frame(crab(eyes=gaze)), 900),
+        (frame(crab(dy=1, eyes=gaze)), 700),
+    ])
+    for gaze in ("left", "right", "up", "down", "upleft", "upright")
+] + [
+    ("dizzy", [
+        (starry(crab(dy=phase % 2, eyes=GOOGLY[phase % 4], arms=((0, 1), (1, 0))[phase % 2]), phase, (0, 1, 1, 1, 0, -1, -1, -1)[phase]), 110)
+        for phase in range(8)
+    ]),
+    ("stagger", [
+        (starry(crab(dy=phase % 2, lifts=((1, 0, 1, 0), (0, 0, 0, 0), (0, 1, 0, 1), (0, 0, 0, 0))[phase % 4], eyes=GOOGLY[phase % 4]), phase, (1, 1, 0, -1, -1, -1, 0, 1)[phase]), 120)
+        for phase in range(8)
+    ]),
+    ("shaken", [
+        (frame(crab(**AIR, lifts=((-3, 0, -3, 0), (0, -3, 0, -3))[phase % 2], eyes=GOOGLY[phase], arms=(("up", -2), (-2, "up"))[phase % 2]), [(SWEAT, (12, 48)[phase % 2], 30 + phase)], dx=(-2, 2)[phase % 2]), 70)
+        for phase in range(4)
+    ]),
+    ("crash", [
+        (pancake(), 260),
+        (pancake(sum(stars(0, 43, 6, 15, 2), [])), 240),
+        (pancake(sum(stars(2, 43, 6, 15, 2), [])), 240),
+        (pancake(sum(stars(4, 43, 6, 15, 2), [])), 240),
+        (frame(crab(dy=3, eyes="x", arms=("down", "down"))), 200),
+    ]),
+    ("splat", [
+        (squashed(16, "x", True), 90),
+        (squashed(24, "x"), 110),
+        (squashed(19, "squint"), 150),
+        (squashed(22, "squint"), 170),
+    ]),
+    ("slide", [
+        (squashed(22, "squint", speed=1, dust=1, brace=True), 110),
+        (squashed(22, "squint", speed=1, dust=2, brace=True), 110),
+    ]),
+    ("slide_fast", [
+        (squashed(22, "x", speed=3, dust=3, brace=True), 70),
+        (squashed(22, "x", speed=3, dust=2, brace=True), 70),
+    ]),
+    ("climb", [
+        (climbing(step), 150)
+        for step in range(4)
+    ]),
+    ("grapple", [
+        (throwing(True), 220),
+        (throwing(False), 600),
+    ]),
+    ("hang", [
+        (hanging(0), 200),
+        (hanging(1), 200),
+    ]),
+    ("hook", [
+        (hook(), 1000),
+    ]),
+    ("inflate", [
+        (inflating(radius), 300 if radius < 5 else 400)
+        for radius in (1, 2, 3, 4, 5)
+    ]),
+    ("balloon", [
+        (floating(sway, dy), 240)
+        for sway, dy in ((0, 0), (1, 1), (0, 1), (1, 0))
+    ]),
+    ("dangle", [
+        (dangling(step), 160 if eyes else 320)
+        for step, eyes in zip(range(8), (0, 0, 1, 1, 1, 0, 0, 1))
+    ]),
+    ("balloon_out", [
+        (floating(0, 0, True), 120),
+        (floating(1, -1, True), 120),
+    ]),
+    ("sit_in", [
+        (frame(crab(dy=2, arms=("down", "down"))), 110),
+        (sitting(), 120),
+    ]),
+    ("sit", [
+        (sitting("open", 0), 450),
+        (sitting("open", 1), 450),
+        (sitting("left", 0), 450),
+        (sitting("left", 1), 450),
+        (sitting("closed", 0), 110),
+        (sitting("open", 1), 450),
+        (sitting("right", 0), 450),
+        (sitting("right", 1), 450),
+        (sitting("squint", 0), 450),
+        (sitting("squint", 1), 450),
+    ]),
+    ("sit_out", [
+        (frame(crab(dy=2, arms=("down", "down"))), 110),
+    ]),
+    ("lookout", [
+        (lookout(-1, 0), 650),
+        (lookout(0, 1), 300),
+        (lookout(1, 2), 650),
+        (lookout(0, 1), 300),
+        (lookout(-1, 0), 500),
+        (lookout(0, 1, True), 600),
+        (lookout(0, 1), 300),
+    ]),
+    ("parachute_hold", [
+        (parachute(), 600),
+        (parachute(1), 400),
+    ]),
+    ("parachute_walk", [
+        (parachute(0, (1, 0, 1, 0)), 110),
+        (parachute(1), 110),
+        (parachute(0, (0, 1, 0, 1)), 110),
+        (parachute(1), 110),
+    ]),
+    ("parachute", [
+        (parachute(0, (-3, -2, -3, -2), "squint", 0), 260),
+        (parachute(1, (-2, -3, -2, -3), "open", 1), 260),
+    ]),
+    ("teeter", [
+        (teetering(step), 120)
+        for step in range(4)
+    ]),
 ]
 
 
-AIRBORNE = {"jump", "fall", "grabbed", "gone", "poke_up"}
+AIRBORNE = {"jump", "fall", "grabbed", "gone", "poke_up", "shaken", "splat", "slide", "slide_fast",
+            "climb", "hang", "hook", "balloon", "balloon_out", "dangle", "sit_in", "sit", "parachute"}
 
 
 def check_floor():

@@ -32,6 +32,7 @@ Singleton {
 
     signal summonRequested()
     signal performRequested(string animation)
+    signal perchRequested(string method)
 
     function apply(text: string): void {
         let data = null;
@@ -127,6 +128,10 @@ Singleton {
 
         function perform(animation: string): void {
             root.performRequested(animation);
+        }
+
+        function perch(method: string): void {
+            root.perchRequested(method);
         }
     }
 }

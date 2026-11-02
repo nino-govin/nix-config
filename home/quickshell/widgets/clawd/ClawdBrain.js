@@ -6,6 +6,9 @@ const apexClearance = 70;
 const maxThrowSpeed = 1800;
 const edgeMargin = 0.3;
 const pokeReach = [0.35, 0.9];
+const jumpReach = 2.5;
+const jumpRise = 5;
+const arcPerDistance = 0.35;
 
 function random(min, max) {
     return min + Math.random() * (max - min);
@@ -26,8 +29,6 @@ function restAnimation(state, tool, night) {
     switch (state) {
     case "sleeping":
         return night ? "nightcap" : "sleep";
-    case "idle":
-        return "idle_read";
     case "working":
         return tool !== "" && tool !== "think" ? "work_" + tool : "think";
     case "thinking":
@@ -44,10 +45,27 @@ function restDuration(state) {
         return random(45000, 90000);
     case "attention":
         return 4000;
-    case "idle":
-        return random(8000, 20000);
     }
     return random(6000, 14000);
+}
+
+const idles = [
+    { animation: "idle_look", weight: 3, duration: [3000, 6000] },
+    { animation: "idle_read", weight: 1, duration: [7000, 12000] },
+    { animation: "idle_coffee", weight: 2, duration: [6000, 10000] },
+    { animation: "idle_music", weight: 2, duration: [6000, 11000] },
+    { animation: "idle_bubbles", weight: 2, duration: [5000, 8000] },
+    { animation: "idle_mania", weight: 2, duration: [6000, 11000] }
+];
+
+function idleRest(media, activity) {
+    const idle = pick(idles.map(entry => [entry,
+        entry.animation === "idle_music" && media ? entry.weight * 3 : entry.weight]));
+    return {
+        kind: "rest",
+        animation: idle.animation,
+        duration: random(idle.duration[0], idle.duration[1]) / activity
+    };
 }
 
 function center(sim) {
@@ -100,14 +118,24 @@ function wanderTarget(sim, platforms, world) {
 }
 
 function jumpOptions(sim, platforms, world) {
+    const feet = surfaceY(sim, platforms, world);
+    const range = surfaceRange(sim, platforms, world);
+    const reach = sim.width * jumpReach;
     return landable(platforms, sim, world)
-        .filter(platform => platform.id !== sim.platform)
-        .map(platform => ({
-            kind: "jump",
-            platform: platform.id,
-            targetX: clampX(world, sim, random(platform.x,
-                Math.max(platform.x, platform.x + platform.width - sim.width)))
-        }));
+        .filter(platform => platform.id !== sim.platform
+            && feet - platform.y <= sim.height * jumpRise)
+        .map(platform => {
+            const targetX = clampX(world, sim, random(platform.x,
+                Math.max(platform.x, platform.x + platform.width - sim.width)));
+            const launchX = Math.max(range.left, Math.min(range.right,
+                Math.max(targetX - reach, Math.min(targetX + reach, sim.x))));
+            if (Math.abs(targetX - launchX) > reach)
+                return null;
+            const jump = { kind: "jump", platform: platform.id, targetX: targetX };
+            return Math.abs(launchX - sim.x) > 1
+                ? [{ kind: "walk", targetX: launchX }, jump] : [jump];
+        })
+        .filter(option => option);
 }
 
 function surfaceY(sim, platforms, world) {
@@ -178,7 +206,7 @@ function plan(context) {
     const state = context.state;
     const activity = context.activity || 1;
     const calm = state === "sleeping" || state === "attention";
-    const rest = {
+    const rest = state === "idle" ? idleRest(context.media, activity) : {
         kind: "rest",
         animation: restAnimation(state, context.tool, context.night),
         duration: restDuration(state) / (calm ? 1 : activity)
@@ -196,15 +224,15 @@ function plan(context) {
         options.push([[rest], 8 / activity]);
         options.push([[{ kind: "walk", targetX: wanderTarget(sim, platforms, world) }, rest], 1]);
         if (jumps.length > 0)
-            options.push([[pick(jumps.map(jump => [jump, 1])), rest], 1]);
+            options.push([pick(jumps.map(jump => [jump, 1])).concat([rest]), 1]);
         return pick(options);
     }
 
-    options.push([[rest], (busy ? 5 : 4) / activity]);
+    options.push([[rest], (busy ? 5 : 3) / activity]);
     options.push([[{ kind: "walk", targetX: wanderTarget(sim, platforms, world) }]
         .concat(busy ? [rest] : []), 2]);
     if (jumps.length > 0)
-        options.push([[pick(jumps.map(jump => [jump, 1]))]
+        options.push([pick(jumps.map(jump => [jump, 1]))
             .concat(busy ? [rest] : []), busy ? 2 : 2.5]);
     if (pokes.length > 0 && !busy)
         options.push([pick(pokes.map(poke => [poke, 1])), 1.5]);
@@ -224,7 +252,8 @@ function plan(context) {
 
 function launch(sim, targetX, targetFeet) {
     const startFeet = sim.y + sim.height;
-    const apexFeet = Math.min(startFeet, targetFeet) - apexClearance;
+    const apexFeet = Math.min(startFeet, targetFeet) - apexClearance
+        - Math.abs(targetX - sim.x) * arcPerDistance;
     const velocityY = -Math.sqrt(2 * gravity * (startFeet - apexFeet));
     const duration = -velocityY / gravity
         + Math.sqrt(2 * (targetFeet - apexFeet) / gravity);

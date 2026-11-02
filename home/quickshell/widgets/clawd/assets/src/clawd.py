@@ -740,6 +740,149 @@ def raised(left=0, right=0):
     return [(CLAW_UP.mirrored(), 12, 27 + left), (CLAW_UP, 44, 27 + right)]
 
 
+def flipped(item):
+    other = Canvas(item.width, item.height)
+    other.grid = item.grid[::-1]
+    return other
+
+
+def scratch(phase):
+    return [(flipped(CLAW_UP), 40 + phase, 30 + phase)]
+
+
+MUG = sprite([
+    "WNNNNW..",
+    "WWWWWWWW",
+    "WWWWWW.W",
+    "WWWWWWWW",
+    "WWWWWW..",
+    ".WWWW...",
+])
+
+
+def steam(x, y, phase):
+    c = Canvas(FRAME, FRAME)
+    for i, (dx, dy) in enumerate(((0, 0), (1, -2), (0, -4), (1, -6))):
+        if (i + phase) % 3:
+            c.px(x + dx + (phase % 2), y + dy, "g")
+            c.px(x + dx + 2 - (phase % 2), y + dy - 1, "g")
+    return c
+
+
+def coffee(sip=False, phase=0):
+    if sip:
+        return [(MUG, 29, 45), (CLAW_SIDE.mirrored(), 37, 46), (steam(31, 42, phase), 0, 0)]
+    return [(MUG, 43, 43), (CLAW_SIDE.mirrored(), 51, 44), (steam(45, 40, phase), 0, 0)]
+
+
+HEART = sprite([".RR.RR.", "RRRRRRR", ".RRRRR.", "..RRR..", "...R..."])
+
+
+def headphones(dy=0):
+    c = Canvas(FRAME, FRAME)
+    top = 33 + dy
+    c.rect(20, top, 43, top, "K")
+    c.line(16, top + 4, 19, top + 1, "K")
+    c.line(47, top + 4, 44, top + 1, "K")
+    c.rect(16, top + 4, 16, top + 6, "K")
+    c.rect(47, top + 4, 47, top + 6, "K")
+    for x0 in (13, 46):
+        c.rect(x0, top + 7, x0 + 4, top + 13, "K")
+        c.rect(x0 + 1, top + 8, x0 + 3, top + 12, "b")
+        c.rect(x0 + 1, top + 8, x0 + 3, top + 8, "S")
+    return c.outline()
+
+
+BUBBLES = {
+    1: glyph([".S.", "S.S", ".S."]),
+    2: glyph([".SSS.", "SW..S", "S...S", "S...S", ".SSS."]),
+    3: glyph(["..SSS..", ".S...S.", "SW....S", "S.....S", "S.....S", ".S...S.", "..SSS.."]),
+    0: glyph(["S...S", "..W..", ".W.W.", "..W..", "S...S"]),
+}
+
+
+def wand(raised=False):
+    c = Canvas(FRAME, FRAME)
+    if raised:
+        c.rows(31, 45, [".SSS.", "S...S", "S...S", "S...S", ".SSS."])
+        c.line(36, 47, 45, 49, "N")
+        c.outline()
+        c.paste(CLAW_SIDE.mirrored(), 45, 46)
+    else:
+        c.rows(46, 33, [".SSS.", "S...S", "S...S", "S...S", ".SSS."])
+        c.line(48, 38, 48, 45, "N")
+        c.outline()
+        c.paste(CLAW_PINCH, 45, 44)
+    return c
+
+
+BUBBLE_PATHS = [
+    [(2, 30, 37), (2, 26, 30), (3, 21, 22), (3, 17, 14), (0, 16, 8)],
+    [(1, 34, 40), (2, 38, 33), (2, 43, 26), (2, 47, 18), (0, 50, 12)],
+    [(1, 31, 41), (1, 30, 34), (2, 32, 27), (0, 31, 21)],
+]
+
+
+def bubbles(step):
+    c = Canvas(FRAME, FRAME)
+    for index, path in enumerate(BUBBLE_PATHS):
+        t = step - index * 2
+        if 0 <= t < len(path):
+            size, x, y = path[t]
+            c.rows(x, y, BUBBLES[size].lines())
+    return c
+
+
+MANIA_CHART = [(0, (0,)), (1, (2,)), (2, (1,)), (3, (3,)), (4, (0, 3)), (5, (2,)), (6, (1,)), (7, (3,))]
+
+
+def mania_tile(step):
+    width, height, hit = 17, 18, 15
+    rows = [["K"] * width for _ in range(height)]
+    for y in range(height):
+        for lane in range(5):
+            rows[y][lane * 4] = "G" if lane in (0, 4) else "E"
+    pressed = set()
+    for beat, lanes in MANIA_CHART:
+        distance = (beat - step) % len(MANIA_CHART)
+        y = hit - distance * 2
+        for lane in lanes:
+            if distance == 0:
+                pressed.add(lane)
+            if 1 <= y < height - 1:
+                for dx in range(3):
+                    rows[y][lane * 4 + 1 + dx] = "W" if lane in (0, 3) else "F"
+    for lane in range(4):
+        for dx in range(3):
+            rows[hit + 1][lane * 4 + 1 + dx] = "W" if lane in pressed else "g"
+    return prop(["".join(row) for row in rows]), pressed
+
+
+def mania(step):
+    tile, pressed = mania_tile(step)
+    pad = Canvas(FRAME, FRAME)
+    pad.rect(20, 56, 43, 58, "K")
+    for lane in range(4):
+        x = 21 + lane * 6
+        pad.rect(x, 55, x + 4, 56, "F" if lane in pressed else "g")
+    pad.outline()
+    extras = [(pad, 0, 0), (tile, 22, 9)]
+    left = 21 if 0 in pressed else 27 if 1 in pressed else 24
+    right = 39 if 3 in pressed else 33 if 2 in pressed else 36
+    extras.append((CLAW_TAP, left - 1, 47 + 2 * (0 in pressed or 1 in pressed)))
+    extras.append((CLAW_TAP, right - 1, 47 + 2 * (2 in pressed or 3 in pressed)))
+    return extras
+
+
+CLAW_TAP = prop([
+    "HBBBD",
+    "BBBBD",
+    ".BBD.",
+    ".BBD.",
+    "..D..",
+])
+
+
 FLOOR = 59
 
 
@@ -891,6 +1034,49 @@ ANIMATIONS = [
     ("juggle", [
         (frame(crab(eyes="up", arms=("up", "up")), raised(phase % 2 * 2, (phase + 1) % 2 * 2) + [(juggle(phase), 0, 0)]), 150)
         for phase in range(6)
+    ]),
+    ("idle_look", [
+        (frame(crab(eyes="left")), 700),
+        (frame(crab(eyes="right")), 700),
+        (frame(crab()), 300),
+        (frame(crab(eyes="closed")), 110),
+        (frame(crab()), 400),
+        (frame(crab(eyes="squint", arms=(0, "up")), scratch(0)), 160),
+        (frame(crab(eyes="squint", arms=(0, "up")), scratch(1)), 160),
+        (frame(crab(eyes="squint", arms=(0, "up")), scratch(0)), 160),
+        (frame(crab(eyes="squint", arms=(0, "up")), scratch(1)), 160),
+        (frame(crab(dy=1)), 600),
+    ]),
+    ("idle_coffee_in", [
+        (frame(crab(eyes="right", arms=(0, "none")), coffee(phase=0)), 200),
+    ]),
+    ("idle_coffee", [
+        (frame(crab(eyes="right", arms=(0, "none")), coffee(phase=0)), 350),
+        (frame(crab(eyes="right", arms=(0, "none")), coffee(phase=1)), 350),
+        (frame(crab(eyes="right", arms=(0, "none")), coffee(phase=2)), 350),
+        (frame(crab(eyes="closed", arms=(0, "none")), coffee(True, 0)), 450),
+        (frame(crab(eyes="closed", arms=(0, "none")), coffee(True, 1)), 450),
+        (frame(crab(dy=1, eyes="squint", arms=(0, "none")), coffee(phase=2) + [(HEART, 6, 28)]), 500),
+        (frame(crab(eyes="squint", arms=(0, "none")), coffee(phase=0) + [(HEART, 6, 26)]), 500),
+        (frame(crab(arms=(0, "none")), coffee(phase=1)), 400),
+    ]),
+    ("idle_music", [
+        (frame(crab(dy=beat % 2, eyes="closed" if beat % 4 < 2 else "squint", arms=("none", "none")), [(headphones(beat % 2), 0, 0), (NOTE, (4, 52, 8, 56)[beat % 4], 30 - (beat % 2) * 4)]), 230)
+        for beat in range(8)
+    ]),
+    ("idle_bubbles", [
+        (frame(crab(eyes="right", arms=(0, "none")), [(wand(), 0, 0)]), 300),
+        (frame(crab(eyes="closed", arms=(0, "none")), [(wand(True), 0, 0)]), 350),
+    ] + [
+        (frame(crab(eyes="up" if step < 5 else "squint", arms=(0, "none")), [(wand(step < 2), 0, 0), (bubbles(step), 0, 0)]), 200)
+        for step in range(9)
+    ]),
+    ("idle_mania", [
+        (frame(crab(dy=step % 2, eyes="up" if step != 4 else "wide", arms=("none", "none")), mania(step)), 140)
+        for step in range(8)
+    ] + [
+        (frame(crab(dy=step % 2, eyes="up", arms=("none", "none")), mania(step)), 140)
+        for step in range(8)
     ]),
     ("think", [
         (frame(crab(eyes="up"), [(TRAIL_TINY, 44, 33), (TRAIL_SMALL, 46, 29), (bubble(1), 48, 20)]), 320),

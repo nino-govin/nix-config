@@ -75,6 +75,7 @@ Item {
             tool: ClawdService.tool,
             reactions: reactions,
             night: night,
+            media: MediaService.playing,
             activity: SettingsService.clawdActivity
         };
     }

@@ -71,15 +71,14 @@ Singleton {
 
     Process {
         id: gpuReader
+        environment: ({ NVIDIA_IN_USE: GpuPowerService.inUse ? "1" : "0" })
         command: ["sh", "-c",
             "for card in /sys/class/drm/card[0-9]*; do "
             + "test -r \"$card/device/boot_vga\" || continue; "
             + "test \"$(cat \"$card/device/boot_vga\")\" = 0 || continue; "
             + "vendor=$(cat \"$card/device/vendor\" 2>/dev/null); "
             + "if test \"$vendor\" = 0x10de && command -v nvidia-smi >/dev/null; then "
-            + "test \"$(cat \"$card/device/power/runtime_status\")\" = active || exit 1; "
-            + "find /proc/[0-9]*/fd -lname '/dev/nvidia[0-9]*' -print -quit "
-            + "2>/dev/null | grep -q . || exit 1; "
+            + "test \"$NVIDIA_IN_USE\" = 1 || exit 1; "
             + "nvidia-smi --query-gpu=name,temperature.gpu,utilization.gpu,"
             + "memory.used,memory.total --format=csv,noheader,nounits "
             + "| head -n1 | sed 's/, /|/g'; exit 0; fi; "

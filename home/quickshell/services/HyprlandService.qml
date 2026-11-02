@@ -28,6 +28,16 @@ Singleton {
             workspace_id: toplevel.workspace.id
         }))
 
+    readonly property int refreshRate: {
+        const monitor = Hyprland.focusedMonitor;
+        return monitor && monitor.lastIpcObject
+            ? Math.round(monitor.lastIpcObject.refreshRate || 0) : 0;
+    }
+
+    function refreshMonitors(): void {
+        Hyprland.refreshMonitors();
+    }
+
     function focusWorkspace(id: int): void {
         Hyprland.dispatch("hl.dsp.focus({ workspace = " + id + " })");
     }

@@ -1,10 +1,17 @@
-{ pkgs, config, ... }:
+{
+  pkgs,
+  config,
+  host,
+  ...
+}:
 
 {
   home.packages = [ pkgs.quickshell ];
 
   xdg.configFile."quickshell".source =
     config.lib.file.mkOutOfStoreSymlink "/etc/nixos/home/quickshell";
+
+  xdg.dataFile."quickshell-host.json".text = builtins.toJSON { inherit (host.monitor) refresh; };
 
   systemd.user.services.quickshell = {
     Unit = {

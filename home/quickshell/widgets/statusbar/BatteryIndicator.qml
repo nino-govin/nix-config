@@ -1,3 +1,4 @@
+import "../../components/state"
 import "../../components/theme"
 import "../../services"
 
@@ -12,4 +13,6 @@ StatusResourceIndicator {
     iconText: BatteryService.icon
     iconFontFamily: Typography.materialIconFontFamily
     outputText: BatteryService.percent + "%"
+    interactive: true
+    onClicked: OverlayState.toggleEnergy()
 }

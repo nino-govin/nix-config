@@ -14,6 +14,8 @@ Singleton {
     readonly property string wallpaperPicker: "wallpaperPicker"
     readonly property string powerMenu: "powerMenu"
     readonly property string settings: "settings"
+    readonly property string energy: "energy"
+    readonly property string keybinds: "keybinds"
 
     property string activeOverlay: ""
     property string utilityPage: "notifications"
@@ -33,6 +35,8 @@ Singleton {
     readonly property bool wallpaperPickerVisible: activeOverlay === wallpaperPicker
     readonly property bool powerMenuVisible: activeOverlay === powerMenu
     readonly property bool settingsVisible: activeOverlay === settings
+    readonly property bool energyVisible: activeOverlay === energy
+    readonly property bool keybindsVisible: activeOverlay === keybinds
 
     function toggle(overlay: string): void {
         activeOverlay = activeOverlay === overlay ? "" : overlay;
@@ -124,6 +128,24 @@ Singleton {
 
     function hidePowerMenu(): void {
         hide(powerMenu);
+    }
+
+    function toggleEnergy(): void {
+        toggle(energy);
+    }
+
+    function hideEnergy(): void {
+        hide(energy);
+    }
+
+    function toggleKeybinds(): void {
+        if (!keybindsVisible)
+            KeybindService.reload();
+        toggle(keybinds);
+    }
+
+    function hideKeybinds(): void {
+        hide(keybinds);
     }
 
     IpcHandler {
@@ -250,6 +272,34 @@ Singleton {
 
         function hide(): void {
             root.hidePowerMenu();
+        }
+    }
+
+    IpcHandler {
+        target: "energy"
+
+        function toggle(): void {
+            root.toggleEnergy();
+        }
+
+        function hide(): void {
+            root.hideEnergy();
+        }
+
+        function setProfile(mode: string): void {
+            PowerProfileService.setMode(mode);
+        }
+    }
+
+    IpcHandler {
+        target: "keybinds"
+
+        function toggle(): void {
+            root.toggleKeybinds();
+        }
+
+        function hide(): void {
+            root.hideKeybinds();
         }
     }
 

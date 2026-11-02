@@ -1,5 +1,7 @@
 import "../../services"
 import "../../widgets/controlcenter"
+import "../../widgets/energy"
+import "../../widgets/keybinds"
 import "../../widgets/launcher"
 import "../../widgets/notifications"
 import "../../widgets/osd"
@@ -76,6 +78,55 @@ EdgeOverlayWindow {
     }
 
     EdgePanel {
+        host: root
+        edge: EdgePanel.Top
+        edgeAlignment: EdgePanel.End
+        alongEdgeOffset: 10
+        edgeOffset: ShellMetrics.panelScreenEdgeOverlap
+        shown: OverlayState.energyVisible
+        wantsKeyboardFocus: true
+        exclusiveKeyboardFocus: false
+        targetWidth: Math.max(1, Math.min(480, root.width - 32))
+        targetHeight: energyPanel.desiredHeight
+        radius: ShellMetrics.panelRadius
+        motionStiffness: ShellMetrics.fastPanelSpringStiffness
+        motionDamping: ShellMetrics.fastPanelSpringDamping
+        closeMotionDamping: ShellMetrics.fastPanelCloseSpringDamping
+
+        EnergyPanel {
+            id: energyPanel
+            anchors.fill: parent
+        }
+    }
+
+    EdgePanel {
+        id: keybindsWidget
+
+        host: root
+        edge: EdgePanel.Bottom
+        edgeAlignment: EdgePanel.Center
+        edgeOffset: ShellMetrics.panelScreenEdgeOverlap
+        shown: OverlayState.keybindsVisible
+        wantsKeyboardFocus: true
+        focusTarget: keybinds.focusTarget
+        targetWidth: Math.max(1, Math.min(980, root.width - 80))
+        targetHeight: keybinds.desiredHeight
+        radius: ShellMetrics.panelRadius
+        motionStiffness: ShellMetrics.fastPanelSpringStiffness
+        motionDamping: ShellMetrics.fastPanelSpringDamping
+        closeMotionDamping: ShellMetrics.fastPanelCloseSpringDamping
+
+        KeybindCheatsheet {
+            id: keybinds
+            anchors.fill: parent
+            shown: keybindsWidget.shown
+            maximumHeight: Math.max(1, Math.min(640, root.height - 60))
+
+            onCloseRequested: OverlayState.hideKeybinds()
+        }
+    }
+
+    EdgePanel {
         id: launcherWidget
 
         host: root
@@ -134,6 +185,7 @@ EdgeOverlayWindow {
         edgeAlignment: EdgePanel.Center
         edgeOffset: ShellMetrics.panelScreenEdgeOverlap
         shown: OverlayState.osdVisible && !OverlayState.launcherVisible
+            && !OverlayState.keybindsVisible
         targetWidth: 320
         targetHeight: 72 + ShellMetrics.panelScreenEdgeOverlap
         radius: ShellMetrics.panelRadius

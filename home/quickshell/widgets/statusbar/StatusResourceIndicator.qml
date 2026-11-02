@@ -11,6 +11,9 @@ Item {
     required property string iconText
     required property string iconFontFamily
     required property string outputText
+    property bool interactive: false
+
+    signal clicked()
 
     visible: resourceAvailable
     implicitWidth: content.width
@@ -50,5 +53,15 @@ Item {
             font.pixelSize: 14
             font.weight: Font.Light
         }
+    }
+
+    HoverHandler {
+        enabled: root.interactive
+        cursorShape: Qt.PointingHandCursor
+    }
+
+    TapHandler {
+        enabled: root.interactive
+        onTapped: root.clicked()
     }
 }

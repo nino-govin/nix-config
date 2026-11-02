@@ -59,4 +59,11 @@ Singleton {
     readonly property string trash: "󰩺"
     readonly property string clipboard: "󰅇"
     readonly property string clipboardImage: "󰋩"
+    readonly property string camera: "󰖠"
+    readonly property string screenShare: "󰄘"
+    readonly property string batteryHealth: "󰗶"
+    readonly property string display: "󰍹"
+    readonly property string plug: "󰚥"
+    readonly property string battery: "󰁹"
+    readonly property string search: "󰍉"
 }

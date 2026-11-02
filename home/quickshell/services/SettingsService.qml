@@ -62,6 +62,8 @@ Singleton {
         statusBarShowClock: true,
         statusBarShowBattery: true,
         statusBarShowMemory: true,
+        statusBarShowGpu: true,
+        statusBarShowPrivacy: true,
         statusBarShowKeyboardLayout: true,
         statusBarShowSystemTray: true,
         doNotDisturb: false,
@@ -175,6 +177,8 @@ Singleton {
     property bool statusBarShowClock: defaults.statusBarShowClock
     property bool statusBarShowBattery: defaults.statusBarShowBattery
     property bool statusBarShowMemory: defaults.statusBarShowMemory
+    property bool statusBarShowGpu: defaults.statusBarShowGpu
+    property bool statusBarShowPrivacy: defaults.statusBarShowPrivacy
     property bool statusBarShowKeyboardLayout: defaults.statusBarShowKeyboardLayout
     property bool statusBarShowSystemTray: defaults.statusBarShowSystemTray
     property bool doNotDisturb: defaults.doNotDisturb

@@ -16,7 +16,13 @@ Item {
         height: parent.height
         spacing: 10
 
+        PrivacyIndicator {
+            anchors.verticalCenter: parent.verticalCenter
+        }
         KeyboardLayoutIndicator {
+            anchors.verticalCenter: parent.verticalCenter
+        }
+        GpuIndicator {
             anchors.verticalCenter: parent.verticalCenter
         }
         BatteryIndicator {

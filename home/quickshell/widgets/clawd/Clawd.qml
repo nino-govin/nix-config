@@ -44,11 +44,12 @@ Item {
     readonly property var motions: ["walk", "climb", "reel", "float"]
     readonly property var aloft: ["climb", "reel", "float", "jump", "dangle", "letgo"]
     readonly property real shakeSpeed: 700
-    property bool shaken: false
-    property bool dizzyPending: false
+    readonly property real dizzyStep: 0.1
+    readonly property real dizzyDecay: 0.2
+    readonly property int stars: dizziness < 0.1 ? 0 : dizziness < 0.4 ? 1 : dizziness < 0.7 ? 2 : 3
+    property real dizziness: 0
     property bool slid: false
     property var shakeSigns: ({ x: 0, y: 0 })
-    property var shakeTimes: []
     property real splatUntil: 0
     property real lastApproach: 0
 
@@ -159,7 +160,7 @@ Item {
         facing = sim.facing;
         const now = Date.now();
         if (dragging)
-            baseAnimation = shaken ? "shaken" : "grabbed";
+            baseAnimation = stars > 0 ? "shaken_" + stars : "grabbed";
         else if (sim.airborne && sim.sliding)
             baseAnimation = now < splatUntil ? "splat"
                 : sim.vy > 600 ? "slide_fast" : "slide";
@@ -307,10 +308,10 @@ Item {
             }
             queue = Brain.recovery(sim, platforms, world, {
                 crash: Brain.crashed(sim),
-                dizzy: dizzyPending,
+                dizzy: dizziness,
                 slid: slid
             }).concat(queue);
-            dizzyPending = false;
+            dizziness = 0;
             slid = false;
             advance();
         } else if (event === "arrived") {
@@ -340,9 +341,7 @@ Item {
 
     function grab(position: point): void {
         dragging = true;
-        shaken = false;
         shakeSigns = { x: 0, y: 0 };
-        shakeTimes = [];
         rope = null;
         sim.sliding = false;
         sim.gliding = false;
@@ -366,7 +365,6 @@ Item {
     }
 
     function trackShake(velocity: vector2d): void {
-        const now = Date.now();
         const signs = shakeSigns;
         for (const axis of ["x", "y"]) {
             const speed = velocity[axis];
@@ -374,20 +372,15 @@ Item {
             if (sign === 0 || sign === signs[axis])
                 continue;
             if (signs[axis] !== 0)
-                shakeTimes = shakeTimes.filter(time => now - time < 1500).concat([now]);
+                dizziness = Math.min(1, dizziness + dizzyStep);
             signs[axis] = sign;
         }
         shakeSigns = signs;
-        if (!shaken && shakeTimes.length >= 4) {
-            shaken = true;
-            sync();
-        }
+        sync();
     }
 
     function release(velocity: vector2d): void {
         dragging = false;
-        dizzyPending = shaken;
-        shaken = false;
         Brain.release(sim, velocity.x, velocity.y);
         replanPending = true;
         moving = true;
@@ -505,6 +498,17 @@ Item {
     Timer {
         id: activityTimer
         onTriggered: root.advance()
+    }
+
+    Timer {
+        interval: 100
+        repeat: true
+        running: root.dizziness > 0 && (root.dragging || root.moving)
+        onTriggered: {
+            root.dizziness = Math.max(0, root.dizziness - root.dizzyDecay * interval / 1000);
+            if (root.dragging)
+                root.sync();
+        }
     }
 
     onCursorChanged: curiosityTimer.restart()

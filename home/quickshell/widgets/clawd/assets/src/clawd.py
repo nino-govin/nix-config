@@ -1017,6 +1017,17 @@ def stars(phase, cy=29, count=8, rx=15, ry=4):
     return front, back
 
 
+def woozy(phase, count):
+    front, back = [], []
+    for k in range(count):
+        angle = 2 * math.pi * (phase / 8 + k / count)
+        star = (STAR_FAR, round(32 + 13 * math.cos(angle)) - 3, round(30 + 3 * math.sin(angle)) - 3)
+        (front if math.sin(angle) >= 0 else back).append(star)
+    lifts = ((-3, -1, -2, -3), (-1, -3, -3, -2))[phase // 2 % 2]
+    body = crab(**AIR, lifts=lifts, eyes=GOOGLY[phase * count // 4 % 4], arms=("down", "down"))
+    return frame(body, front, back)
+
+
 def starry(body, phase, dx=0, extras=()):
     front, back = stars(phase)
     return frame(body, list(extras) + front, back, dx=dx)
@@ -1594,10 +1605,13 @@ ANIMATIONS = [
         (starry(crab(dy=phase % 2, lifts=((1, 0, 1, 0), (0, 0, 0, 0), (0, 1, 0, 1), (0, 0, 0, 0))[phase % 4], eyes=GOOGLY[phase % 4]), phase, (1, 1, 0, -1, -1, -1, 0, 1)[phase]), 120)
         for phase in range(8)
     ]),
-    ("shaken", [
-        (frame(crab(**AIR, lifts=((-3, 0, -3, 0), (0, -3, 0, -3))[phase % 2], eyes=GOOGLY[phase], arms=(("up", -2), (-2, "up"))[phase % 2]), [(SWEAT, (12, 48)[phase % 2], 30 + phase)], dx=(-2, 2)[phase % 2]), 70)
-        for phase in range(4)
-    ]),
+] + [
+    ("shaken_%d" % count, [
+        (woozy(phase, count), 150 - count * 20)
+        for phase in range(8)
+    ])
+    for count in (1, 2, 3)
+] + [
     ("crash", [
         (pancake(), 260),
         (pancake(sum(stars(0, 43, 6, 15, 2), [])), 240),
@@ -1699,7 +1713,7 @@ ANIMATIONS = [
 ]
 
 
-AIRBORNE = {"jump", "fall", "grabbed", "gone", "poke_up", "shaken", "splat", "slide", "slide_fast",
+AIRBORNE = {"jump", "fall", "grabbed", "gone", "poke_up", "shaken_1", "shaken_2", "shaken_3", "splat", "slide", "slide_fast",
             "climb", "hang", "hook", "balloon", "balloon_out", "dangle", "sit_in", "sit", "parachute"}
 
 

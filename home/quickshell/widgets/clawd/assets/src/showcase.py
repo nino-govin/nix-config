@@ -56,7 +56,7 @@ CELLS = [
     ("dangle", ["dangle"]),
     ("balloon", ["inflate", "balloon", "balloon", "balloon_out"]),
     ("parachute", ["parachute_hold", "parachute_walk", "parachute"]),
-    ("shaken", ["shaken"]),
+    ("shaken", ["shaken_1", "shaken_2", "shaken_3"]),
     ("dizzy", ["dizzy", "stagger"]),
     ("crash", ["crash"]),
     ("splat", ["splat", "slide", "slide", "slide_fast", "slide_fast"]),

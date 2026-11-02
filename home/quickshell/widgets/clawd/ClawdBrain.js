@@ -394,11 +394,11 @@ function recovery(sim, platforms, world, impact) {
     const steps = [];
     if (impact.crash)
         steps.push({ kind: "rest", animation: "crash", duration: 1200 });
-    if (impact.dizzy)
-        steps.push(
-            { kind: "rest", animation: "dizzy", duration: random(3000, 4500) },
-            { kind: "walk", animation: "stagger", speed: staggerSpeed, targetX: wanderTarget(sim, platforms, world) });
-    else if (impact.crash || impact.slid)
+    if (impact.dizzy >= 0.1)
+        steps.push({ kind: "rest", animation: "dizzy", duration: 1200 + impact.dizzy * 3800 });
+    if (impact.dizzy >= 0.7)
+        steps.push({ kind: "walk", animation: "stagger", speed: staggerSpeed, targetX: wanderTarget(sim, platforms, world) });
+    else if (impact.dizzy < 0.1 && (impact.crash || impact.slid))
         steps.push({ kind: "rest", animation: "dizzy", duration: 1600 });
     return steps.length > 0 ? steps
         : [{ kind: "rest", animation: "land", duration: 180 }];

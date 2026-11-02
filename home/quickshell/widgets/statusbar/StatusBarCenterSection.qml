@@ -44,6 +44,7 @@ Item {
             anchors.fill: parent
             value: gauge.value
             ringWidth: 3
+            interactive: true
             ringColor: gauge.muted ? Theme.mutedTextColor : Theme.accentColor
             onClicked: gauge.clicked()
             onScrolled: delta => gauge.scrolled(delta)

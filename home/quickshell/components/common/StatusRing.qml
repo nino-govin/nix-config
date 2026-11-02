@@ -9,6 +9,7 @@ Item {
     property color backgroundColor: Theme.surfaceBorderColor
     property real ringWidth: 3
     property real displayValue: value
+    property bool interactive: false
     signal scrolled(real delta)
     signal clicked()
 
@@ -56,6 +57,7 @@ Item {
 
     MouseArea {
         anchors.fill: parent
+        enabled: root.interactive
         cursorShape: Qt.PointingHandCursor
         onClicked: root.clicked()
         onWheel: wheel => root.scrolled(wheel.angleDelta.y > 0 ? 0.05 : -0.05)

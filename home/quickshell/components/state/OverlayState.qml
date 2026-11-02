@@ -15,6 +15,7 @@ Singleton {
     readonly property string powerMenu: "powerMenu"
     readonly property string settings: "settings"
     readonly property string energy: "energy"
+    readonly property string memory: "memory"
     readonly property string keybinds: "keybinds"
 
     property string activeOverlay: ""
@@ -36,6 +37,7 @@ Singleton {
     readonly property bool powerMenuVisible: activeOverlay === powerMenu
     readonly property bool settingsVisible: activeOverlay === settings
     readonly property bool energyVisible: activeOverlay === energy
+    readonly property bool memoryVisible: activeOverlay === memory
     readonly property bool keybindsVisible: activeOverlay === keybinds
 
     function toggle(overlay: string): void {
@@ -136,6 +138,14 @@ Singleton {
 
     function hideEnergy(): void {
         hide(energy);
+    }
+
+    function toggleMemory(): void {
+        toggle(memory);
+    }
+
+    function hideMemory(): void {
+        hide(memory);
     }
 
     function toggleKeybinds(): void {
@@ -288,6 +298,18 @@ Singleton {
 
         function setProfile(mode: string): void {
             PowerProfileService.setMode(mode);
+        }
+    }
+
+    IpcHandler {
+        target: "memory"
+
+        function toggle(): void {
+            root.toggleMemory();
+        }
+
+        function hide(): void {
+            root.hideMemory();
         }
     }
 

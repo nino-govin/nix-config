@@ -66,4 +66,8 @@ Singleton {
     readonly property string plug: "󰚥"
     readonly property string battery: "󰁹"
     readonly property string search: "󰍉"
+    readonly property string cache: "󰆼"
+    readonly property string sharedMemory: "󰉋"
+    readonly property string dirtyMemory: "󰆓"
+    readonly property string pressure: "󰊚"
 }

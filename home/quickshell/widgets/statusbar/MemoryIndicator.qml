@@ -1,3 +1,4 @@
+import "../../components/state"
 import "../../components/theme"
 import "../../services"
 
@@ -11,4 +12,6 @@ StatusResourceIndicator {
     iconText: Icons.memory
     iconFontFamily: Typography.materialIconFontFamily
     outputText: MemoryService.usedFormatted
+    interactive: true
+    onClicked: OverlayState.toggleMemory()
 }

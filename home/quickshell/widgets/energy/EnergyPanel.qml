@@ -49,7 +49,7 @@ Item {
             columnSpacing: 10
             rowSpacing: 10
 
-            EnergyStatTile {
+            StatTile {
                 Layout.fillWidth: true
                 Layout.preferredWidth: 1
                 icon: Icons.batteryHealth
@@ -60,7 +60,7 @@ Item {
                     + (BatteryService.cycleCount > 0 ? " · " + BatteryService.cycleCount + " cycles" : "")
             }
 
-            EnergyStatTile {
+            StatTile {
                 Layout.fillWidth: true
                 Layout.preferredWidth: 1
                 icon: Icons.display
@@ -69,7 +69,7 @@ Item {
                 detail: PowerProfileService.mode === "balanced" ? "Adaptive" : "Fixed"
             }
 
-            EnergyStatTile {
+            StatTile {
                 Layout.fillWidth: true
                 Layout.preferredWidth: 1
                 icon: BatteryService.acOnline ? Icons.plug : Icons.battery
@@ -78,7 +78,7 @@ Item {
                 detail: BatteryService.status
             }
 
-            EnergyStatTile {
+            StatTile {
                 Layout.fillWidth: true
                 Layout.preferredWidth: 1
                 icon: Icons.gpu

@@ -3,6 +3,7 @@ import "../../widgets/controlcenter"
 import "../../widgets/energy"
 import "../../widgets/keybinds"
 import "../../widgets/launcher"
+import "../../widgets/memory"
 import "../../widgets/notifications"
 import "../../widgets/osd"
 import "../../widgets/powermenu"
@@ -95,6 +96,28 @@ EdgeOverlayWindow {
 
         EnergyPanel {
             id: energyPanel
+            anchors.fill: parent
+        }
+    }
+
+    EdgePanel {
+        host: root
+        edge: EdgePanel.Top
+        edgeAlignment: EdgePanel.End
+        alongEdgeOffset: 10
+        edgeOffset: ShellMetrics.panelScreenEdgeOverlap
+        shown: OverlayState.memoryVisible
+        wantsKeyboardFocus: true
+        exclusiveKeyboardFocus: false
+        targetWidth: Math.max(1, Math.min(440, root.width - 32))
+        targetHeight: memoryPanel.desiredHeight
+        radius: ShellMetrics.panelRadius
+        motionStiffness: ShellMetrics.fastPanelSpringStiffness
+        motionDamping: ShellMetrics.fastPanelSpringDamping
+        closeMotionDamping: ShellMetrics.fastPanelCloseSpringDamping
+
+        MemoryPanel {
+            id: memoryPanel
             anchors.fill: parent
         }
     }

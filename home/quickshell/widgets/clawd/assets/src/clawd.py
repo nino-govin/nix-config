@@ -247,13 +247,35 @@ ALERT = prop([
 ])
 
 
+def limbs(segments, dy=0, dx=0):
+    c = Canvas(FRAME, FRAME)
+    for (x0, y0), (x1, y1) in segments:
+        vertical = abs(y1 - y0) >= abs(x1 - x0)
+        ox, oy = (1, 0) if vertical else (0, 1)
+        c.line(x0, y0, x1, y1, "B")
+        c.line(x0 + ox, y0 + oy, x1 + ox, y1 + oy, "D")
+    c.outline()
+    for y in range(38 + dy, 54 + dy):
+        for x in range(18 + dx, 46 + dx):
+            c.px(x, y, ".")
+    return c
+
+
+def claw_up(hx, hy, left=False):
+    return (CLAW_UP.mirrored(), hx - 4, hy - 7) if left else (CLAW_UP, hx - 3, hy - 7)
+
+
 def alert(dy=0, bubble=True, tilt=0, dx=0, sides=("left", "right")):
-    top = 27 + dy
-    extras = []
+    segments, claws = [], []
     if "left" in sides:
-        extras.append((CLAW_UP.mirrored(), 12 + dx - tilt, top))
+        hx, hy = 12 + dx - 3 * tilt, 34 + dy
+        segments.append(((17 + dx, 45 + dy), (hx, hy)))
+        claws.append(claw_up(hx, hy, True))
     if "right" in sides:
-        extras.append((CLAW_UP, 44 + dx + tilt, top))
+        hx, hy = 51 + dx + 3 * tilt, 34 + dy
+        segments.append(((46 + dx, 45 + dy), (hx, hy)))
+        claws.append(claw_up(hx, hy))
+    extras = [(limbs(segments, dy, dx), 0, 0)] + claws
     if bubble:
         extras.append((ALERT, 27 + dx, 15 + dy))
     return extras
@@ -372,11 +394,18 @@ def baton(c, x0, y0, x1, y1):
     c.px(x0, y0, "N")
 
 
-def conductor(position):
+def conductor(position, dy=0):
+    hx, hy = {"left": (44, 34), "up": (49, 31), "right": (53, 34)}[position]
+    tx, ty = {"left": (-7, -5), "up": (2, -9), "right": (7, -5)}[position]
+    hy += dy
+    stick = Canvas(FRAME, FRAME)
+    baton(stick, hx, hy - 6, hx + tx, hy - 6 + ty)
     c = Canvas(FRAME, FRAME)
-    ends = {"left": (44, 22), "up": (50, 20), "right": (57, 23)}
-    baton(c, 49, 30, *ends[position])
-    return c.outline()
+    c.paste(limbs([((46, 45 + dy), (hx, hy))], dy), 0, 0)
+    c.paste(stick.outline(), 0, 0)
+    item, x, y = claw_up(hx, hy)
+    c.paste(item, x, y)
+    return c
 
 
 def sofa():
@@ -566,28 +595,28 @@ NIGHTCAP_SWAY = sprite([
     "WWWWWWWWWWWWWWWW...",
 ])
 
-UCHIWA = [
-    "..RRRRR..",
-    ".RRWWWRR.",
-    "RRWWWWWRR",
-    "RRWWWWWRR",
-    ".RRWWWRR.",
-    "..RRRRR..",
-    "....N....",
-    "....N....",
-    "....N....",
-]
-
-SWEAT = sprite([".S.", "SSS", "SSS", ".S."])
+SWEAT = sprite([".S.", "SWS", "SSS", ".S."])
 
 
 def fan(phase):
     c = Canvas(FRAME, FRAME)
-    tilt = (0, 1, 2, 1)[phase]
-    c.rows(46 - tilt, 33 + tilt, UCHIWA[:6])
-    c.line(50 - tilt, 39 + tilt, 50, 44, "N")
+    cx, cy = 54, 41
+    for y in range(-7, 8):
+        for x in range(-6, 7):
+            inside = (x / 6.5) ** 2 + (y / 7.5) ** 2
+            if inside <= 1:
+                c.px(cx + x, cy + y, "G" if inside > 0.7 else "K")
+    spokes = ((0, -5), (0, 5), (-4, 0), (4, 0)) if phase % 2 == 0 else ((-3, -4), (3, 4), (-3, 4), (3, -4))
+    for dx, dy in spokes:
+        c.line(cx, cy, cx + dx, cy + dy, "g")
+    c.rect(cx - 1, cy - 1, cx + 1, cy + 1, "W")
+    c.rect(cx, cy + 8, cx, 56, "G")
+    c.rect(cx - 4, 57, cx + 4, 58, "K")
+    c.rect(cx - 3, 57, cx + 3, 57, "G")
     c.outline()
-    c.paste(CLAW_PINCH, 47, 43)
+    for y, length in ((39, 3), (47, 4), (50, 3)):
+        start = 46 - (phase * 2 + y) % 5
+        c.line(start - length, y, start, y, "W")
     return c
 
 
@@ -607,7 +636,7 @@ def battery(level, color):
 BOLT = sprite(["..YY", ".YY.", "YYYY", ".YY.", "YY.."])
 
 
-def canopy(cx=40, top=14, radius=15):
+def umbrella(top=14, dy=0, cx=33, radius=16):
     c = Canvas(FRAME, FRAME)
     for y in range(radius + 1):
         for x in range(-radius, radius + 1):
@@ -619,10 +648,10 @@ def canopy(cx=40, top=14, radius=15):
             if -radius < x + dx < radius:
                 c.px(cx + x + dx, top + radius, ".")
     c.rect(cx, top - 2, cx, top - 1, "K")
-    c.line(cx, top + radius, 48, 47, "K")
-    c.rows(46, 47, ["K.K", ".KK"])
+    c.rect(cx, top + radius, cx, 36 + dy, "K")
     c.outline()
-    c.paste(CLAW_PINCH, 45, 45)
+    c.paste(limbs([((46, 45 + dy), (49, 39 + dy)), ((49, 39 + dy), (cx + 5, 33 + dy))], dy), 0, 0)
+    c.paste(CLAW_SIDE.mirrored(), cx, 31 + dy)
     return c
 
 
@@ -727,17 +756,57 @@ RAM = sprite([
 ])
 
 
+CATCH = {0: "left", 4: "right"}
+JUGGLE_PATH = [(11, 26), (12, 14), (26, 7), (40, 14), (42, 26), (26, 30)]
+
+
 def juggle(phase):
-    c = Canvas(FRAME, FRAME)
-    path = [(8, 26), (12, 14), (24, 7), (38, 7), (49, 14), (53, 26)]
-    for offset in (0, 2, 4):
-        x, y = path[(phase + offset) % len(path)]
-        c.paste(RAM, x, y)
-    return c
+    spots = [(phase + offset) % len(JUGGLE_PATH) for offset in (0, 2, 4)]
+    left = 2 if 0 in spots else 0
+    right = 2 if 4 in spots else 0
+    extras = raised(left, right)
+    for spot in spots:
+        x, y = JUGGLE_PATH[spot]
+        extras.append((RAM, x, y + (left if spot == 0 else right if spot == 4 else 0)))
+    return extras
 
 
 def raised(left=0, right=0):
     return [(CLAW_UP.mirrored(), 12, 27 + left), (CLAW_UP, 44, 27 + right)]
+
+
+def holding(y, grip=True, dy=0):
+    lx, rx = (23, 35) if grip else (18, 41)
+    hy = y + dy
+    arms = limbs([((17, 45 + dy), (lx, hy + 1)), ((46, 45 + dy), (rx + 5, hy + 1))], dy)
+    return [(arms, 0, 0), (CLAW_SIDE, lx - 1, hy - 2), (CLAW_SIDE.mirrored(), rx - 1, hy - 2)]
+
+
+def browser(progress):
+    width = 19
+    rows = [["W"] * width for _ in range(13)]
+    for x in range(width):
+        rows[0][x] = "G"
+        rows[1][x] = "G"
+        rows[2][x] = "G"
+    for x, color in ((1, "R"), (3, "Y"), (5, "V")):
+        rows[0][x] = color
+    for x in range(1, width - 1):
+        rows[1][x] = "b" if x <= 1 + progress * 2 else "W"
+    for x in range(2, 11):
+        rows[4][x] = "K"
+    for x in range(2, 9):
+        rows[6][x] = "b"
+    for x in range(10, 17):
+        rows[6][x] = "g"
+    for x in range(2, 15):
+        rows[8][x] = "g"
+    for y in range(10, 12):
+        for x in range(2, 7):
+            rows[y][x] = "S"
+    for x in range(9, 17):
+        rows[10][x] = "g"
+    return prop(["".join(row) for row in rows])
 
 
 def flipped(item):
@@ -747,7 +816,9 @@ def flipped(item):
 
 
 def scratch(phase):
-    return [(flipped(CLAW_UP), 40 + phase, 30 + phase)]
+    hx = 43 + phase
+    arm = limbs([((46, 45), (51, 40)), ((51, 40), (hx + 5, 35))])
+    return [(arm, 0, 0), (CLAW_SIDE.mirrored(), hx, 32 + phase)]
 
 
 MUG = sprite([
@@ -833,7 +904,7 @@ def bubbles(step):
     return c
 
 
-MANIA_CHART = [(0, (0,)), (1, (2,)), (2, (1,)), (3, (3,)), (4, (0, 3)), (5, (2,)), (6, (1,)), (7, (3,))]
+MANIA_CHART = [(0, (0,)), (1, (2,)), (2, (1,)), (3, (3,)), (4, (0, 2)), (5, (1,)), (6, (3,)), (7, (2,))]
 
 
 def mania_tile(step):
@@ -987,11 +1058,11 @@ ANIMATIONS = [
         (frame(crab(eyes="squint", arms=(0, 0))), 300),
     ]),
     ("fan", [
-        (frame(crab(eyes="closed", arms=(0, "none")), [(fan(phase), 0, 0), (SWEAT, 13, 32 + phase % 2)]), 140)
+        (frame(crab(eyes="closed"), [(fan(phase), 0, 0), (SWEAT, 20, 37 + phase // 2)]), 120)
         for phase in range(4)
     ] + [
-        (frame(crab(eyes="squint", arms=(0, "none")), [(fan(phase), 0, 0), (SWEAT, 13, 35)]), 140)
-        for phase in range(4)
+        (frame(crab(dy=phase % 2, eyes="squint"), [(fan(phase), 0, 0)]), 120)
+        for phase in range(4, 10)
     ]),
     ("yawn", [
         (frame(crab(eyes="closed"), [(battery(1, "R"), 26, 20)]), 600),
@@ -1006,7 +1077,7 @@ ANIMATIONS = [
         for level in range(5)
     ]),
     ("umbrella", [
-        (frame(crab(dy=phase % 2, eyes="up" if phase < 2 else "open", arms=(0, "none")), [(rain(phase), 0, 0), (canopy(top=14 + phase % 2), 0, 0)]), 180)
+        (frame(crab(dy=phase % 2, eyes="up" if phase < 2 else "open", arms=(0, "none")), [(rain(phase), 0, 0), (umbrella(14 + phase % 2, phase % 2), 0, 0)]), 180)
         for phase in range(6)
     ]),
     ("sunglasses", [
@@ -1022,17 +1093,19 @@ ANIMATIONS = [
         (frame(crab(**SLEEP, arms=(1, 1)), [(NIGHTCAP_SWAY, 19, 35), (Z_SMALL, 46, 30), (Z_LARGE, 50, 22)]), 1100),
     ]),
     ("packets", [
-        (frame(crab(eyes="up", arms=("up", "up")), raised() + [(PACKET, 28, y), (ARROW_DOWN, 52, 12)]), 110)
-        for y in (2, 10, 18, 26)
+        (frame(crab(eyes="up", arms=("none", "none")), holding(28, False) + [(PACKET, 27, y), (ARROW_DOWN, 52, 12)]), 110)
+        for y in (0, 7, 14, 20)
     ] + [
-        (frame(crab(dy=2, eyes="squint", arms=("up", "up")), raised(2, 2) + [(PACKET, 28, 30)]), 140),
-        (frame(crab(dy=-1, eyes="up", arms=("up", "up")), raised(-1, -1) + [(PACKET, 28, 22), (ARROW_UP, 6, 12)]), 110),
+        (frame(crab(dy=1, eyes="squint", arms=("none", "none")), holding(28, True, 1) + [(PACKET, 27, 26)]), 160),
+        (frame(crab(eyes="open", arms=("none", "none")), holding(28) + [(PACKET, 27, 25)]), 300),
+        (frame(crab(dy=1, eyes="up", arms=("none", "none")), holding(29, True, 1) + [(PACKET, 27, 26)]), 110),
+        (frame(crab(dy=-1, eyes="up", arms=("none", "none")), holding(23, True, -1) + [(PACKET, 27, 20)]), 90),
     ] + [
-        (frame(crab(eyes="up", arms=("up", "up")), raised() + [(PACKET, 28, y), (ARROW_UP, 6, 12)]), 110)
-        for y in (12, 3)
+        (frame(crab(eyes="up", arms=("none", "none")), holding(26, False) + [(PACKET, 27, y), (ARROW_UP, 6, 12)]), 110)
+        for y in (10, 0)
     ]),
     ("juggle", [
-        (frame(crab(eyes="up", arms=("up", "up")), raised(phase % 2 * 2, (phase + 1) % 2 * 2) + [(juggle(phase), 0, 0)]), 150)
+        (frame(crab(eyes="up", arms=("up", "up")), juggle(phase)), 150)
         for phase in range(6)
     ]),
     ("idle_look", [
@@ -1041,10 +1114,10 @@ ANIMATIONS = [
         (frame(crab()), 300),
         (frame(crab(eyes="closed")), 110),
         (frame(crab()), 400),
-        (frame(crab(eyes="squint", arms=(0, "up")), scratch(0)), 160),
-        (frame(crab(eyes="squint", arms=(0, "up")), scratch(1)), 160),
-        (frame(crab(eyes="squint", arms=(0, "up")), scratch(0)), 160),
-        (frame(crab(eyes="squint", arms=(0, "up")), scratch(1)), 160),
+        (frame(crab(eyes="squint", arms=(0, "none")), scratch(0)), 160),
+        (frame(crab(eyes="squint", arms=(0, "none")), scratch(1)), 160),
+        (frame(crab(eyes="squint", arms=(0, "none")), scratch(0)), 160),
+        (frame(crab(eyes="squint", arms=(0, "none")), scratch(1)), 160),
         (frame(crab(dy=1)), 600),
     ]),
     ("idle_coffee_in", [
@@ -1147,7 +1220,7 @@ ANIMATIONS = [
         (frame(crab(dy=1, eyes="right"), [(PITH_HELMET, 23, 32), ground(desk_globe(0), 47)]), 100),
     ]),
     ("work_web", [
-        (frame(crab(eyes="right", arms=(0, "none")), [(PITH_HELMET, 23, 31), ground(desk_globe(phase), 47), (CLAW_SIDE, 45 + (phase % 2), 46)]), 150)
+        (frame(crab(eyes="right", arms=(0, "none")), [(PITH_HELMET, 23, 31), ground(desk_globe(phase), 47), (CLAW_SIDE, 45 + (phase % 2), 46), (browser(phase), 40, 20)]), 150)
         for phase in range(9)
     ]),
     ("work_web_out", [
@@ -1156,23 +1229,23 @@ ANIMATIONS = [
     ]),
     ("work_agent_in", [
         (frame(crab(), [(BOW_TIE, 27, 46), ground(mini(0), -6), ground(mini(0), 59)]), 120),
-        (frame(crab(arms=(0, "none")), [(BOW_TIE, 27, 46), (CLAW_UP, 46, 30), (conductor("up"), 0, 0), ground(mini(1), -2), ground(mini(1), 55)]), 120),
+        (frame(crab(arms=(0, "none")), [(BOW_TIE, 27, 46), (conductor("up"), 0, 0), ground(mini(1), -2), ground(mini(1), 55)]), 120),
     ]),
     ("work_agent", [
-        (frame(crab(arms=(0, "none")), [(BOW_TIE, 27, 46), (conductor("left"), 0, 0), (CLAW_UP, 45, 30), ground(mini(0), 0), ground(mini(0), 53), (NOTE, 8, 30)]), 220),
-        (frame(crab(dy=1, arms=(0, "none")), [(BOW_TIE, 27, 47), (conductor("up"), 0, 0), (CLAW_UP, 46, 30), ground(mini(1), 0), ground(mini(1), 53), (NOTE, 6, 26)]), 220),
-        (frame(crab(arms=(0, "none")), [(BOW_TIE, 27, 46), (conductor("right"), 0, 0), (CLAW_UP, 47, 30), ground(mini(0), 0), ground(mini(0), 53), (NOTE, 56, 30)]), 220),
-        (frame(crab(dy=1, arms=(0, "none")), [(BOW_TIE, 27, 47), (conductor("up"), 0, 0), (CLAW_UP, 46, 30), ground(mini(1), 0), ground(mini(1), 53), (NOTE, 58, 26)]), 220),
+        (frame(crab(arms=(0, "none")), [(BOW_TIE, 27, 46), (conductor("left"), 0, 0), ground(mini(0), 0), ground(mini(0), 53), (NOTE, 8, 30)]), 220),
+        (frame(crab(dy=1, arms=(0, "none")), [(BOW_TIE, 27, 47), (conductor("up", 1), 0, 0), ground(mini(1), 0), ground(mini(1), 53), (NOTE, 6, 26)]), 220),
+        (frame(crab(arms=(0, "none")), [(BOW_TIE, 27, 46), (conductor("right"), 0, 0), ground(mini(0), 0), ground(mini(0), 53), (NOTE, 56, 30)]), 220),
+        (frame(crab(dy=1, arms=(0, "none")), [(BOW_TIE, 27, 47), (conductor("up", 1), 0, 0), ground(mini(1), 0), ground(mini(1), 53), (NOTE, 58, 26)]), 220),
     ]),
     ("work_agent_out", [
-        (frame(crab(arms=(0, "none")), [(BOW_TIE, 27, 46), (CLAW_UP, 46, 30), (conductor("up"), 0, 0), ground(mini(1), -2), ground(mini(1), 55)]), 110),
+        (frame(crab(arms=(0, "none")), [(BOW_TIE, 27, 46), (conductor("up"), 0, 0), ground(mini(1), -2), ground(mini(1), 55)]), 110),
         (frame(crab(), [(BOW_TIE, 27, 46), ground(mini(0), -6), ground(mini(0), 59)]), 110),
     ]),
     ("attention", [
-        (frame(crab(eyes="wide", arms=("up", "up")), alert(0, True, 1)), 150),
-        (frame(crab(dy=-2, eyes="wide", arms=("up", "up")), alert(-2, True, -1)), 150),
-        (frame(crab(eyes="wide", arms=("up", "up")), alert(0, False, 1)), 150),
-        (frame(crab(dy=1, eyes="wide", arms=("up", "up")), alert(1, True, -1)), 150),
+        (frame(crab(eyes="wide", arms=("none", "none")), alert(0, True, 1)), 150),
+        (frame(crab(dy=-2, eyes="wide", arms=("none", "none")), alert(-2, True, -1)), 150),
+        (frame(crab(eyes="wide", arms=("none", "none")), alert(0, False, 1)), 150),
+        (frame(crab(dy=1, eyes="wide", arms=("none", "none")), alert(1, True, -1)), 150),
     ]),
     ("gone", [
         ([("." * FRAME)] * FRAME, 1000),
@@ -1180,13 +1253,13 @@ ANIMATIONS = [
     ("peek_in", [
         (frame(crab(eyes="left"), dx=40), 70),
         (frame(crab(eyes="left"), dx=30), 70),
-        (frame(crab(eyes="left", arms=("up", 0)), alert(0, False, 0, 22, ("left",)), dx=22), 90),
+        (frame(crab(eyes="left", arms=("none", 0)), alert(0, False, 0, 22, ("left",)), dx=22), 90),
     ]),
     ("peek", [
-        (frame(crab(eyes="left", arms=("up", 0)), alert(0, True, 1, 22, ("left",)), dx=22), 200),
-        (frame(crab(eyes="left", arms=("up", 0)), alert(0, True, -1, 22, ("left",)), dx=22), 200),
-        (frame(crab(dy=1, eyes="left", arms=("up", 0)), alert(1, False, 1, 22, ("left",)), dx=22), 200),
-        (frame(crab(eyes="left", arms=("up", 0)), alert(0, True, -1, 22, ("left",)), dx=22), 200),
+        (frame(crab(eyes="left", arms=("none", 0)), alert(0, True, 1, 22, ("left",)), dx=22), 200),
+        (frame(crab(eyes="left", arms=("none", 0)), alert(0, True, -1, 22, ("left",)), dx=22), 200),
+        (frame(crab(dy=1, eyes="left", arms=("none", 0)), alert(1, False, 1, 22, ("left",)), dx=22), 200),
+        (frame(crab(eyes="left", arms=("none", 0)), alert(0, True, -1, 22, ("left",)), dx=22), 200),
     ]),
     ("peek_out", [
         (frame(crab(eyes="left"), dx=30), 70),

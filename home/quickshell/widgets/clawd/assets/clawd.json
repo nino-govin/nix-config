@@ -510,7 +510,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 140
+    "duration": 120
    },
    {
     "filename": "clawd 57.aseprite",
@@ -519,7 +519,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 140
+    "duration": 120
    },
    {
     "filename": "clawd 58.aseprite",
@@ -528,7 +528,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 140
+    "duration": 120
    },
    {
     "filename": "clawd 59.aseprite",
@@ -537,7 +537,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 140
+    "duration": 120
    },
    {
     "filename": "clawd 60.aseprite",
@@ -546,7 +546,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 140
+    "duration": 120
    },
    {
     "filename": "clawd 61.aseprite",
@@ -555,7 +555,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 140
+    "duration": 120
    },
    {
     "filename": "clawd 62.aseprite",
@@ -564,7 +564,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 140
+    "duration": 120
    },
    {
     "filename": "clawd 63.aseprite",
@@ -573,7 +573,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 140
+    "duration": 120
    },
    {
     "filename": "clawd 64.aseprite",
@@ -582,7 +582,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 600
+    "duration": 120
    },
    {
     "filename": "clawd 65.aseprite",
@@ -591,7 +591,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 300
+    "duration": 120
    },
    {
     "filename": "clawd 66.aseprite",
@@ -600,7 +600,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 250
+    "duration": 600
    },
    {
     "filename": "clawd 67.aseprite",
@@ -609,7 +609,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 700
+    "duration": 300
    },
    {
     "filename": "clawd 68.aseprite",
@@ -636,7 +636,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 260
+    "duration": 250
    },
    {
     "filename": "clawd 71.aseprite",
@@ -645,7 +645,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 260
+    "duration": 700
    },
    {
     "filename": "clawd 72.aseprite",
@@ -672,7 +672,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 700
+    "duration": 260
    },
    {
     "filename": "clawd 75.aseprite",
@@ -681,7 +681,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 180
+    "duration": 260
    },
    {
     "filename": "clawd 76.aseprite",
@@ -690,7 +690,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 180
+    "duration": 700
    },
    {
     "filename": "clawd 77.aseprite",
@@ -735,7 +735,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 300
+    "duration": 180
    },
    {
     "filename": "clawd 82.aseprite",
@@ -744,7 +744,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 300
+    "duration": 180
    },
    {
     "filename": "clawd 83.aseprite",
@@ -789,7 +789,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 110
+    "duration": 300
    },
    {
     "filename": "clawd 88.aseprite",
@@ -798,7 +798,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 110
+    "duration": 300
    },
    {
     "filename": "clawd 89.aseprite",
@@ -861,7 +861,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 1100
+    "duration": 110
    },
    {
     "filename": "clawd 96.aseprite",
@@ -870,7 +870,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 1100
+    "duration": 110
    },
    {
     "filename": "clawd 97.aseprite",
@@ -879,7 +879,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 110
+    "duration": 1100
    },
    {
     "filename": "clawd 98.aseprite",
@@ -888,7 +888,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 110
+    "duration": 1100
    },
    {
     "filename": "clawd 99.aseprite",
@@ -915,7 +915,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 140
+    "duration": 110
    },
    {
     "filename": "clawd 102.aseprite",
@@ -933,7 +933,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 110
+    "duration": 160
    },
    {
     "filename": "clawd 104.aseprite",
@@ -942,7 +942,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 110
+    "duration": 300
    },
    {
     "filename": "clawd 105.aseprite",
@@ -951,7 +951,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 150
+    "duration": 110
    },
    {
     "filename": "clawd 106.aseprite",
@@ -960,7 +960,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 150
+    "duration": 90
    },
    {
     "filename": "clawd 107.aseprite",
@@ -969,7 +969,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 150
+    "duration": 110
    },
    {
     "filename": "clawd 108.aseprite",
@@ -978,7 +978,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 150
+    "duration": 110
    },
    {
     "filename": "clawd 109.aseprite",
@@ -1005,7 +1005,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 700
+    "duration": 150
    },
    {
     "filename": "clawd 112.aseprite",
@@ -1014,7 +1014,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 700
+    "duration": 150
    },
    {
     "filename": "clawd 113.aseprite",
@@ -1023,7 +1023,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 300
+    "duration": 150
    },
    {
     "filename": "clawd 114.aseprite",
@@ -1032,7 +1032,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 110
+    "duration": 150
    },
    {
     "filename": "clawd 115.aseprite",
@@ -1041,7 +1041,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 400
+    "duration": 700
    },
    {
     "filename": "clawd 116.aseprite",
@@ -1050,7 +1050,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 160
+    "duration": 700
    },
    {
     "filename": "clawd 117.aseprite",
@@ -1059,7 +1059,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 160
+    "duration": 300
    },
    {
     "filename": "clawd 118.aseprite",
@@ -1068,7 +1068,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 160
+    "duration": 110
    },
    {
     "filename": "clawd 119.aseprite",
@@ -1077,7 +1077,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 160
+    "duration": 400
    },
    {
     "filename": "clawd 120.aseprite",
@@ -1086,7 +1086,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 600
+    "duration": 160
    },
    {
     "filename": "clawd 121.aseprite",
@@ -1095,7 +1095,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 200
+    "duration": 160
    },
    {
     "filename": "clawd 122.aseprite",
@@ -1104,7 +1104,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 350
+    "duration": 160
    },
    {
     "filename": "clawd 123.aseprite",
@@ -1113,7 +1113,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 350
+    "duration": 160
    },
    {
     "filename": "clawd 124.aseprite",
@@ -1122,7 +1122,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 350
+    "duration": 600
    },
    {
     "filename": "clawd 125.aseprite",
@@ -1131,7 +1131,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 450
+    "duration": 200
    },
    {
     "filename": "clawd 126.aseprite",
@@ -1140,7 +1140,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 450
+    "duration": 350
    },
    {
     "filename": "clawd 127.aseprite",
@@ -1149,7 +1149,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 500
+    "duration": 350
    },
    {
     "filename": "clawd 128.aseprite",
@@ -1158,7 +1158,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 500
+    "duration": 350
    },
    {
     "filename": "clawd 129.aseprite",
@@ -1167,7 +1167,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 400
+    "duration": 450
    },
    {
     "filename": "clawd 130.aseprite",
@@ -1176,7 +1176,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 230
+    "duration": 450
    },
    {
     "filename": "clawd 131.aseprite",
@@ -1185,7 +1185,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 230
+    "duration": 500
    },
    {
     "filename": "clawd 132.aseprite",
@@ -1194,7 +1194,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 230
+    "duration": 500
    },
    {
     "filename": "clawd 133.aseprite",
@@ -1203,7 +1203,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 230
+    "duration": 400
    },
    {
     "filename": "clawd 134.aseprite",
@@ -1248,7 +1248,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 300
+    "duration": 230
    },
    {
     "filename": "clawd 139.aseprite",
@@ -1257,7 +1257,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 350
+    "duration": 230
    },
    {
     "filename": "clawd 140.aseprite",
@@ -1266,7 +1266,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 200
+    "duration": 230
    },
    {
     "filename": "clawd 141.aseprite",
@@ -1275,7 +1275,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 200
+    "duration": 230
    },
    {
     "filename": "clawd 142.aseprite",
@@ -1284,7 +1284,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 200
+    "duration": 300
    },
    {
     "filename": "clawd 143.aseprite",
@@ -1293,7 +1293,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 200
+    "duration": 350
    },
    {
     "filename": "clawd 144.aseprite",
@@ -1347,7 +1347,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 140
+    "duration": 200
    },
    {
     "filename": "clawd 150.aseprite",
@@ -1356,7 +1356,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 140
+    "duration": 200
    },
    {
     "filename": "clawd 151.aseprite",
@@ -1365,7 +1365,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 140
+    "duration": 200
    },
    {
     "filename": "clawd 152.aseprite",
@@ -1374,7 +1374,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 140
+    "duration": 200
    },
    {
     "filename": "clawd 153.aseprite",
@@ -1491,7 +1491,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 320
+    "duration": 140
    },
    {
     "filename": "clawd 166.aseprite",
@@ -1500,7 +1500,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 320
+    "duration": 140
    },
    {
     "filename": "clawd 167.aseprite",
@@ -1509,7 +1509,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 320
+    "duration": 140
    },
    {
     "filename": "clawd 168.aseprite",
@@ -1518,7 +1518,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 320
+    "duration": 140
    },
    {
     "filename": "clawd 169.aseprite",
@@ -1527,7 +1527,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 70
+    "duration": 320
    },
    {
     "filename": "clawd 170.aseprite",
@@ -1536,7 +1536,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 70
+    "duration": 320
    },
    {
     "filename": "clawd 171.aseprite",
@@ -1545,7 +1545,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 110
+    "duration": 320
    },
    {
     "filename": "clawd 172.aseprite",
@@ -1554,7 +1554,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 110
+    "duration": 320
    },
    {
     "filename": "clawd 173.aseprite",
@@ -1563,7 +1563,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 500
+    "duration": 70
    },
    {
     "filename": "clawd 174.aseprite",
@@ -1572,7 +1572,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 500
+    "duration": 70
    },
    {
     "filename": "clawd 175.aseprite",
@@ -1581,7 +1581,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 120
+    "duration": 110
    },
    {
     "filename": "clawd 176.aseprite",
@@ -1590,7 +1590,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 500
+    "duration": 110
    },
    {
     "filename": "clawd 177.aseprite",
@@ -1599,7 +1599,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 700
+    "duration": 500
    },
    {
     "filename": "clawd 178.aseprite",
@@ -1608,7 +1608,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 700
+    "duration": 500
    },
    {
     "filename": "clawd 179.aseprite",
@@ -1617,7 +1617,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 100
+    "duration": 120
    },
    {
     "filename": "clawd 180.aseprite",
@@ -1626,7 +1626,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 100
+    "duration": 500
    },
    {
     "filename": "clawd 181.aseprite",
@@ -1635,7 +1635,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 70
+    "duration": 700
    },
    {
     "filename": "clawd 182.aseprite",
@@ -1644,7 +1644,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 70
+    "duration": 700
    },
    {
     "filename": "clawd 183.aseprite",
@@ -1653,7 +1653,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 90
+    "duration": 100
    },
    {
     "filename": "clawd 184.aseprite",
@@ -1662,7 +1662,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 90
+    "duration": 100
    },
    {
     "filename": "clawd 185.aseprite",
@@ -1671,7 +1671,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 120
+    "duration": 70
    },
    {
     "filename": "clawd 186.aseprite",
@@ -1680,7 +1680,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 150
+    "duration": 70
    },
    {
     "filename": "clawd 187.aseprite",
@@ -1689,7 +1689,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 150
+    "duration": 90
    },
    {
     "filename": "clawd 188.aseprite",
@@ -1698,7 +1698,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 150
+    "duration": 90
    },
    {
     "filename": "clawd 189.aseprite",
@@ -1707,7 +1707,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 400
+    "duration": 120
    },
    {
     "filename": "clawd 190.aseprite",
@@ -1734,7 +1734,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 500
+    "duration": 150
    },
    {
     "filename": "clawd 193.aseprite",
@@ -1743,7 +1743,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 90
+    "duration": 400
    },
    {
     "filename": "clawd 194.aseprite",
@@ -1752,7 +1752,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 90
+    "duration": 150
    },
    {
     "filename": "clawd 195.aseprite",
@@ -1761,7 +1761,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 80
+    "duration": 150
    },
    {
     "filename": "clawd 196.aseprite",
@@ -1770,7 +1770,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 80
+    "duration": 500
    },
    {
     "filename": "clawd 197.aseprite",
@@ -1779,7 +1779,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 100
+    "duration": 90
    },
    {
     "filename": "clawd 198.aseprite",
@@ -1788,7 +1788,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 100
+    "duration": 90
    },
    {
     "filename": "clawd 199.aseprite",
@@ -1797,7 +1797,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 150
+    "duration": 80
    },
    {
     "filename": "clawd 200.aseprite",
@@ -1806,7 +1806,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 150
+    "duration": 80
    },
    {
     "filename": "clawd 201.aseprite",
@@ -1815,7 +1815,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 150
+    "duration": 100
    },
    {
     "filename": "clawd 202.aseprite",
@@ -1824,7 +1824,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 90
+    "duration": 100
    },
    {
     "filename": "clawd 203.aseprite",
@@ -1851,7 +1851,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 500
+    "duration": 150
    },
    {
     "filename": "clawd 206.aseprite",
@@ -1860,7 +1860,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 100
+    "duration": 90
    },
    {
     "filename": "clawd 207.aseprite",
@@ -1869,7 +1869,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 80
+    "duration": 150
    },
    {
     "filename": "clawd 208.aseprite",
@@ -1878,7 +1878,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 80
+    "duration": 150
    },
    {
     "filename": "clawd 209.aseprite",
@@ -1887,7 +1887,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 80
+    "duration": 500
    },
    {
     "filename": "clawd 210.aseprite",
@@ -1905,7 +1905,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 150
+    "duration": 80
    },
    {
     "filename": "clawd 212.aseprite",
@@ -1914,7 +1914,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 150
+    "duration": 80
    },
    {
     "filename": "clawd 213.aseprite",
@@ -1923,7 +1923,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 150
+    "duration": 80
    },
    {
     "filename": "clawd 214.aseprite",
@@ -1932,7 +1932,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 150
+    "duration": 100
    },
    {
     "filename": "clawd 215.aseprite",
@@ -1986,7 +1986,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 100
+    "duration": 150
    },
    {
     "filename": "clawd 221.aseprite",
@@ -1995,7 +1995,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 80
+    "duration": 150
    },
    {
     "filename": "clawd 222.aseprite",
@@ -2004,7 +2004,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 120
+    "duration": 150
    },
    {
     "filename": "clawd 223.aseprite",
@@ -2013,7 +2013,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 120
+    "duration": 150
    },
    {
     "filename": "clawd 224.aseprite",
@@ -2022,7 +2022,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 220
+    "duration": 100
    },
    {
     "filename": "clawd 225.aseprite",
@@ -2031,7 +2031,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 220
+    "duration": 80
    },
    {
     "filename": "clawd 226.aseprite",
@@ -2040,7 +2040,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 220
+    "duration": 120
    },
    {
     "filename": "clawd 227.aseprite",
@@ -2049,7 +2049,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 220
+    "duration": 120
    },
    {
     "filename": "clawd 228.aseprite",
@@ -2058,7 +2058,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 110
+    "duration": 220
    },
    {
     "filename": "clawd 229.aseprite",
@@ -2067,7 +2067,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 110
+    "duration": 220
    },
    {
     "filename": "clawd 230.aseprite",
@@ -2076,7 +2076,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 150
+    "duration": 220
    },
    {
     "filename": "clawd 231.aseprite",
@@ -2085,7 +2085,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 150
+    "duration": 220
    },
    {
     "filename": "clawd 232.aseprite",
@@ -2094,7 +2094,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 150
+    "duration": 110
    },
    {
     "filename": "clawd 233.aseprite",
@@ -2103,7 +2103,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 150
+    "duration": 110
    },
    {
     "filename": "clawd 234.aseprite",
@@ -2112,7 +2112,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 1000
+    "duration": 150
    },
    {
     "filename": "clawd 235.aseprite",
@@ -2121,7 +2121,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 70
+    "duration": 150
    },
    {
     "filename": "clawd 236.aseprite",
@@ -2130,7 +2130,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 70
+    "duration": 150
    },
    {
     "filename": "clawd 237.aseprite",
@@ -2139,7 +2139,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 90
+    "duration": 150
    },
    {
     "filename": "clawd 238.aseprite",
@@ -2148,7 +2148,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 200
+    "duration": 1000
    },
    {
     "filename": "clawd 239.aseprite",
@@ -2157,7 +2157,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 200
+    "duration": 70
    },
    {
     "filename": "clawd 240.aseprite",
@@ -2166,7 +2166,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 200
+    "duration": 70
    },
    {
     "filename": "clawd 241.aseprite",
@@ -2175,7 +2175,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 200
+    "duration": 90
    },
    {
     "filename": "clawd 242.aseprite",
@@ -2184,11 +2184,47 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
-    "duration": 70
+    "duration": 200
    },
    {
     "filename": "clawd 243.aseprite",
     "frame": { "x": 15552, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 200
+   },
+   {
+    "filename": "clawd 244.aseprite",
+    "frame": { "x": 15616, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 200
+   },
+   {
+    "filename": "clawd 245.aseprite",
+    "frame": { "x": 15680, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 200
+   },
+   {
+    "filename": "clawd 246.aseprite",
+    "frame": { "x": 15744, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 70
+   },
+   {
+    "filename": "clawd 247.aseprite",
+    "frame": { "x": 15808, "y": 0, "w": 64, "h": 64 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
@@ -2201,7 +2237,7 @@
   "version": "1.3.18.6-x64",
   "image": "clawd.png",
   "format": "RGBA8888",
-  "size": { "w": 15616, "h": 64 },
+  "size": { "w": 15872, "h": 64 },
   "scale": "1",
   "frameTags": [
    { "name": "stand", "from": 0, "to": 1, "direction": "forward", "color": "#000000ff" },
@@ -2217,42 +2253,42 @@
    { "name": "poke", "from": 39, "to": 44, "direction": "forward", "color": "#000000ff" },
    { "name": "poke_down", "from": 45, "to": 50, "direction": "forward", "color": "#000000ff" },
    { "name": "poke_up", "from": 51, "to": 55, "direction": "forward", "color": "#000000ff" },
-   { "name": "fan", "from": 56, "to": 63, "direction": "forward", "color": "#000000ff" },
-   { "name": "yawn", "from": 64, "to": 69, "direction": "forward", "color": "#000000ff" },
-   { "name": "charge", "from": 70, "to": 74, "direction": "forward", "color": "#000000ff" },
-   { "name": "umbrella", "from": 75, "to": 80, "direction": "forward", "color": "#000000ff" },
-   { "name": "sunglasses", "from": 81, "to": 86, "direction": "forward", "color": "#000000ff" },
-   { "name": "snow", "from": 87, "to": 94, "direction": "forward", "color": "#000000ff" },
-   { "name": "nightcap", "from": 95, "to": 96, "direction": "forward", "color": "#000000ff" },
-   { "name": "packets", "from": 97, "to": 104, "direction": "forward", "color": "#000000ff" },
-   { "name": "juggle", "from": 105, "to": 110, "direction": "forward", "color": "#000000ff" },
-   { "name": "idle_look", "from": 111, "to": 120, "direction": "forward", "color": "#000000ff" },
-   { "name": "idle_coffee_in", "from": 121, "to": 121, "direction": "forward", "color": "#000000ff" },
-   { "name": "idle_coffee", "from": 122, "to": 129, "direction": "forward", "color": "#000000ff" },
-   { "name": "idle_music", "from": 130, "to": 137, "direction": "forward", "color": "#000000ff" },
-   { "name": "idle_bubbles", "from": 138, "to": 148, "direction": "forward", "color": "#000000ff" },
-   { "name": "idle_mania", "from": 149, "to": 164, "direction": "forward", "color": "#000000ff" },
-   { "name": "think", "from": 165, "to": 168, "direction": "forward", "color": "#000000ff" },
-   { "name": "work_read_in", "from": 169, "to": 172, "direction": "forward", "color": "#000000ff" },
-   { "name": "work_read", "from": 173, "to": 178, "direction": "forward", "color": "#000000ff" },
-   { "name": "work_read_out", "from": 179, "to": 182, "direction": "forward", "color": "#000000ff" },
-   { "name": "work_write_in", "from": 183, "to": 185, "direction": "forward", "color": "#000000ff" },
-   { "name": "work_write", "from": 186, "to": 192, "direction": "forward", "color": "#000000ff" },
-   { "name": "work_write_out", "from": 193, "to": 195, "direction": "forward", "color": "#000000ff" },
-   { "name": "work_bash_in", "from": 196, "to": 198, "direction": "forward", "color": "#000000ff" },
-   { "name": "work_bash", "from": 199, "to": 205, "direction": "forward", "color": "#000000ff" },
-   { "name": "work_bash_out", "from": 206, "to": 208, "direction": "forward", "color": "#000000ff" },
-   { "name": "work_web_in", "from": 209, "to": 210, "direction": "forward", "color": "#000000ff" },
-   { "name": "work_web", "from": 211, "to": 219, "direction": "forward", "color": "#000000ff" },
-   { "name": "work_web_out", "from": 220, "to": 221, "direction": "forward", "color": "#000000ff" },
-   { "name": "work_agent_in", "from": 222, "to": 223, "direction": "forward", "color": "#000000ff" },
-   { "name": "work_agent", "from": 224, "to": 227, "direction": "forward", "color": "#000000ff" },
-   { "name": "work_agent_out", "from": 228, "to": 229, "direction": "forward", "color": "#000000ff" },
-   { "name": "attention", "from": 230, "to": 233, "direction": "forward", "color": "#000000ff" },
-   { "name": "gone", "from": 234, "to": 234, "direction": "forward", "color": "#000000ff" },
-   { "name": "peek_in", "from": 235, "to": 237, "direction": "forward", "color": "#000000ff" },
-   { "name": "peek", "from": 238, "to": 241, "direction": "forward", "color": "#000000ff" },
-   { "name": "peek_out", "from": 242, "to": 243, "direction": "forward", "color": "#000000ff" }
+   { "name": "fan", "from": 56, "to": 65, "direction": "forward", "color": "#000000ff" },
+   { "name": "yawn", "from": 66, "to": 71, "direction": "forward", "color": "#000000ff" },
+   { "name": "charge", "from": 72, "to": 76, "direction": "forward", "color": "#000000ff" },
+   { "name": "umbrella", "from": 77, "to": 82, "direction": "forward", "color": "#000000ff" },
+   { "name": "sunglasses", "from": 83, "to": 88, "direction": "forward", "color": "#000000ff" },
+   { "name": "snow", "from": 89, "to": 96, "direction": "forward", "color": "#000000ff" },
+   { "name": "nightcap", "from": 97, "to": 98, "direction": "forward", "color": "#000000ff" },
+   { "name": "packets", "from": 99, "to": 108, "direction": "forward", "color": "#000000ff" },
+   { "name": "juggle", "from": 109, "to": 114, "direction": "forward", "color": "#000000ff" },
+   { "name": "idle_look", "from": 115, "to": 124, "direction": "forward", "color": "#000000ff" },
+   { "name": "idle_coffee_in", "from": 125, "to": 125, "direction": "forward", "color": "#000000ff" },
+   { "name": "idle_coffee", "from": 126, "to": 133, "direction": "forward", "color": "#000000ff" },
+   { "name": "idle_music", "from": 134, "to": 141, "direction": "forward", "color": "#000000ff" },
+   { "name": "idle_bubbles", "from": 142, "to": 152, "direction": "forward", "color": "#000000ff" },
+   { "name": "idle_mania", "from": 153, "to": 168, "direction": "forward", "color": "#000000ff" },
+   { "name": "think", "from": 169, "to": 172, "direction": "forward", "color": "#000000ff" },
+   { "name": "work_read_in", "from": 173, "to": 176, "direction": "forward", "color": "#000000ff" },
+   { "name": "work_read", "from": 177, "to": 182, "direction": "forward", "color": "#000000ff" },
+   { "name": "work_read_out", "from": 183, "to": 186, "direction": "forward", "color": "#000000ff" },
+   { "name": "work_write_in", "from": 187, "to": 189, "direction": "forward", "color": "#000000ff" },
+   { "name": "work_write", "from": 190, "to": 196, "direction": "forward", "color": "#000000ff" },
+   { "name": "work_write_out", "from": 197, "to": 199, "direction": "forward", "color": "#000000ff" },
+   { "name": "work_bash_in", "from": 200, "to": 202, "direction": "forward", "color": "#000000ff" },
+   { "name": "work_bash", "from": 203, "to": 209, "direction": "forward", "color": "#000000ff" },
+   { "name": "work_bash_out", "from": 210, "to": 212, "direction": "forward", "color": "#000000ff" },
+   { "name": "work_web_in", "from": 213, "to": 214, "direction": "forward", "color": "#000000ff" },
+   { "name": "work_web", "from": 215, "to": 223, "direction": "forward", "color": "#000000ff" },
+   { "name": "work_web_out", "from": 224, "to": 225, "direction": "forward", "color": "#000000ff" },
+   { "name": "work_agent_in", "from": 226, "to": 227, "direction": "forward", "color": "#000000ff" },
+   { "name": "work_agent", "from": 228, "to": 231, "direction": "forward", "color": "#000000ff" },
+   { "name": "work_agent_out", "from": 232, "to": 233, "direction": "forward", "color": "#000000ff" },
+   { "name": "attention", "from": 234, "to": 237, "direction": "forward", "color": "#000000ff" },
+   { "name": "gone", "from": 238, "to": 238, "direction": "forward", "color": "#000000ff" },
+   { "name": "peek_in", "from": 239, "to": 241, "direction": "forward", "color": "#000000ff" },
+   { "name": "peek", "from": 242, "to": 245, "direction": "forward", "color": "#000000ff" },
+   { "name": "peek_out", "from": 246, "to": 247, "direction": "forward", "color": "#000000ff" }
   ],
   "slices": [
    { "name": "body", "keys": [{ "frame": 0, "bounds": {"x": 14, "y": 37, "w": 36, "h": 23 } }] }

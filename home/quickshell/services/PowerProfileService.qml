@@ -26,10 +26,6 @@ Singleton {
         applier.running = true;
     }
 
-    function cycle(): void {
-        setMode(modes[(modes.indexOf(mode) + 1) % modes.length]);
-    }
-
     FileView {
         path: root.statePath
         watchChanges: true

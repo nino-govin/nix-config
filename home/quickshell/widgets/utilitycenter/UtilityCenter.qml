@@ -40,26 +40,6 @@ Item {
                 active: IdleInhibitService.inhibited
                 onClicked: IdleInhibitService.toggle()
             }
-
-            QuickActionButton {
-                readonly property var icons: ({
-                    economy: Icons.powerEconomy,
-                    balanced: Icons.powerBalanced,
-                    performance: Icons.powerPerformance
-                })
-                readonly property var labels: ({
-                    economy: "Economy",
-                    balanced: "Balanced",
-                    performance: "Performance"
-                })
-                Layout.fillWidth: true
-                Layout.preferredHeight: 38
-                Layout.preferredWidth: 1
-                icon: icons[PowerProfileService.mode]
-                label: labels[PowerProfileService.mode]
-                active: PowerProfileService.mode !== "balanced"
-                onClicked: PowerProfileService.cycle()
-            }
         }
 
         UtilityTabBar {

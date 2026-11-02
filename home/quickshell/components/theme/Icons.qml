@@ -42,6 +42,7 @@ Singleton {
     readonly property string play: "󰐊"
     readonly property string nextTrack: "󰒭"
     readonly property string cpu: "󰘚"
+    readonly property string gpu: "󰢮"
     readonly property string temperature: "󰔏"
     readonly property string ultraviolet: "󰖨"
     readonly property string humidity: "󰖎"

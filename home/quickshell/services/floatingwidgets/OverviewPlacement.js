@@ -209,8 +209,10 @@ function createCards(request) {
         namedCard("cpuTemperature", resourceSize),
         namedCard("cpuUsage", resourceSize)
     ];
-    if (request.gpuAvailable)
+    if (request.gpuAvailable) {
         resources.push(namedCard("gpuTemperature", resourceSize));
+        resources.push(namedCard("gpuUsage", resourceSize));
+    }
 
     const environment = [
         namedCard("uvIndex", environmentSize),

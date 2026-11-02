@@ -89,6 +89,7 @@ Singleton {
         cpuTemperatureWidget: true,
         cpuUsageWidget: true,
         gpuTemperatureWidget: true,
+        gpuUsageWidget: true,
         uvIndexWidget: true,
         humidityWidget: true,
         airQualityWidget: true,
@@ -201,6 +202,7 @@ Singleton {
     property bool cpuTemperatureWidget: defaults.cpuTemperatureWidget
     property bool cpuUsageWidget: defaults.cpuUsageWidget
     property bool gpuTemperatureWidget: defaults.gpuTemperatureWidget
+    property bool gpuUsageWidget: defaults.gpuUsageWidget
     property bool uvIndexWidget: defaults.uvIndexWidget
     property bool humidityWidget: defaults.humidityWidget
     property bool airQualityWidget: defaults.airQualityWidget
@@ -515,7 +517,7 @@ Singleton {
 
     function anyFloatingWidgetEnabled(): bool {
         return clockWidget || weatherWidget || calendarWidget
-            || cpuTemperatureWidget || cpuUsageWidget || gpuTemperatureWidget
+            || cpuTemperatureWidget || cpuUsageWidget || gpuTemperatureWidget || gpuUsageWidget
             || uvIndexWidget || humidityWidget || airQualityWidget;
     }
 

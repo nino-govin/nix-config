@@ -48,6 +48,7 @@ Item {
             SettingsService.clockWidget, SettingsService.weatherWidget,
             SettingsService.calendarWidget, SettingsService.cpuTemperatureWidget,
             SettingsService.cpuUsageWidget, SettingsService.gpuTemperatureWidget,
+            SettingsService.gpuUsageWidget,
             SettingsService.uvIndexWidget, SettingsService.humidityWidget,
             SettingsService.airQualityWidget].join("|");
         if (fingerprint === requestedFingerprint)
@@ -92,6 +93,7 @@ Item {
         moveCard(cpuTemperatureCard, positions.cpuTemperature);
         moveCard(cpuUsageCard, positions.cpuUsage);
         moveCard(gpuTemperatureCard, positions.gpuTemperature);
+        moveCard(gpuUsageCard, positions.gpuUsage);
         moveCard(uvIndexCard, positions.uvIndex);
         moveCard(humidityCard, positions.humidity);
         moveCard(airQualityCard, positions.airQuality);
@@ -246,6 +248,27 @@ Item {
     }
 
     OverviewMovableResourceCard {
+        id: gpuUsageCard
+
+        overview: root
+
+        targetX: gpuTemperatureCard.targetX
+        targetY: gpuTemperatureCard.targetY + height + 12
+        cardSize: root.resourceSize
+        visible: SettingsService.gpuUsageWidget && CpuService.gpuAvailable
+        label: "GPU USAGE"
+        icon: Icons.gpu
+        value: CpuService.gpuUsageAvailable ? CpuService.gpuPercent + "%" : "--%"
+        detail: CpuService.gpuMemoryTotal > 0
+            ? (CpuService.gpuMemoryUsed / 1024).toFixed(1) + " / "
+                + (CpuService.gpuMemoryTotal / 1024).toFixed(1) + " GiB VRAM"
+            : ""
+        progress: CpuService.gpuUsage
+        accentColor: CpuService.gpuUsage < 0.5 ? Theme.successColor
+            : CpuService.gpuUsage < 0.8 ? Theme.accentColor : Theme.dangerColor
+    }
+
+    OverviewMovableResourceCard {
         id: uvIndexCard
 
         overview: root
@@ -359,6 +382,7 @@ Item {
         function onCpuTemperatureWidgetChanged(): void { root.schedulePlacement(); }
         function onCpuUsageWidgetChanged(): void { root.schedulePlacement(); }
         function onGpuTemperatureWidgetChanged(): void { root.schedulePlacement(); }
+        function onGpuUsageWidgetChanged(): void { root.schedulePlacement(); }
         function onUvIndexWidgetChanged(): void { root.schedulePlacement(); }
         function onHumidityWidgetChanged(): void { root.schedulePlacement(); }
         function onAirQualityWidgetChanged(): void { root.schedulePlacement(); }

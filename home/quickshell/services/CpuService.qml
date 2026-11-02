@@ -14,6 +14,11 @@ Singleton {
     property real gpuTemperature: 0
     property bool gpuAvailable: false
     property string gpuName: "Dedicated GPU"
+    property real gpuUsage: 0
+    readonly property int gpuPercent: Math.round(gpuUsage * 100)
+    property bool gpuUsageAvailable: false
+    property real gpuMemoryUsed: 0
+    property real gpuMemoryTotal: 0
     property real previousIdle: 0
     property real previousTotal: 0
 
@@ -65,7 +70,7 @@ Singleton {
     }
 
     Process {
-        id: gpuTemperatureReader
+        id: gpuReader
         command: ["sh", "-c",
             "for card in /sys/class/drm/card[0-9]*; do "
             + "test -r \"$card/device/boot_vga\" || continue; "
@@ -73,29 +78,42 @@ Singleton {
             + "vendor=$(cat \"$card/device/vendor\" 2>/dev/null); "
             + "if test \"$vendor\" = 0x10de && command -v nvidia-smi >/dev/null; then "
             + "test \"$(cat \"$card/device/power/runtime_status\")\" = active || exit 1; "
-            + "name=$(nvidia-smi --query-gpu=name --format=csv,noheader | head -n1); "
-            + "temp=$(nvidia-smi --query-gpu=temperature.gpu "
-            + "--format=csv,noheader,nounits | head -n1); "
-            + "printf '%s|%s\\n' \"$name\" \"$temp\"; exit 0; fi; "
+            + "find /proc/[0-9]*/fd -lname '/dev/nvidia[0-9]*' -print -quit "
+            + "2>/dev/null | grep -q . || exit 1; "
+            + "nvidia-smi --query-gpu=name,temperature.gpu,utilization.gpu,"
+            + "memory.used,memory.total --format=csv,noheader,nounits "
+            + "| head -n1 | sed 's/, /|/g'; exit 0; fi; "
             + "for h in \"$card/device/hwmon\"/hwmon*; do "
             + "test -r \"$h/temp1_input\" || continue; "
             + "case \"$vendor\" in 0x1002) name='AMD GPU';; "
             + "0x8086) name='Intel GPU';; *) name='Dedicated GPU';; esac; "
             + "temp=$(cat \"$h/temp1_input\"); "
-            + "printf '%s|%s\\n' \"$name\" \"$((temp / 1000))\"; exit 0; "
-            + "done; done; exit 1"]
+            + "busy=$(cat \"$card/device/gpu_busy_percent\" 2>/dev/null); "
+            + "used=$(cat \"$card/device/mem_info_vram_used\" 2>/dev/null); "
+            + "total=$(cat \"$card/device/mem_info_vram_total\" 2>/dev/null); "
+            + "printf '%s|%s|%s|%s|%s\\n' \"$name\" \"$((temp / 1000))\" \"$busy\" "
+            + "\"${used:+$((used / 1048576))}\" \"${total:+$((total / 1048576))}\"; "
+            + "exit 0; done; done; exit 1"]
         stdout: StdioCollector {
-            id: gpuTemperatureOutput
+            id: gpuOutput
         }
         onExited: (exitCode, exitStatus) => {
-            const fields = gpuTemperatureOutput.text.trim().split("|");
-            const value = Number(fields[1]);
-            root.gpuAvailable = exitCode === 0 && fields.length === 2
-                && Number.isFinite(value);
-            if (root.gpuAvailable) {
-                root.gpuName = fields[0];
-                root.gpuTemperature = value;
-            }
+            const fields = gpuOutput.text.trim().split("|");
+            const number = text => text !== undefined && text.trim() !== ""
+                ? Number(text) : NaN;
+            const temperature = number(fields[1]);
+            const usage = number(fields[2]);
+            root.gpuAvailable = exitCode === 0 && fields.length === 5
+                && Number.isFinite(temperature);
+            if (!root.gpuAvailable)
+                return;
+            root.gpuName = fields[0];
+            root.gpuTemperature = temperature;
+            root.gpuUsageAvailable = Number.isFinite(usage);
+            root.gpuUsage = root.gpuUsageAvailable
+                ? Math.max(0, Math.min(1, usage / 100)) : 0;
+            root.gpuMemoryUsed = number(fields[3]) || 0;
+            root.gpuMemoryTotal = number(fields[4]) || 0;
         }
     }
 
@@ -109,13 +127,13 @@ Singleton {
                 cpuStatReader.running = true;
             if (!temperatureReader.running)
                 temperatureReader.running = true;
-            if (!gpuTemperatureReader.running)
-                gpuTemperatureReader.running = true;
+            if (!gpuReader.running)
+                gpuReader.running = true;
         }
     }
 
     Component.onCompleted: {
         temperatureReader.running = true;
-        gpuTemperatureReader.running = true;
+        gpuReader.running = true;
     }
 }

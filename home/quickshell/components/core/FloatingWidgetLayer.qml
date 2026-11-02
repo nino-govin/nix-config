@@ -77,6 +77,7 @@ PanelWindow {
         floorY: root.height - (root.barOnTop ? 0 : root.reservedBarHeight)
         platforms: overview.platforms
         onPoked: (platform, direction) => overview.poke(platform, direction)
+        onLanded: platform => overview.poke(platform, "down")
         shown: root.desktopVisible && root.primaryScreen
             && SettingsService.clawdWidget
     }

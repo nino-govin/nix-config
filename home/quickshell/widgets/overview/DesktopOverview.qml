@@ -37,7 +37,7 @@ Item {
         y: card.y,
         width: card.width,
         height: card.height,
-        active: shown && placementReady && card.visible
+        active: card !== clockCard && shown && placementReady && card.visible
     }))
 
     visible: (shown && placementReady) || opacity > 0

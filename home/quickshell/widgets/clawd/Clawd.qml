@@ -63,6 +63,7 @@ Item {
     }
 
     signal poked(int platform, string direction)
+    signal landed(int platform)
 
     visible: shown
 
@@ -172,6 +173,8 @@ Item {
         const event = Brain.step(sim, platforms, world, dt, walkTarget);
         if (event === "landed") {
             moving = false;
+            if (sim.platform >= 0)
+                root.landed(sim.platform);
             if (replanPending) {
                 replanPending = false;
                 queue = Brain.plan(context());

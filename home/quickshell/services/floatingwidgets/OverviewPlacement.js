@@ -43,18 +43,28 @@ function calculate(request, analysis, cardGap) {
         if (!environment)
             continue;
 
+        occupied.push(environment);
+
+        const system = bestGroupPlacement([
+            verticalLayout(cards.system, gap),
+            horizontalLayout(cards.system, gap)
+        ], bounds, request, analysis, occupied, gap);
+        if (!system)
+            continue;
+
         const balancePenalty = horizontalBalancePenalty([
-            primary.group, resources, environment
+            primary.group, resources, environment, system
         ], request.sampleWidth);
         const score = primary.score + resources.score
-            + environment.score - balancePenalty;
+            + environment.score + system.score - balancePenalty;
 
         if (score > bestScore) {
             bestScore = score;
             bestSolution = {
                 primary: primary,
                 resources: resources,
-                environment: environment
+                environment: environment,
+                system: system
             };
         }
     }
@@ -68,6 +78,7 @@ function calculate(request, analysis, cardGap) {
         copyCardPositions(positions, bestSolution.primary.clock, request);
     copyCardPositions(positions, bestSolution.resources, request);
     copyCardPositions(positions, bestSolution.environment, request);
+    copyCardPositions(positions, bestSolution.system, request);
 
     return { positions: positions };
 }
@@ -221,12 +232,19 @@ function createCards(request) {
     if (request.airQualityAvailable)
         environment.push(namedCard("airQuality", environmentSize));
 
+    const system = [
+        namedCard("networkDownload", resourceSize),
+        namedCard("networkUpload", resourceSize),
+        namedCard("diskUsage", resourceSize)
+    ];
+
     return {
         clock: namedCard("clock", sampleSize(request.clockSize, request)),
         weather: namedCard("weather", sampleSize(request.weatherSize, request)),
         calendar: namedCard("calendar", sampleSize(request.calendarSize, request)),
         resources: resources,
-        environment: environment
+        environment: environment,
+        system: system
     };
 }
 

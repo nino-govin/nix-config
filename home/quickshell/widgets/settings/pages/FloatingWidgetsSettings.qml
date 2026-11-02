@@ -57,6 +57,9 @@ Column {
         SettingsToggleRow { width: parent.width; title: "GPU usage"; detail: "Dedicated GPU load and VRAM, shown while it is active"; checked: SettingsService.draftValue("gpuUsageWidget"); showSeparator: true; onToggleRequested: SettingsService.setDraftValue("gpuUsageWidget", !checked) }
         SettingsToggleRow { width: parent.width; title: "UV index"; detail: "Requires configured weather data"; checked: SettingsService.draftValue("uvIndexWidget"); showSeparator: true; onToggleRequested: SettingsService.setDraftValue("uvIndexWidget", !checked) }
         SettingsToggleRow { width: parent.width; title: "Humidity"; detail: "Requires configured weather data"; checked: SettingsService.draftValue("humidityWidget"); showSeparator: true; onToggleRequested: SettingsService.setDraftValue("humidityWidget", !checked) }
-        SettingsToggleRow { width: parent.width; title: "Air quality"; detail: "Shown only when air-quality data is available"; checked: SettingsService.draftValue("airQualityWidget"); onToggleRequested: SettingsService.setDraftValue("airQualityWidget", !checked) }
+        SettingsToggleRow { width: parent.width; title: "Air quality"; detail: "Shown only when air-quality data is available"; checked: SettingsService.draftValue("airQualityWidget"); showSeparator: true; onToggleRequested: SettingsService.setDraftValue("airQualityWidget", !checked) }
+        SettingsToggleRow { width: parent.width; title: "Download"; detail: "Incoming network throughput"; checked: SettingsService.draftValue("networkDownloadWidget"); showSeparator: true; onToggleRequested: SettingsService.setDraftValue("networkDownloadWidget", !checked) }
+        SettingsToggleRow { width: parent.width; title: "Upload"; detail: "Outgoing network throughput"; checked: SettingsService.draftValue("networkUploadWidget"); showSeparator: true; onToggleRequested: SettingsService.setDraftValue("networkUploadWidget", !checked) }
+        SettingsToggleRow { width: parent.width; title: "Disk"; detail: "Root filesystem usage"; checked: SettingsService.draftValue("diskUsageWidget"); onToggleRequested: SettingsService.setDraftValue("diskUsageWidget", !checked) }
     }
 }

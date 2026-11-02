@@ -50,7 +50,10 @@ Item {
             SettingsService.cpuUsageWidget, SettingsService.gpuTemperatureWidget,
             SettingsService.gpuUsageWidget,
             SettingsService.uvIndexWidget, SettingsService.humidityWidget,
-            SettingsService.airQualityWidget].join("|");
+            SettingsService.airQualityWidget,
+            SettingsService.networkDownloadWidget,
+            SettingsService.networkUploadWidget,
+            SettingsService.diskUsageWidget].join("|");
         if (fingerprint === requestedFingerprint)
             return;
         requestedFingerprint = fingerprint;
@@ -97,6 +100,9 @@ Item {
         moveCard(uvIndexCard, positions.uvIndex);
         moveCard(humidityCard, positions.humidity);
         moveCard(airQualityCard, positions.airQuality);
+        moveCard(networkDownloadCard, positions.networkDownload);
+        moveCard(networkUploadCard, positions.networkUpload);
+        moveCard(diskUsageCard, positions.diskUsage);
     }
 
     function temperatureColor(value: real): color {
@@ -107,6 +113,11 @@ Item {
     function uvColor(value: real): color {
         return value < 3 ? Theme.successColor
             : value < 6 ? Theme.accentColor : Theme.dangerColor;
+    }
+
+    function usageColor(value: real): color {
+        return value < 0.75 ? Theme.successColor
+            : value < 0.9 ? Theme.accentColor : Theme.dangerColor;
     }
 
     function airQualityColor(value: real): color {
@@ -323,6 +334,60 @@ Item {
 
     }
 
+    OverviewMovableResourceCard {
+        id: networkDownloadCard
+
+        overview: root
+
+        targetX: root.usableArea.x
+        targetY: root.usableArea.y + root.usableArea.height / 2
+        cardSize: root.resourceSize
+        visible: SettingsService.networkDownloadWidget
+        label: "DOWNLOAD"
+        icon: Icons.download
+        value: NetworkTrafficService.rateText(NetworkTrafficService.downloadRate)
+        detail: "Total " + NetworkTrafficService.formatBytes(NetworkTrafficService.downloadTotal)
+        progress: NetworkTrafficService.downloadProgress
+        accentColor: Theme.accentColor
+    }
+
+    OverviewMovableResourceCard {
+        id: networkUploadCard
+
+        overview: root
+
+        targetX: networkDownloadCard.targetX
+        targetY: networkDownloadCard.targetY + height + 12
+        cardSize: root.resourceSize
+        visible: SettingsService.networkUploadWidget
+        label: "UPLOAD"
+        icon: Icons.upload
+        value: NetworkTrafficService.rateText(NetworkTrafficService.uploadRate)
+        detail: "Total " + NetworkTrafficService.formatBytes(NetworkTrafficService.uploadTotal)
+        progress: NetworkTrafficService.uploadProgress
+        accentColor: Theme.accentColor
+    }
+
+    OverviewMovableResourceCard {
+        id: diskUsageCard
+
+        overview: root
+
+        targetX: networkUploadCard.targetX
+        targetY: networkUploadCard.targetY + height + 12
+        cardSize: root.resourceSize
+        visible: SettingsService.diskUsageWidget
+        label: "DISK"
+        icon: Icons.disk
+        value: StorageService.available ? StorageService.percent + "%" : "--%"
+        detail: StorageService.available
+            ? StorageService.format(StorageService.usedBytes) + " / "
+                + StorageService.format(StorageService.totalBytes)
+            : ""
+        progress: StorageService.usage
+        accentColor: root.usageColor(StorageService.usage)
+    }
+
     component OverviewMovement: MotionAnimation {
         group: "floatingWidget"
         type: MotionAnimation.SlowSpatial
@@ -386,6 +451,9 @@ Item {
         function onUvIndexWidgetChanged(): void { root.schedulePlacement(); }
         function onHumidityWidgetChanged(): void { root.schedulePlacement(); }
         function onAirQualityWidgetChanged(): void { root.schedulePlacement(); }
+        function onNetworkDownloadWidgetChanged(): void { root.schedulePlacement(); }
+        function onNetworkUploadWidgetChanged(): void { root.schedulePlacement(); }
+        function onDiskUsageWidgetChanged(): void { root.schedulePlacement(); }
         function onFloatingWidgetScaleChanged(): void { root.schedulePlacement(); }
         function onFloatingWidgetLockPlacementChanged(): void {
             if (!SettingsService.floatingWidgetLockPlacement)

@@ -121,10 +121,13 @@ Item {
                         && iconText.visible ? 10 : 0
                     verticalCenter: parent.verticalCenter
                 }
+                height: parent.height
                 text: root.value
                 color: Theme.primaryTextColor
                 font.family: Typography.bodyFontFamily
                 font.pixelSize: 34
+                fontSizeMode: Text.Fit
+                minimumPixelSize: 14
                 font.weight: Font.Bold
                 horizontalAlignment: root.contentAlignment === Text.AlignLeft
                     ? Text.AlignRight : Text.AlignLeft

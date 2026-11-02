@@ -95,6 +95,9 @@ Singleton {
         uvIndexWidget: true,
         humidityWidget: true,
         airQualityWidget: true,
+        networkDownloadWidget: true,
+        networkUploadWidget: true,
+        diskUsageWidget: true,
 
         // Integrations
         terminalIntegration: false,
@@ -210,6 +213,9 @@ Singleton {
     property bool uvIndexWidget: defaults.uvIndexWidget
     property bool humidityWidget: defaults.humidityWidget
     property bool airQualityWidget: defaults.airQualityWidget
+    property bool networkDownloadWidget: defaults.networkDownloadWidget
+    property bool networkUploadWidget: defaults.networkUploadWidget
+    property bool diskUsageWidget: defaults.diskUsageWidget
 
     // Integrations
     property bool terminalIntegration: defaults.terminalIntegration
@@ -522,7 +528,8 @@ Singleton {
     function anyFloatingWidgetEnabled(): bool {
         return clockWidget || weatherWidget || calendarWidget
             || cpuTemperatureWidget || cpuUsageWidget || gpuTemperatureWidget || gpuUsageWidget
-            || uvIndexWidget || humidityWidget || airQualityWidget;
+            || uvIndexWidget || humidityWidget || airQualityWidget
+            || networkDownloadWidget || networkUploadWidget || diskUsageWidget;
     }
 
     FileView {

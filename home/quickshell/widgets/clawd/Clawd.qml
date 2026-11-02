@@ -275,13 +275,15 @@ Item {
         sync();
     }
 
-    onPlatformsChanged: {
-        if (!sim || dragging)
+    function followPlatforms(): void {
+        if (!sim || dragging || !shown)
             return;
         if (Brain.follow(sim, platforms))
             moving = true;
         sync();
     }
+
+    onPlatformsChanged: Qt.callLater(followPlatforms)
 
     onShownChanged: {
         impactTimer.stop();

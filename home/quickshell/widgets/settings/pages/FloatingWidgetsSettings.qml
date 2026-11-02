@@ -62,4 +62,32 @@ Column {
         SettingsToggleRow { width: parent.width; title: "Upload"; detail: "Outgoing network throughput"; checked: SettingsService.draftValue("networkUploadWidget"); showSeparator: true; onToggleRequested: SettingsService.setDraftValue("networkUploadWidget", !checked) }
         SettingsToggleRow { width: parent.width; title: "Disk"; detail: "Root filesystem usage"; checked: SettingsService.draftValue("diskUsageWidget"); onToggleRequested: SettingsService.setDraftValue("diskUsageWidget", !checked) }
     }
+
+    SettingsGroup {
+        SettingsToggleRow {
+            width: parent.width
+            title: "Claude crab"
+            detail: "Animated companion following Claude Code sessions"
+            checked: SettingsService.draftValue("clawdWidget")
+            showSeparator: true
+            onToggleRequested: SettingsService.setDraftValue("clawdWidget", !checked)
+        }
+        SettingsSliderRow {
+            width: parent.width
+            title: "Crab size"
+            detail: "Screen pixels per sprite pixel"
+            value: SettingsService.draftValue("clawdScale")
+            minimum: 3; maximum: 8; step: 1; decimals: 0; suffix: "×"
+            showSeparator: true
+            onValueRequested: value => SettingsService.setDraftValue("clawdScale", value)
+        }
+        SettingsSliderRow {
+            width: parent.width
+            title: "Crab activity"
+            detail: "How often the crab wanders, jumps and pokes widgets"
+            value: SettingsService.draftValue("clawdActivity")
+            minimum: 0.5; maximum: 2.0; step: 0.1; decimals: 1; suffix: "×"
+            onValueRequested: value => SettingsService.setDraftValue("clawdActivity", value)
+        }
+    }
 }

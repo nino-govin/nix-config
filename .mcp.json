@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "aseprite": {
+      "command": "uvx",
+      "args": [
+        "--python",
+        "3.13",
+        "--with",
+        "mcp[cli]<2",
+        "--from",
+        "git+https://github.com/diivi/aseprite-mcp@a89b205bed31930ee141edf319e78c71ef16bba6",
+        "python",
+        "-m",
+        "aseprite_mcp"
+      ]
+    }
+  }
+}

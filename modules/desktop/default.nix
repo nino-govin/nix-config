@@ -5,6 +5,7 @@
     ./display.nix
     ./greeter.nix
     ./fonts.nix
+    ./clawd.nix
   ];
 
   environment.systemPackages = with pkgs; [

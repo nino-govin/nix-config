@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 let
   mesaEgl = "/run/opengl-driver/share/glvnd/egl_vendor.d/50_mesa.json";
@@ -18,12 +18,35 @@ let
     '';
     nativeBuildInputs = [ pkgs.makeWrapper ];
   };
+
+  aseprite-steam = pkgs.writeShellScriptBin "aseprite" ''
+    export LD_LIBRARY_PATH=${
+      lib.makeLibraryPath (
+        with pkgs;
+        [
+          stdenv.cc.cc.lib
+          libxcb
+          libX11
+          libXext
+          libXcursor
+          libXrandr
+          libGL
+          fontconfig
+          freetype
+        ]
+      )
+    }''${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+    export __EGL_VENDOR_LIBRARY_FILENAMES=${mesaEgl}
+    export __GLX_VENDOR_LIBRARY_NAME=mesa
+    exec "$HOME/.local/share/Steam/steamapps/common/Aseprite/aseprite" "$@"
+  '';
 in
 {
   home.packages = with pkgs; [
     obsidian
     xdg-utils
     discord-wayland
+    aseprite-steam
     google-chrome
     moonlight-qt
     protonup-qt

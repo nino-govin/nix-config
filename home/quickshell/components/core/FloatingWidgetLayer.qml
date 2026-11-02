@@ -2,6 +2,7 @@ import Quickshell
 import Quickshell.Wayland
 import QtQuick
 import "../../services"
+import "../../widgets/clawd"
 import "../../widgets/overview"
 import "../state"
 import "../theme"
@@ -25,10 +26,13 @@ PanelWindow {
         widgetInset + (barOnTop ? reservedBarHeight : 0),
         Math.max(1, width - widgetInset * 2),
         Math.max(1, height - widgetInset * 2 - reservedBarHeight))
-    readonly property bool floatingWidgetsVisible:
-        SettingsService.anyFloatingWidgetEnabled()
-        && StartupState.maskRevealFinished(targetScreen.name)
+    readonly property bool desktopVisible:
+        StartupState.maskRevealFinished(targetScreen.name)
         && FloatingWidgetVisibilityService.visibleOnOutput(targetScreen.name)
+    readonly property bool floatingWidgetsVisible:
+        SettingsService.anyFloatingWidgetEnabled() && desktopVisible
+    readonly property bool primaryScreen: Quickshell.screens.length > 0
+        && Quickshell.screens[0].name === targetScreen.name
 
     screen: targetScreen
     color: "transparent"
@@ -57,11 +61,23 @@ PanelWindow {
     }
 
     DesktopOverview {
+        id: overview
+
         anchors.fill: parent
         screenName: root.targetScreen.name
         usableArea: root.usableArea
         wallpaperSource: root.displayedWallpaper
         wallpaperSourceItem: wallpaperTexture
         shown: root.floatingWidgetsVisible
+    }
+
+    Clawd {
+        anchors.fill: parent
+        ceilingY: root.barOnTop ? root.reservedBarHeight : 0
+        floorY: root.height - (root.barOnTop ? 0 : root.reservedBarHeight)
+        platforms: overview.platforms
+        onPoked: (platform, direction) => overview.poke(platform, direction)
+        shown: root.desktopVisible && root.primaryScreen
+            && SettingsService.clawdWidget
     }
 }

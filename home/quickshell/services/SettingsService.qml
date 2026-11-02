@@ -98,6 +98,9 @@ Singleton {
         networkDownloadWidget: true,
         networkUploadWidget: true,
         diskUsageWidget: true,
+        clawdWidget: true,
+        clawdScale: 4,
+        clawdActivity: 1.0,
 
         // Integrations
         terminalIntegration: false,
@@ -216,6 +219,9 @@ Singleton {
     property bool networkDownloadWidget: defaults.networkDownloadWidget
     property bool networkUploadWidget: defaults.networkUploadWidget
     property bool diskUsageWidget: defaults.diskUsageWidget
+    property bool clawdWidget: defaults.clawdWidget
+    property int clawdScale: defaults.clawdScale
+    property real clawdActivity: defaults.clawdActivity
 
     // Integrations
     property bool terminalIntegration: defaults.terminalIntegration
@@ -416,6 +422,8 @@ Singleton {
         case "statusBarHeight": return Math.round(clamp(value, 32, 64));
         case "globalAnimationSpeed": return clamp(value, 0.50, 2.0);
         case "floatingWidgetScale": return clamp(value, 0.70, 1.35);
+        case "clawdScale": return Math.round(clamp(value, 3, 8));
+        case "clawdActivity": return clamp(value, 0.5, 2.0);
         case "floatingWidgetOpacity": return clamp(value, 0.35, 1.0);
         case "panelDuration":
         case "launcherDuration":

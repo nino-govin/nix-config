@@ -6,6 +6,7 @@ import "components/state"
 import "components/windows"
 import "integrations"
 import "services"
+import "widgets/clawd"
 import "widgets/statusbar"
 
 ShellRoot {
@@ -61,6 +62,8 @@ ShellRoot {
 
         ScreenOverlay {}
     }
+
+    ClawdAttentionWindow {}
 
     Variants {
         model: Quickshell.screens

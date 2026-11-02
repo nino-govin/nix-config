@@ -27,6 +27,19 @@ Item {
     readonly property size environmentSize: Qt.size(190 * widgetScale, 125 * widgetScale)
     readonly property color placementTextColor: Theme.primaryTextColor
 
+    readonly property var cards: [clockCard, weatherCard, calendarCard,
+        cpuTemperatureCard, cpuUsageCard, gpuTemperatureCard, gpuUsageCard,
+        uvIndexCard, humidityCard, airQualityCard, networkDownloadCard,
+        networkUploadCard, diskUsageCard]
+    readonly property var platforms: cards.map((card, index) => ({
+        id: index,
+        x: card.x,
+        y: card.y,
+        width: card.width,
+        height: card.height,
+        active: shown && placementReady && card.visible
+    }))
+
     visible: (shown && placementReady) || opacity > 0
     opacity: shown && placementReady ? SettingsService.floatingWidgetOpacity : 0
 
@@ -103,6 +116,16 @@ Item {
         moveCard(networkDownloadCard, positions.networkDownload);
         moveCard(networkUploadCard, positions.networkUpload);
         moveCard(diskUsageCard, positions.diskUsage);
+    }
+
+    function poke(index: int, direction: string): void {
+        const card = cards[index];
+        if (!card || pokeAnimation.running || bumpAnimation.running
+            || SettingsService.reduceMotion)
+            return;
+        const animation = direction === "side" ? pokeAnimation : bumpAnimation;
+        animation.card = card;
+        animation.restart();
     }
 
     function temperatureColor(value: real): color {
@@ -386,6 +409,69 @@ Item {
             : ""
         progress: StorageService.usage
         accentColor: root.usageColor(StorageService.usage)
+    }
+
+    SequentialAnimation {
+        id: pokeAnimation
+
+        property Item card: null
+
+        NumberAnimation {
+            target: pokeAnimation.card
+            property: "rotation"
+            to: 2.5
+            duration: 70
+            easing.type: Easing.OutQuad
+        }
+        NumberAnimation {
+            target: pokeAnimation.card
+            property: "rotation"
+            to: -2
+            duration: 110
+            easing.type: Easing.InOutQuad
+        }
+        NumberAnimation {
+            target: pokeAnimation.card
+            property: "rotation"
+            to: 1
+            duration: 90
+            easing.type: Easing.InOutQuad
+        }
+        NumberAnimation {
+            target: pokeAnimation.card
+            property: "rotation"
+            to: 0
+            duration: 120
+            easing.type: Easing.OutQuad
+        }
+    }
+
+    SequentialAnimation {
+        id: bumpAnimation
+
+        property Item card: null
+
+        NumberAnimation {
+            target: bumpAnimation.card
+            property: "scale"
+            to: 0.97
+            duration: 70
+            easing.type: Easing.OutQuad
+        }
+        NumberAnimation {
+            target: bumpAnimation.card
+            property: "scale"
+            to: 1.015
+            duration: 120
+            easing.type: Easing.InOutQuad
+        }
+        NumberAnimation {
+            target: bumpAnimation.card
+            property: "scale"
+            to: 1
+            duration: 130
+            easing.type: Easing.OutQuad
+        }
     }
 
     component OverviewMovement: MotionAnimation {

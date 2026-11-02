@@ -34,6 +34,27 @@ Singleton {
             ? Math.round(monitor.lastIpcObject.refreshRate || 0) : 0;
     }
 
+    readonly property int activePid: {
+        const toplevel = Hyprland.activeToplevel;
+        return toplevel && toplevel.lastIpcObject
+            ? toplevel.lastIpcObject.pid || 0 : 0;
+    }
+
+    function activeWorkspaceFullscreen(outputName: string): bool {
+        return Hyprland.workspaces.values.some(workspace => workspace.active
+            && workspace.monitor && workspace.monitor.name === outputName
+            && workspace.hasFullscreen);
+    }
+
+    function focusPid(pid: int): void {
+        Hyprland.dispatch("hl.dsp.focus({ window = \"pid:" + pid + "\" })");
+    }
+
+    Connections {
+        target: Hyprland
+        function onActiveToplevelChanged(): void { Hyprland.refreshToplevels(); }
+    }
+
     function refreshMonitors(): void {
         Hyprland.refreshMonitors();
     }

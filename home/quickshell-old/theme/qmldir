@@ -1,3 +1,0 @@
-module theme
-singleton PaletteNord 1.0 PaletteNord.qml
-singleton Tokens 1.0 Tokens.qml

@@ -15,41 +15,30 @@
   };
 
   outputs =
-    {
-      self,
-      nixpkgs,
-      nixpkgs-unstable,
-      home-manager,
-      nix-gaming,
-      ...
-    }@inputs:
+    { nixpkgs, home-manager, ... }@inputs:
+    let
+      system = "x86_64-linux";
+      host = import ./hosts/nixos/vars.nix;
+    in
     {
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
+        inherit system;
+        specialArgs = { inherit inputs host; };
         modules = [
-          ./configuration.nix
-          {
-            nixpkgs.overlays = [
-              (final: prev: {
-                claude-code =
-                  (import nixpkgs-unstable {
-                    system = prev.system;
-                    config.allowUnfree = true;
-                  }).claude-code;
-              })
-            ];
-          }
+          ./hosts/nixos
           home-manager.nixosModules.home-manager
           {
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
               backupFileExtension = "backup";
-              users.nino-nixos = import ./home/default.nix;
+              extraSpecialArgs = { inherit host; };
+              users.${host.user} = import ./home;
             };
           }
         ];
       };
+
+      formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt-tree;
     };
 }

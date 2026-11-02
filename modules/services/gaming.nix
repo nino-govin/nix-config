@@ -29,19 +29,16 @@ in
     gamescope
     desmume
     icu
-    (inputs.nix-gaming.packages.${pkgs.stdenv.hostPlatform.system}.osu-stable.overrideAttrs (oldAttrs: {
-      buildInputs = (oldAttrs.buildInputs or [ ]) ++ [ pkgs.corefonts ];
-
-      wrapperArgs =
-        (oldAttrs.wrapperArgs or [ ])
-        ++ lib.concatLists (
-          lib.mapAttrsToList (name: value: [
-            "--set"
-            name
-            value
-          ]) osuEnv
+    (
+      (inputs.nix-gaming.packages.${pkgs.stdenv.hostPlatform.system}.osu-stable.override {
+        preCommands = lib.concatLines (
+          lib.mapAttrsToList (name: value: "export ${name}=${lib.escapeShellArg value}") osuEnv
         );
-    }))
+      }).overrideAttrs
+        (oldAttrs: {
+          buildInputs = (oldAttrs.buildInputs or [ ]) ++ [ pkgs.corefonts ];
+        })
+    )
     (pkgs.appimage-run.override { extraPkgs = p: [ p.icu ]; })
   ];
 }

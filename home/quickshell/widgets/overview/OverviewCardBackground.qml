@@ -28,15 +28,36 @@ Item {
                 wallpaperRect.width / wallpaperSourceItem.width,
                 wallpaperRect.height / wallpaperSourceItem.height))
         : -1
+    readonly property real separation: 0.14
+    readonly property real readableLuminance: Theme.lightMode ? 0.62 : 0.22
+    readonly property color baseTint: Theme.shellBackgroundColor
+    readonly property color raisedTint: Theme.mix(baseTint,
+        Theme.primaryTextColor, 0.4)
+    readonly property real targetLuminance: Theme.lightMode
+        ? Math.max(readableLuminance, backgroundLuminance + separation)
+        : Math.min(readableLuminance, backgroundLuminance - separation)
+    readonly property bool raised: backgroundLuminance >= 0
+        && !SettingsService.reduceTransparency
+        && (Theme.lightMode
+            ? targetLuminance > encodedLuminance(baseTint) - 0.03
+            : targetLuminance < encodedLuminance(baseTint) + 0.03)
+    readonly property color tintColor: raised ? raisedTint : baseTint
     readonly property real tintOpacity: {
         if (SettingsService.reduceTransparency)
             return 0.85;
         if (backgroundLuminance < 0)
             return 0.55;
-        const target = Theme.lightMode ? 0.62 : 0.22;
-        const tint = Theme.lightMode ? 0.92 : 0.04;
-        const needed = (backgroundLuminance - target) / (backgroundLuminance - tint);
-        return Math.max(0.35, Math.min(0.85, needed));
+        const tint = encodedLuminance(tintColor);
+        const needed = raised
+            ? separation / Math.abs(tint - backgroundLuminance)
+            : (backgroundLuminance - targetLuminance)
+                / (backgroundLuminance - tint);
+        return Math.max(0.3, Math.min(0.92, needed));
+    }
+
+    function encodedLuminance(colorValue: color): real {
+        return colorValue.r * 0.2126 + colorValue.g * 0.7152
+            + colorValue.b * 0.0722;
     }
 
     ClippingRectangle {
@@ -73,12 +94,23 @@ Item {
 
         Rectangle {
             anchors.fill: parent
-            color: Theme.shellBackgroundColor
+            color: root.tintColor
             opacity: root.tintOpacity
 
+            Behavior on color {
+                MotionColorAnimation { type: MotionAnimation.DefaultEffects }
+            }
             Behavior on opacity {
                 MotionAnimation { type: MotionAnimation.DefaultEffects }
             }
         }
+    }
+
+    Rectangle {
+        anchors.fill: parent
+        radius: ShellMetrics.radiusExtraLarge
+        color: "transparent"
+        border.width: 1
+        border.color: Theme.withOpacity(Theme.primaryTextColor, 0.1)
     }
 }

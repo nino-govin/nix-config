@@ -42,7 +42,6 @@ Singleton {
         const request = Object.assign({}, options, {
             source: source,
             path: decodeURIComponent(source.replace(/^file:\/\//, "")),
-            textLuminance: WallpaperAnalysis.colorLuminance(options.textColor),
             sampleWidth: sampleSize.width,
             sampleHeight: sampleSize.height,
             cacheKey: source + "|" + sampleSize.width + "x" + sampleSize.height,

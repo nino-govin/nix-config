@@ -25,7 +25,6 @@ Item {
     readonly property size calendarSize: Qt.size(280 * widgetScale, 260 * widgetScale)
     readonly property size resourceSize: Qt.size(190 * widgetScale, 125 * widgetScale)
     readonly property size environmentSize: Qt.size(190 * widgetScale, 125 * widgetScale)
-    readonly property color placementTextColor: Theme.primaryTextColor
 
     readonly property var cards: [clockCard, weatherCard, calendarCard,
         cpuTemperatureCard, cpuUsageCard, gpuTemperatureCard, gpuUsageCard,
@@ -55,7 +54,7 @@ Item {
             return;
         const fingerprint = [wallpaperSource.toString(), width, height,
             usableArea.x, usableArea.y, usableArea.width, usableArea.height,
-            placementTextColor.toString(), CpuService.gpuAvailable,
+            CpuService.gpuAvailable,
             WeatherService.airQualityAvailable,
             SettingsService.floatingWidgetScale,
             SettingsService.clockWidget, SettingsService.weatherWidget,
@@ -76,14 +75,29 @@ Item {
             screenWidth: width,
             screenHeight: height,
             usableArea: usableArea,
-            textColor: placementTextColor,
             clockSize: clockSize,
             weatherSize: weatherSize,
             calendarSize: calendarSize,
             resourceSize: resourceSize,
             environmentSize: environmentSize,
-            gpuAvailable: CpuService.gpuAvailable,
-            airQualityAvailable: WeatherService.airQualityAvailable
+            enabled: {
+                clock: SettingsService.clockWidget,
+                weather: SettingsService.weatherWidget,
+                calendar: SettingsService.calendarWidget,
+                cpuTemperature: SettingsService.cpuTemperatureWidget,
+                cpuUsage: SettingsService.cpuUsageWidget,
+                gpuTemperature: SettingsService.gpuTemperatureWidget
+                    && CpuService.gpuAvailable,
+                gpuUsage: SettingsService.gpuUsageWidget
+                    && CpuService.gpuAvailable,
+                uvIndex: SettingsService.uvIndexWidget,
+                humidity: SettingsService.humidityWidget,
+                airQuality: SettingsService.airQualityWidget
+                    && WeatherService.airQualityAvailable,
+                networkDownload: SettingsService.networkDownloadWidget,
+                networkUpload: SettingsService.networkUploadWidget,
+                diskUsage: SettingsService.diskUsageWidget
+            }
         });
     }
 
@@ -514,7 +528,6 @@ Item {
             schedulePlacement();
     }
     onUsableAreaChanged: schedulePlacement()
-    onPlacementTextColorChanged: schedulePlacement()
     Connections {
         target: CpuService
         function onGpuAvailableChanged(): void { root.schedulePlacement(); }

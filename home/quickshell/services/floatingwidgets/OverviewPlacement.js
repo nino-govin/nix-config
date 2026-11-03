@@ -17,6 +17,8 @@ function calculate(request, analysis, cardGap) {
     const gap = Math.max(1, Math.round(cardGap
         / request.screenWidth * request.sampleWidth));
     const cards = createCards(request);
+    const secondaryGroups = [cards.resources, cards.environment, cards.system]
+        .filter(group => group.length > 0);
 
     const primaryCandidates = buildPrimaryCandidates(cards, bounds, request,
         analysis, gap);
@@ -27,45 +29,27 @@ function calculate(request, analysis, cardGap) {
     for (let i = 0; i < primaryCandidates.length; ++i) {
         const primary = primaryCandidates[i];
         const occupied = primary.occupied.slice();
+        const placed = [];
+        let score = primary.score;
 
-        const resources = bestGroupPlacement([
-            verticalLayout(cards.resources, gap),
-            horizontalLayout(cards.resources, gap)
-        ], bounds, request, analysis, occupied, gap);
-        if (!resources)
-            continue;
-        occupied.push(resources);
-
-        const environment = bestGroupPlacement([
-            verticalLayout(cards.environment, gap),
-            horizontalLayout(cards.environment, gap)
-        ], bounds, request, analysis, occupied, gap);
-        if (!environment)
-            continue;
-
-        occupied.push(environment);
-
-        const system = bestGroupPlacement([
-            verticalLayout(cards.system, gap),
-            horizontalLayout(cards.system, gap)
-        ], bounds, request, analysis, occupied, gap);
-        if (!system)
+        for (let j = 0; j < secondaryGroups.length; ++j) {
+            const placement = bestGroupPlacement([
+                verticalLayout(secondaryGroups[j], gap),
+                horizontalLayout(secondaryGroups[j], gap)
+            ], bounds, request, analysis, occupied, gap);
+            if (!placement)
+                break;
+            occupied.push(placement);
+            placed.push(placement);
+            score += placement.score;
+        }
+        if (placed.length < secondaryGroups.length)
             continue;
 
-        const balancePenalty = horizontalBalancePenalty([
-            primary.group, resources, environment, system
-        ], request.sampleWidth);
-        const score = primary.score + resources.score
-            + environment.score + system.score - balancePenalty;
-
+        score -= horizontalBalancePenalty(occupied, request.sampleWidth);
         if (score > bestScore) {
             bestScore = score;
-            bestSolution = {
-                primary: primary,
-                resources: resources,
-                environment: environment,
-                system: system
-            };
+            bestSolution = occupied;
         }
     }
 
@@ -73,12 +57,8 @@ function calculate(request, analysis, cardGap) {
         return null;
 
     const positions = {};
-    copyCardPositions(positions, bestSolution.primary.group, request);
-    if (bestSolution.primary.clock)
-        copyCardPositions(positions, bestSolution.primary.clock, request);
-    copyCardPositions(positions, bestSolution.resources, request);
-    copyCardPositions(positions, bestSolution.environment, request);
-    copyCardPositions(positions, bestSolution.system, request);
+    for (let i = 0; i < bestSolution.length; ++i)
+        copyCardPositions(positions, bestSolution[i], request);
 
     return { positions: positions };
 }
@@ -87,53 +67,48 @@ function calculate(request, analysis, cardGap) {
 
 function buildPrimaryCandidates(cards, bounds, request, analysis, gap) {
     const candidates = [];
+    const info = [cards.weather, cards.calendar].filter(card => card);
 
     // First try clock + weather + calendar as one group.
-    const joinedLayouts = [
-        horizontalLayout([cards.clock, cards.weather, cards.calendar], gap),
-        verticalLayout([cards.clock, cards.weather, cards.calendar], gap)
-    ];
-    for (let i = 0; i < joinedLayouts.length; ++i) {
-        const placements = placementsForLayout(joinedLayouts[i], bounds,
-            request, analysis, [], gap, false);
-        for (let j = 0; j < placements.length; ++j) {
-            candidates.push({
-                score: placements[j].score + 0.2,
-                group: placements[j],
-                clock: null,
-                occupied: [placements[j]]
-            });
+    if (cards.clock && info.length > 0) {
+        const joinedLayouts = [
+            horizontalLayout([cards.clock].concat(info), gap),
+            verticalLayout([cards.clock].concat(info), gap)
+        ];
+        for (let i = 0; i < joinedLayouts.length; ++i) {
+            const placements = placementsForLayout(joinedLayouts[i], bounds,
+                request, analysis, [], gap, false);
+            for (let j = 0; j < placements.length; ++j) {
+                candidates.push({
+                    score: placements[j].score + 0.2,
+                    occupied: [placements[j]]
+                });
+            }
         }
     }
 
     // Also allow the clock to float independently from weather + calendar.
-    const infoLayouts = [
-        horizontalLayout([cards.weather, cards.calendar], gap),
-        verticalLayout([cards.weather, cards.calendar], gap)
-    ];
-    const clockLayout = horizontalLayout([cards.clock], 0);
-    const clockPlacements = placementsForLayout(clockLayout, bounds,
-        request, analysis, [], gap, true);
+    const groups = info.length === 0 ? [null] : [
+        horizontalLayout(info, gap),
+        verticalLayout(info, gap)
+    ].reduce((all, layout) => all.concat(placementsForLayout(layout, bounds,
+        request, analysis, [], gap, false)), []);
+    const clocks = !cards.clock ? [null] : placementsForLayout(
+        horizontalLayout([cards.clock], 0), bounds, request, analysis, [],
+        gap, true);
 
-    for (let i = 0; i < infoLayouts.length; ++i) {
-        const groups = placementsForLayout(infoLayouts[i], bounds,
-            request, analysis, [], gap, false);
+    for (let groupIndex = 0; groupIndex < groups.length; ++groupIndex) {
+        for (let clockIndex = 0; clockIndex < clocks.length; ++clockIndex) {
+            const group = groups[groupIndex];
+            const clock = clocks[clockIndex];
+            if (group && clock && overlaps(group, clock, gap * 2))
+                continue;
 
-        for (let groupIndex = 0; groupIndex < groups.length; ++groupIndex) {
-            for (let clockIndex = 0; clockIndex < clockPlacements.length;
-                    ++clockIndex) {
-                const group = groups[groupIndex];
-                const clock = clockPlacements[clockIndex];
-                if (overlaps(group, clock, gap * 2))
-                    continue;
-
-                candidates.push({
-                    score: (group.score * 2 + clock.score) / 3,
-                    group: group,
-                    clock: clock,
-                    occupied: [group, clock]
-                });
-            }
+            candidates.push({
+                score: group && clock ? (group.score * 2 + clock.score) / 3
+                    : group ? group.score : clock ? clock.score : 0,
+                occupied: [group, clock].filter(item => item)
+            });
         }
     }
 
@@ -168,8 +143,8 @@ function placementsForLayout(layout, bounds, request, analysis, occupied,
         if (collides(placement, occupied, gap * 2))
             continue;
 
-        placement.score = scorePlacement(placement, request, analysis,
-            textOnly) - centerPenalty(placement, request);
+        placement.score = scorePlacement(placement, analysis, textOnly)
+            - centerPenalty(placement, request);
         placements.push(placement);
     }
 
@@ -180,12 +155,10 @@ function placementsForLayout(layout, bounds, request, analysis, occupied,
 
 // Scoring -------------------------------------------------------------------
 
-function scorePlacement(placement, request, analysis, textOnly) {
+function scorePlacement(placement, analysis, textOnly) {
     let total = 0;
-    for (let i = 0; i < placement.cards.length; ++i) {
-        total += WallpaperAnalysis.score(placement.cards[i], analysis,
-            request.textLuminance, textOnly);
-    }
+    for (let i = 0; i < placement.cards.length; ++i)
+        total += WallpaperAnalysis.score(placement.cards[i], analysis, textOnly);
     return total / placement.cards.length;
 }
 
@@ -215,36 +188,22 @@ function horizontalBalancePenalty(groups, sampleWidth) {
 function createCards(request) {
     const resourceSize = sampleSize(request.resourceSize, request);
     const environmentSize = sampleSize(request.environmentSize, request);
-
-    const resources = [
-        namedCard("cpuTemperature", resourceSize),
-        namedCard("cpuUsage", resourceSize)
-    ];
-    if (request.gpuAvailable) {
-        resources.push(namedCard("gpuTemperature", resourceSize));
-        resources.push(namedCard("gpuUsage", resourceSize));
-    }
-
-    const environment = [
-        namedCard("uvIndex", environmentSize),
-        namedCard("humidity", environmentSize)
-    ];
-    if (request.airQualityAvailable)
-        environment.push(namedCard("airQuality", environmentSize));
-
-    const system = [
-        namedCard("networkDownload", resourceSize),
-        namedCard("networkUpload", resourceSize),
-        namedCard("diskUsage", resourceSize)
-    ];
+    const enabled = name => request.enabled[name] === true;
+    const cards = (names, size) => names.filter(enabled)
+        .map(name => namedCard(name, size));
+    const single = (name, size) => enabled(name)
+        ? namedCard(name, sampleSize(size, request)) : null;
 
     return {
-        clock: namedCard("clock", sampleSize(request.clockSize, request)),
-        weather: namedCard("weather", sampleSize(request.weatherSize, request)),
-        calendar: namedCard("calendar", sampleSize(request.calendarSize, request)),
-        resources: resources,
-        environment: environment,
-        system: system
+        clock: single("clock", request.clockSize),
+        weather: single("weather", request.weatherSize),
+        calendar: single("calendar", request.calendarSize),
+        resources: cards(["cpuTemperature", "cpuUsage", "gpuTemperature",
+            "gpuUsage"], resourceSize),
+        environment: cards(["uvIndex", "humidity", "airQuality"],
+            environmentSize),
+        system: cards(["networkDownload", "networkUpload", "diskUsage"],
+            resourceSize)
     };
 }
 

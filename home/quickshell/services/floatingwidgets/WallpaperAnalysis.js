@@ -33,25 +33,13 @@ function build(rgbData, width, height) {
     };
 }
 
-function colorLuminance(colorValue) {
-    return colorValue.r * 0.2126
-        + colorValue.g * 0.7152
-        + colorValue.b * 0.0722;
-}
-
-function score(rectangle, analysis, textLuminance, textOnly) {
+function score(rectangle, analysis, textOnly) {
     const stats = regionStats(rectangle, analysis);
 
-    // Cards with a background mainly want a calm, low-detail area.
-    if (!textOnly)
-        return -stats.deviation * 12 - stats.detail * 10;
-
-    // The clock has no card background, so contrast matters as well.
-    const contrast = (Math.max(textLuminance, stats.mean) + 0.05)
-        / (Math.min(textLuminance, stats.mean) + 0.05);
-    return Math.min(4, contrast) * 0.25
-        - stats.deviation * 6
-        - stats.detail * 6;
+    // The clock has no card background and switches between dark and light
+    // text, so any flat area is readable and busy areas hurt it the most.
+    const weight = textOnly ? 1.5 : 1;
+    return -(stats.deviation * 12 + stats.detail * 10) * weight;
 }
 
 function integralImage(values, width, height) {

@@ -44,6 +44,7 @@ PanelWindow {
         pixelScale: root.pixelScale
         animation: !root.shown ? "gone" : ClawdService.state === "ready" ? "nudge" : "peek"
         running: root.visible
+        onFrameEntered: (tag, frame) => ClawdSoundService.cue(tag, frame)
     }
 
     Item {
@@ -55,7 +56,10 @@ PanelWindow {
         height: 36 * root.pixelScale
 
         TapHandler {
-            onTapped: ClawdService.activate()
+            onTapped: {
+                ClawdSoundService.play("boop");
+                ClawdService.activate();
+            }
         }
     }
 }

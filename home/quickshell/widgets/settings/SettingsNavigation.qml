@@ -18,6 +18,7 @@ Rectangle {
         { key: "behavior", label: "Behavior", icon: "󰒓" },
         { key: "session", label: "Session", icon: "󰌾" },
         { key: "widgets", label: "Floating widgets", icon: "󰖲" },
+        { key: "clawd", label: "Clawd", icon: "󰚩" },
         { key: "animations", label: "Animations", icon: "󰔎" },
         { key: "integrations", label: "Integrations", icon: "󰌹" },
         { key: "about", label: "About", icon: "󰋼" }

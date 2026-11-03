@@ -45,6 +45,7 @@ Item {
     readonly property var aloft: ["climb", "reel", "float", "jump", "dangle", "letgo"]
     readonly property real shakeReach: 40
     readonly property int shakeLeg: 450
+    readonly property real throwSpeed: 900
     readonly property real dizzyStep: 0.1
     readonly property real dizzyDecay: 0.2
     readonly property int stars: dizziness < 0.1 ? 0 : dizziness < 0.4 ? 1 : dizziness < 0.7 ? 2 : 3
@@ -352,6 +353,7 @@ Item {
         impactTimer.stop();
         activity = null;
         queue = [];
+        ClawdSoundService.play("grab");
         sim.airborne = false;
         sim.platform = -1;
         grabOffset = Qt.point(position.x - sim.x, position.y - sim.y);
@@ -387,8 +389,10 @@ Item {
             }
             if (Math.abs(travel) < shakeReach)
                 continue;
-            if (now - track.since <= shakeLeg)
+            if (now - track.since <= shakeLeg) {
                 dizziness = Math.min(1, dizziness + dizzyStep);
+                ClawdSoundService.play("shake_" + Math.max(1, stars));
+            }
             track.direction = -track.direction;
             track.extreme = value;
             track.since = now;
@@ -398,6 +402,8 @@ Item {
 
     function release(velocity: vector2d): void {
         dragging = false;
+        if (Math.hypot(velocity.x, velocity.y) > throwSpeed)
+            ClawdSoundService.play("throw");
         Brain.release(sim, velocity.x, velocity.y);
         replanPending = true;
         moving = true;
@@ -445,6 +451,7 @@ Item {
             || cursor.y > sim.y + sim.height || cursor.y < sim.y - 500)
             return;
         lastApproach = now;
+        ClawdSoundService.play("curious");
         queue = Brain.approach(sim, platforms, world, cursor.x);
         advance();
     }
@@ -542,6 +549,7 @@ Item {
         PropertyAction { target: root; property: "ropeProgress"; value: 0 }
         PauseAnimation { duration: 220 }
         NumberAnimation { target: root; property: "ropeProgress"; to: 1; duration: 320; easing.type: Easing.OutQuad }
+        ScriptAction { script: ClawdSoundService.play("clink") }
     }
 
     HoverHandler {
@@ -594,8 +602,10 @@ Item {
     Timer {
         id: impactTimer
         onTriggered: {
-            if (root.activity && root.activity.kind === "poke")
+            if (root.activity && root.activity.kind === "poke") {
+                ClawdSoundService.play("boing");
                 root.poked(root.activity.platform, root.activity.direction);
+            }
         }
     }
 
@@ -625,10 +635,14 @@ Item {
             animation: root.animation
             facing: root.facing
             running: root.shown
+            onFrameEntered: (tag, frame) => ClawdSoundService.cue(tag, frame)
         }
 
         TapHandler {
-            onTapped: ClawdService.activate()
+            onTapped: {
+                ClawdSoundService.play("boop");
+                ClawdService.activate();
+            }
         }
 
         DragHandler {

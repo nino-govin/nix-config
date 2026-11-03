@@ -101,6 +101,11 @@ Singleton {
         clawdWidget: true,
         clawdScale: 4,
         clawdActivity: 1.0,
+        clawdVolume: 70,
+        clawdVolumeAlerts: 100,
+        clawdVolumeHandling: 80,
+        clawdVolumeStunts: 70,
+        clawdVolumeAmbient: 50,
 
         // Integrations
         terminalIntegration: false,
@@ -222,6 +227,11 @@ Singleton {
     property bool clawdWidget: defaults.clawdWidget
     property int clawdScale: defaults.clawdScale
     property real clawdActivity: defaults.clawdActivity
+    property int clawdVolume: defaults.clawdVolume
+    property int clawdVolumeAlerts: defaults.clawdVolumeAlerts
+    property int clawdVolumeHandling: defaults.clawdVolumeHandling
+    property int clawdVolumeStunts: defaults.clawdVolumeStunts
+    property int clawdVolumeAmbient: defaults.clawdVolumeAmbient
 
     // Integrations
     property bool terminalIntegration: defaults.terminalIntegration
@@ -424,6 +434,12 @@ Singleton {
         case "floatingWidgetScale": return clamp(value, 0.70, 1.35);
         case "clawdScale": return Math.round(clamp(value, 3, 8));
         case "clawdActivity": return clamp(value, 0.5, 2.0);
+        case "clawdVolume":
+        case "clawdVolumeAlerts":
+        case "clawdVolumeHandling":
+        case "clawdVolumeStunts":
+        case "clawdVolumeAmbient":
+            return Math.round(clamp(value, 0, 100));
         case "floatingWidgetOpacity": return clamp(value, 0.35, 1.0);
         case "panelDuration":
         case "launcherDuration":

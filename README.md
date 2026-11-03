@@ -76,6 +76,8 @@ He gets around: he chains jumps between widgets, climbs the screen edges, throws
 
 He also reacts to the machine: a fan when the CPU is hot, a battery when charging or nearly empty, an umbrella, snow hat or sunglasses depending on the weather, a nightcap when he sleeps at night, flying packets under heavy traffic, and juggling RAM sticks when memory is nearly full.
 
+Everything he does makes a little 8-bit noise: a chime when Claude needs you or hands the turn back, squeaks and thuds when you grab, shake or throw him, boings and pops for his stunts, and soft footsteps, snores and keyboard clicks the rest of the time. Each group has its own volume in the settings.
+
 <img src="docs/media/clawd-moods.png" alt="Clawd moods" width="100%">
 
 <details>
@@ -83,7 +85,7 @@ He also reacts to the machine: a fan when the CPU is hot, a battery when chargin
 <br>
 <img src="home/quickshell/widgets/clawd/assets/showcase.gif" alt="All Clawd animations" width="100%">
 
-The sprites are generated from code: `assets/src/clawd.py` describes every frame, Aseprite builds the sheet, and `assets/src/showcase.py` renders this grid.
+The sprites are generated from code: `assets/src/clawd.py` describes every frame, Aseprite builds the sheet, and `assets/src/showcase.py` renders this grid. `assets/src/sounds.py` synthesizes every sound, and `ClawdSounds.js` ties them to animation frames.
 </details>
 
 ## Hardware

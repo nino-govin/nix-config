@@ -26,6 +26,7 @@ Item {
         behavior: { title: "Behavior", description: "Change dismissal rules, launcher behavior, and global motion preferences." },
         session: { title: "Session", description: "Configure automatic lock and suspend after periods of inactivity." },
         widgets: { title: "Floating widgets", description: "Control desktop-only visibility, placement, scale, opacity, and cards." },
+        clawd: { title: "Clawd", description: "Tune the Claude Code crab: size, activity, and the volume of each kind of sound." },
         animations: { title: "Animations", description: "Tune motion style and duration for each part of the shell." },
         integrations: { title: "Integrations", description: "Keep supported applications in sync with the current shell palette." },
         about: { title: "About", description: "Inspect the running setup, open the config, reload, or reset settings." }
@@ -46,6 +47,7 @@ Item {
         case "behavior": return Qt.resolvedUrl("pages/BehaviorSettings.qml");
         case "session": return Qt.resolvedUrl("pages/SessionSettings.qml");
         case "widgets": return Qt.resolvedUrl("pages/FloatingWidgetsSettings.qml");
+        case "clawd": return Qt.resolvedUrl("pages/ClawdSettings.qml");
         case "animations": return Qt.resolvedUrl("pages/AnimationsSettings.qml");
         case "integrations": return Qt.resolvedUrl("pages/IntegrationsSettings.qml");
         case "about": return Qt.resolvedUrl("pages/AboutSettings.qml");

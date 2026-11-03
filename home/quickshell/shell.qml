@@ -13,6 +13,7 @@ ShellRoot {
     Component.onCompleted: {
         ThemeExportService.initialize();
         GreeterSyncService.sync();
+        ClawdSoundService.initialize();
     }
 
     Binding {

@@ -30,6 +30,8 @@ Item {
     readonly property var frame: frames.length > frameIndex ? frames[frameIndex] : null
     readonly property int frameSize: frame ? frame.frame.w : 64
 
+    signal frameEntered(string tag, int frame)
+
     implicitWidth: frameSize * pixelScale
     implicitHeight: frameSize * pixelScale
 
@@ -82,6 +84,10 @@ Item {
     }
 
     onTargetChanged: transition()
+    onFrameIndexChanged: {
+        if (running && tag)
+            frameEntered(current, frameIndex - tag.from);
+    }
 
     FileView {
         path: Qt.resolvedUrl("assets/clawd.json").toString().replace(/^file:\/\//, "")

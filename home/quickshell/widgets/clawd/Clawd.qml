@@ -43,13 +43,14 @@ Item {
     readonly property int gripRow: 27
     readonly property var motions: ["walk", "climb", "reel", "float"]
     readonly property var aloft: ["climb", "reel", "float", "jump", "dangle", "letgo"]
-    readonly property real shakeSpeed: 700
+    readonly property real shakeReach: 40
+    readonly property int shakeLeg: 450
     readonly property real dizzyStep: 0.1
     readonly property real dizzyDecay: 0.2
     readonly property int stars: dizziness < 0.1 ? 0 : dizziness < 0.4 ? 1 : dizziness < 0.7 ? 2 : 3
     property real dizziness: 0
     property bool slid: false
-    property var shakeSigns: ({ x: 0, y: 0 })
+    property var shakeAxes: ({})
     property real splatUntil: 0
     property real lastApproach: 0
 
@@ -341,7 +342,7 @@ Item {
 
     function grab(position: point): void {
         dragging = true;
-        shakeSigns = { x: 0, y: 0 };
+        shakeAxes = {};
         rope = null;
         sim.sliding = false;
         sim.gliding = false;
@@ -364,18 +365,34 @@ Item {
         sync();
     }
 
-    function trackShake(velocity: vector2d): void {
-        const signs = shakeSigns;
+    function trackShake(position: point): void {
+        const now = Date.now();
         for (const axis of ["x", "y"]) {
-            const speed = velocity[axis];
-            const sign = speed > shakeSpeed ? 1 : speed < -shakeSpeed ? -1 : 0;
-            if (sign === 0 || sign === signs[axis])
+            const value = position[axis];
+            const track = shakeAxes[axis];
+            if (!track) {
+                shakeAxes[axis] = { direction: 0, extreme: value, since: now };
                 continue;
-            if (signs[axis] !== 0)
+            }
+            const travel = value - track.extreme;
+            if (track.direction === 0 || travel * track.direction > 0) {
+                if (track.direction === 0 && Math.abs(travel) < shakeReach)
+                    continue;
+                if (track.direction === 0) {
+                    track.direction = Math.sign(travel);
+                    track.since = now;
+                }
+                track.extreme = value;
+                continue;
+            }
+            if (Math.abs(travel) < shakeReach)
+                continue;
+            if (now - track.since <= shakeLeg)
                 dizziness = Math.min(1, dizziness + dizzyStep);
-            signs[axis] = sign;
+            track.direction = -track.direction;
+            track.extreme = value;
+            track.since = now;
         }
-        shakeSigns = signs;
         sync();
     }
 
@@ -626,7 +643,7 @@ Item {
                 if (!active)
                     return;
                 root.dragVelocity = centroid.velocity;
-                root.trackShake(centroid.velocity);
+                root.trackShake(centroid.scenePosition);
                 root.dragTo(centroid.scenePosition);
             }
         }

@@ -263,12 +263,12 @@ Item {
             moving = true;
             break;
         case "jump": {
-            const platform = platforms[next.platform];
-            if (!platform || !platform.active) {
+            const platform = next.platform >= 0 ? platforms[next.platform] : null;
+            if (next.platform >= 0 && (!platform || !platform.active)) {
                 advance();
                 return;
             }
-            Brain.launch(sim, next.targetX, platform.y);
+            Brain.launch(sim, next.targetX, platform ? platform.y : world.floor);
             moving = true;
             break;
         }

@@ -7,7 +7,8 @@ const maxThrowSpeed = 1800;
 const edgeMargin = 0.3;
 const pokeReach = [0.35, 0.9];
 const jumpReach = 2.5;
-const jumpRise = 5;
+const jumpRise = 7.5;
+const bounceReach = [0.3, 2.5];
 const arcPerDistance = 0.35;
 const routeDepth = 4;
 const climbSpeed = 110;
@@ -180,6 +181,25 @@ function jumpOptions(sim, platforms, world) {
         .map(platform => hop(from, platform, sim, world, sim.x))
         .filter(option => option)
         .map(option => option.steps);
+}
+
+function bounces(sim, platforms, world) {
+    const range = surfaceRange(sim, platforms, world);
+    const count = Math.floor(random(1, 4));
+    const direction = Math.random() < 0.5 ? -1 : 1;
+    const steps = [];
+    let x = sim.x;
+    for (let index = 0; index < count; index++) {
+        const distance = sim.width * random(bounceReach[0], bounceReach[1]);
+        let targetX = x + direction * distance;
+        if (targetX < range.left || targetX > range.right)
+            targetX = x - direction * distance;
+        if (targetX < range.left || targetX > range.right)
+            break;
+        steps.push({ kind: "jump", platform: sim.platform, targetX: targetX });
+        x = targetX;
+    }
+    return steps;
 }
 
 function route(sim, platforms, world, goal) {
@@ -523,6 +543,9 @@ function plan(context) {
     if (jumps.length > 0)
         options.push([pick(jumps.map(jump => [jump, 1]))
             .concat(busy ? [rest] : []), busy ? 2 : 2.5]);
+    const bounce = bounces(sim, platforms, world);
+    if (bounce.length > 0)
+        options.push([bounce.concat(busy ? [rest] : []), busy ? 0.5 : 1]);
     if (pokes.length > 0 && !busy)
         options.push([pick(pokes.map(poke => [poke, 1])), 1.5]);
     const trip = perchTrip(sim, platforms, world, "");

@@ -11,8 +11,9 @@ QtObject {
     readonly property real maximumToneSaturation: 0.82
     readonly property real neutralChroma: 0.12
     readonly property real lightModeThreshold: 0.50
-    readonly property int quantizerDepth: 4
-    readonly property int quantizerRescaleSize: 64
+    readonly property real minimumSemanticVibrancy: 0.35
+    readonly property int quantizerDepth: 8
+    readonly property int quantizerRescaleSize: 128
 
     property url paletteSource: WallpaperService.source
     readonly property var palette: quantizer.colors
@@ -21,6 +22,7 @@ QtObject {
     readonly property color accentSeed: SettingsService.manualAccentEnabled
         ? SettingsService.manualAccentColor : wallpaperAccentSeed
     readonly property real wallpaperBrightness: averageLuminance(palette)
+    readonly property real wallpaperChroma: averageChroma(palette)
     readonly property bool automaticLightMode: wallpaperBrightness >= lightModeThreshold
     readonly property bool lightMode: SettingsService.colorMode === "light"
         ? true : SettingsService.colorMode === "dark"
@@ -80,6 +82,16 @@ QtObject {
         let total = 0;
         for (let index = 0; index < colors.length; index++)
             total += luminance(colors[index]);
+        return total / colors.length;
+    }
+
+    function averageChroma(colors): real {
+        if (!colors || colors.length === 0)
+            return 1;
+
+        let total = 0;
+        for (let index = 0; index < colors.length; index++)
+            total += chromaWeight(colors[index]);
         return total / colors.length;
     }
 
@@ -151,7 +163,10 @@ QtObject {
     }
 
     function semanticColor(seed: color, accent: color, light: bool): color {
-        return tone(mix(seed, accent, 0.20), light ? 0.42 : 0.70, 0.48);
+        const base = tone(mix(seed, accent, 0.20), light ? 0.42 : 0.70, 0.48);
+        return Qt.hsla(base.hslHue, base.hslSaturation
+            * Math.max(minimumSemanticVibrancy, wallpaperChroma),
+            base.hslLightness, 1);
     }
 
     function buildPalette(light: bool): var {

@@ -256,6 +256,28 @@ ALERT = prop([
     "...W...",
 ])
 
+READY = prop([
+    ".WWWWWWWWW.",
+    "WWWWWWWWVWW",
+    "WWWWWWWVVWW",
+    "WWVWWWVVWWW",
+    "WWVVWVVWWWW",
+    "WWWVVVWWWWW",
+    "WWWWVWWWWWW",
+    ".WWWWWWWWW.",
+    "..WW.......",
+    "..W........",
+])
+
+
+def ready(tilt=0, dy=0, eyes="open"):
+    body = crab(dy=dy, eyes=eyes, arms=(0, "none"))
+    return frame(body, alert(dy, False, tilt, 0, ("right",)) + [(READY, 20, 16 + dy)])
+
+
+def nudge(dx=30, dy=0, eyes="left", bubble=True):
+    return frame(crab(dy=dy, eyes=eyes), [(READY, dx + 6, 22 + dy)] if bubble else [], dx=dx)
+
 
 def limbs(segments, dy=0, dx=0):
     c = Canvas(FRAME, FRAME)
@@ -1571,6 +1593,29 @@ ANIMATIONS = [
         (frame(crab(dy=-2, eyes="wide", arms=("none", "none")), alert(-2, True, -1)), 150),
         (frame(crab(eyes="wide", arms=("none", "none")), alert(0, False, 1)), 150),
         (frame(crab(dy=1, eyes="wide", arms=("none", "none")), alert(1, True, -1)), 150),
+    ]),
+    ("ready", [
+        (ready(1), 360),
+        (ready(0, 1), 360),
+        (ready(1), 360),
+        (ready(0, 1), 360),
+        (ready(1), 900),
+        (ready(1, 0, "closed"), 140),
+    ]),
+    ("nudge_in", [
+        (nudge(40, bubble=False), 120),
+        (nudge(35, bubble=False), 120),
+        (nudge(30, bubble=False), 160),
+    ]),
+    ("nudge", [
+        (nudge(), 1400),
+        (nudge(dy=1), 700),
+        (nudge(), 1400),
+        (nudge(eyes="closed"), 140),
+    ]),
+    ("nudge_out", [
+        (nudge(35, bubble=False), 100),
+        (nudge(40, bubble=False), 100),
     ]),
     ("gone", [
         ([("." * FRAME)] * FRAME, 1000),

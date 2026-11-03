@@ -14,13 +14,13 @@ PanelWindow {
     readonly property bool barAtBottom: SettingsService.statusBarPosition !== "top"
         && !SettingsService.statusBarAutoHide
     readonly property bool shown: SettingsService.clawdWidget
-        && ClawdService.state === "attention"
+        && (ClawdService.state === "attention" || ClawdService.state === "ready")
         && StartupState.maskRevealFinished(outputName)
         && !FloatingWidgetVisibilityService.visibleOnOutput(outputName)
         && !HyprlandService.activeWorkspaceFullscreen(outputName)
 
     screen: targetScreen
-    visible: shown || sprite.current === "peek_out"
+    visible: shown || sprite.current.endsWith("_out")
     color: "transparent"
     exclusionMode: ExclusionMode.Ignore
     WlrLayershell.layer: WlrLayer.Overlay
@@ -42,7 +42,7 @@ PanelWindow {
 
         anchors.fill: parent
         pixelScale: root.pixelScale
-        animation: root.shown ? "peek" : "gone"
+        animation: !root.shown ? "gone" : ClawdService.state === "ready" ? "nudge" : "peek"
         running: root.visible
     }
 

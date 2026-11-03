@@ -10,7 +10,7 @@ Singleton {
     readonly property string homeDirectory: Quickshell.env("HOME") || ""
     readonly property string statePath:
         (Quickshell.env("XDG_RUNTIME_DIR") || "/tmp") + "/clawd/state.json"
-    readonly property var states: ["sleeping", "idle", "thinking", "working", "attention"]
+    readonly property var states: ["sleeping", "idle", "ready", "thinking", "working", "attention"]
     readonly property var tools: ["", "read", "write", "bash", "web", "agent", "think"]
 
     property string reportedState: "sleeping"
@@ -18,15 +18,17 @@ Singleton {
     property int targetPid: 0
     property int sessions: 0
     property real updated: 0
+    property real since: 0
     property real acknowledgedAt: -1
     property string overrideState: ""
     property string overrideTool: ""
 
-    readonly property bool acknowledged: reportedState === "attention"
-        && acknowledgedAt === updated
+    readonly property bool calling: reportedState === "attention" || reportedState === "ready"
+    readonly property bool acknowledged: calling && acknowledgedAt === since
     readonly property string state: overrideState !== "" ? overrideState
-        : acknowledged ? (reportedTool !== "" ? "working" : "thinking")
-        : reportedState
+        : !acknowledged ? reportedState
+        : reportedState === "ready" ? "idle"
+        : reportedTool !== "" ? "working" : "thinking"
     readonly property string tool: overrideState !== "" ? overrideTool : reportedTool
     readonly property bool awake: state !== "sleeping"
 
@@ -47,6 +49,7 @@ Singleton {
             targetPid = 0;
             sessions = 0;
             updated = data && data.updated ? data.updated : 0;
+            since = updated;
             return;
         }
         reportedState = data.state;
@@ -54,13 +57,13 @@ Singleton {
         targetPid = data.kittyPid || 0;
         sessions = data.sessions || 0;
         updated = data.updated || 0;
+        since = data.since || updated;
         checkAcknowledged();
     }
 
     function checkAcknowledged(): void {
-        if (reportedState === "attention" && targetPid > 0
-                && HyprlandService.activePid === targetPid)
-            acknowledgedAt = updated;
+        if (calling && targetPid > 0 && HyprlandService.activePid === targetPid)
+            acknowledgedAt = since;
     }
 
     function activate(): void {

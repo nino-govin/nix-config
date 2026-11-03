@@ -50,6 +50,8 @@ function restAnimation(state, tool, night) {
         return "think";
     case "attention":
         return "attention";
+    case "ready":
+        return "ready";
     }
     return "stand";
 }
@@ -498,6 +500,9 @@ function plan(context) {
 
     if (state === "attention")
         return [rest];
+    if (state === "ready")
+        return pick([[[rest], 4],
+            [[{ kind: "walk", targetX: wanderTarget(sim, platforms, world) }, rest], 1]]);
 
     const options = [];
     const jumps = jumpOptions(sim, platforms, world);

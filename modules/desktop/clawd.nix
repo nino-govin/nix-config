@@ -33,10 +33,11 @@ let
             '{state: "sleeping", tool: "", kittyPid: 0, sessions: 0, updated: $now}'
         else
           jq -s '
-            def rank: {attention: 3, working: 2, thinking: 1}[.state] // 0;
+            def rank: {attention: 4, ready: 3, working: 2, thinking: 1}[.state] // 0;
             (sort_by([rank, .updated]) | last) as $top
             | {state: $top.state, tool: $top.tool, kittyPid: $top.kittyPid,
-               sessions: length, updated: (map(.updated) | max)}' "''${files[@]}"
+               sessions: length, since: $top.updated,
+               updated: (map(.updated) | max)}' "''${files[@]}"
         fi > "$dir/state.json.tmp"
         mv -f "$dir/state.json.tmp" "$dir/state.json"
       }
@@ -74,7 +75,8 @@ let
       [ -e "$file" ] && previous_tool=$(jq -r '.tool // ""' "$file" 2>/dev/null || true)
 
       case "$event" in
-        SessionStart | Stop | StopFailure) state=idle tool="" ;;
+        SessionStart) state=idle tool="" ;;
+        Stop | StopFailure) state=ready tool="" ;;
         UserPromptSubmit | PostToolUse | PostToolUseFailure | PermissionDenied) state=thinking tool="" ;;
         PreToolUse) state=working tool=$(category "$tool") ;;
         PermissionRequest) state=attention tool=$(category "$tool") ;;
@@ -124,7 +126,7 @@ let
     hooks = [
       {
         type = "command";
-        command = lib.getExe clawd-hook;
+        command = "/run/current-system/sw/bin/clawd-hook";
         timeout = 5;
       }
     ];

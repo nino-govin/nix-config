@@ -537,9 +537,10 @@ function plan(context) {
         return pick(options);
     }
 
-    options.push([[rest], (busy ? 5 : 3) / activity]);
+    const perched = sim.platform >= 0 && !busy;
+    options.push([[rest], (busy ? 5 : perched ? 1.2 : 2) / activity]);
     options.push([[{ kind: "walk", targetX: wanderTarget(sim, platforms, world) }]
-        .concat(busy ? [rest] : []), 2]);
+        .concat(busy ? [rest] : []), perched ? 3 : 2.5]);
     if (jumps.length > 0)
         options.push([pick(jumps.map(jump => [jump, 1]))
             .concat(busy ? [rest] : []), busy ? 2 : 2.5]);
@@ -553,7 +554,7 @@ function plan(context) {
         options.push([trip.concat(busy ? [rest] : []), busy ? 1 : 3]);
     if (sim.platform >= 0 && !busy)
         for (const option of perchIdles(sim, platforms, world))
-            options.push(option);
+            options.push([option[0], option[1] * 0.5]);
     for (const reaction of context.reactions || [])
         options.push([[{
             kind: "rest",
@@ -564,10 +565,10 @@ function plan(context) {
         const drop = dropOption(sim, platforms, world);
         const deadly = world.floor - platforms[sim.platform].y >= crashHeight;
         if (drop)
-            options.push([[drop], deadly ? 0.2 : busy ? 0.5 : 1]);
+            options.push([[drop], deadly ? 0.8 : busy ? 0.5 : 2.5]);
         const glide = deadly ? glideOption(sim, platforms, world) : null;
         if (glide)
-            options.push([glide, busy ? 0.6 : 1.5]);
+            options.push([glide, busy ? 0.6 : 3]);
     }
     return pick(options);
 }

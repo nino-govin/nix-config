@@ -22,6 +22,9 @@ Item {
         KeyboardLayoutIndicator {
             anchors.verticalCenter: parent.verticalCenter
         }
+        DevIndicator {
+            anchors.verticalCenter: parent.verticalCenter
+        }
         GpuIndicator {
             anchors.verticalCenter: parent.verticalCenter
         }

@@ -59,7 +59,8 @@ Item {
 
         width: 38
         visible: SettingsService.launcherShowIcons
-            && (root.result.type === "command" || root.result.type === "clipboard")
+            && (root.result.type === "command" || root.result.type === "clipboard"
+                || root.result.type === "calculator")
         text: visible ? root.result.icon : ""
         color: Theme.primaryTextColor
         font.family: Typography.nerdIconFontFamily
@@ -111,6 +112,7 @@ Item {
                 && (root.result.type === "application"
                     || root.result.type === "command"
                     || root.result.type === "clipboard"
+                    || root.result.type === "calculator"
                     || root.result.type === "colorScheme") ? 62 : 12
             rightMargin: root.deletable ? 52 : 12
         }

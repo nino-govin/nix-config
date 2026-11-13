@@ -1,5 +1,6 @@
 import "../../services"
 import "../../widgets/controlcenter"
+import "../../widgets/dev"
 import "../../widgets/energy"
 import "../../widgets/keybinds"
 import "../../widgets/launcher"
@@ -118,6 +119,28 @@ EdgeOverlayWindow {
 
         MemoryPanel {
             id: memoryPanel
+            anchors.fill: parent
+        }
+    }
+
+    EdgePanel {
+        host: root
+        edge: EdgePanel.Top
+        edgeAlignment: EdgePanel.End
+        alongEdgeOffset: 10
+        edgeOffset: ShellMetrics.panelScreenEdgeOverlap
+        shown: OverlayState.devVisible
+        wantsKeyboardFocus: true
+        exclusiveKeyboardFocus: false
+        targetWidth: Math.max(1, Math.min(480, root.width - 32))
+        targetHeight: Math.max(1, Math.min(devPanel.desiredHeight, root.height - 96))
+        radius: ShellMetrics.panelRadius
+        motionStiffness: ShellMetrics.fastPanelSpringStiffness
+        motionDamping: ShellMetrics.fastPanelSpringDamping
+        closeMotionDamping: ShellMetrics.fastPanelCloseSpringDamping
+
+        DevPanel {
+            id: devPanel
             anchors.fill: parent
         }
     }

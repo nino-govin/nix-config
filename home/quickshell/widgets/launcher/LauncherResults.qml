@@ -11,6 +11,11 @@ ScriptModel {
     property string query: ""
     property var commands: []
     property var clipboardEntries: []
+    property string calculation: ""
+    property string calculationExpression: ""
+
+    readonly property bool calculatorMode: SettingsService.launcherCalculator
+        && query.startsWith("=")
 
     readonly property bool commandMode: SettingsService.launcherCommandMode
         && query.startsWith("/")
@@ -22,6 +27,9 @@ ScriptModel {
         && query.startsWith("/clip ")
 
     values: {
+        if (root.calculatorMode)
+            return calculatorResults();
+
         if (root.colorSchemeMode)
             return colorSchemeResults();
 
@@ -55,6 +63,22 @@ ScriptModel {
                     name: application.name,
                     detail: application.genericName || application.comment || "Application"
                 }));
+    }
+
+    function calculatorResults(): var {
+        if (root.calculation === "")
+            return [];
+
+        return [
+            {
+                key: "calc",
+                type: "calculator",
+                name: root.calculation,
+                detail: root.calculationExpression,
+                icon: Icons.calculator,
+                value: root.calculation
+            }
+        ];
     }
 
     function clipboardResults(): var {

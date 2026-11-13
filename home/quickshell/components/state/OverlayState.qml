@@ -16,6 +16,7 @@ Singleton {
     readonly property string settings: "settings"
     readonly property string energy: "energy"
     readonly property string memory: "memory"
+    readonly property string dev: "dev"
     readonly property string keybinds: "keybinds"
 
     property string activeOverlay: ""
@@ -38,6 +39,7 @@ Singleton {
     readonly property bool settingsVisible: activeOverlay === settings
     readonly property bool energyVisible: activeOverlay === energy
     readonly property bool memoryVisible: activeOverlay === memory
+    readonly property bool devVisible: activeOverlay === dev
     readonly property bool keybindsVisible: activeOverlay === keybinds
 
     function toggle(overlay: string): void {
@@ -146,6 +148,14 @@ Singleton {
 
     function hideMemory(): void {
         hide(memory);
+    }
+
+    function toggleDev(): void {
+        toggle(dev);
+    }
+
+    function hideDev(): void {
+        hide(dev);
     }
 
     function toggleKeybinds(): void {
@@ -310,6 +320,18 @@ Singleton {
 
         function hide(): void {
             root.hideMemory();
+        }
+    }
+
+    IpcHandler {
+        target: "dev"
+
+        function toggle(): void {
+            root.toggleDev();
+        }
+
+        function hide(): void {
+            root.hideDev();
         }
     }
 

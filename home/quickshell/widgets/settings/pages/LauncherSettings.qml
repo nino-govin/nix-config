@@ -88,7 +88,15 @@ Column {
             title: "Wallpaper command"
             detail: "Show Wallpapers in command mode"
             checked: SettingsService.draftValue("launcherCommandWallpapers")
+            showSeparator: true
             onToggleRequested: SettingsService.setDraftValue("launcherCommandWallpapers", !checked)
+        }
+        SettingsToggleRow {
+            width: parent.width
+            title: "Calculator"
+            detail: "Evaluate = expressions with qalc"
+            checked: SettingsService.draftValue("launcherCalculator")
+            onToggleRequested: SettingsService.setDraftValue("launcherCalculator", !checked)
         }
     }
 }

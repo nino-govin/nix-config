@@ -16,6 +16,7 @@
     playerctl
     wl-clipboard
     cliphist
+    libqalculate
     imagemagick
     hyprshutdown
     cava

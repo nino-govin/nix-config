@@ -26,6 +26,7 @@ Item {
     readonly property real desiredHeight: Math.min(maximumHeight, fixedContentHeight + visibleResultRows * resultRowHeight)
 
     readonly property bool commandMode: launcherResults.commandMode
+    readonly property bool calculatorMode: launcherResults.calculatorMode
 
     property alias focusTarget: searchField.focusTarget
 
@@ -39,10 +40,18 @@ Item {
         id: clipboard
     }
 
+    Calculator {
+        id: calculator
+
+        expression: launcherResults.calculatorMode ? searchField.text.slice(1) : ""
+    }
+
     LauncherResults {
         id: launcherResults
 
         clipboardEntries: clipboard.entries
+        calculation: calculator.result
+        calculationExpression: calculator.resultExpression
 
         query: searchField.text
 
@@ -59,6 +68,10 @@ Item {
             break;
         case "clipboard":
             clipboard.copy(result.entryId);
+            root.closeRequested();
+            break;
+        case "calculator":
+            calculator.copy(result.value);
             root.closeRequested();
             break;
         case "colorScheme":
@@ -136,7 +149,7 @@ Item {
 
         rowHeight: root.resultRowHeight
 
-        emptyText: root.commandMode ? "No commands found" : "No applications found"
+        emptyText: root.calculatorMode ? "Type an expression" : root.commandMode ? "No commands found" : "No applications found"
 
         onActivated: result => root.launchResult(result)
 

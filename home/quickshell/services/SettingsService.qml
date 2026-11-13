@@ -43,6 +43,7 @@ Singleton {
         launcherCommandColors: true,
         launcherCommandClipboard: true,
         launcherCommandWallpapers: true,
+        launcherCalculator: true,
 
         // Wallpaper
         wallpaperDirectory: "~/Pictures/Wallpapers",
@@ -63,6 +64,7 @@ Singleton {
         statusBarShowBattery: true,
         statusBarShowMemory: true,
         statusBarShowGpu: true,
+        statusBarShowDev: true,
         statusBarShowPrivacy: true,
         statusBarShowKeyboardLayout: true,
         statusBarShowSystemTray: true,
@@ -169,6 +171,7 @@ Singleton {
     property bool launcherCommandColors: defaults.launcherCommandColors
     property bool launcherCommandClipboard: defaults.launcherCommandClipboard
     property bool launcherCommandWallpapers: defaults.launcherCommandWallpapers
+    property bool launcherCalculator: defaults.launcherCalculator
 
     // Wallpaper
     property string wallpaperDirectory: defaults.wallpaperDirectory
@@ -189,6 +192,7 @@ Singleton {
     property bool statusBarShowBattery: defaults.statusBarShowBattery
     property bool statusBarShowMemory: defaults.statusBarShowMemory
     property bool statusBarShowGpu: defaults.statusBarShowGpu
+    property bool statusBarShowDev: defaults.statusBarShowDev
     property bool statusBarShowPrivacy: defaults.statusBarShowPrivacy
     property bool statusBarShowKeyboardLayout: defaults.statusBarShowKeyboardLayout
     property bool statusBarShowSystemTray: defaults.statusBarShowSystemTray

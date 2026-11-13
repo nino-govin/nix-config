@@ -44,24 +44,25 @@ ScriptModel {
 
         const search = root.query.trim().toLowerCase();
 
-        const applications = [...DesktopEntries.applications.values];
-
-        const matches = search.length === 0 ? applications : applications.filter(application => {
-            const searchable = [application.name, application.genericName, application.comment, ...application.keywords].join(" ").toLowerCase();
-
-            return searchable.includes(search);
-        });
-
-        return matches.sort((first, second) => {
-            const nameComparison = first.name.localeCompare(second.name);
-
-            return nameComparison !== 0 ? nameComparison : first.id.localeCompare(second.id);
-        }).map(application => ({
-                    key: "app:" + application.id,
+        return [...DesktopEntries.applications.values].map(application => {
+            const frecency = LauncherUsageService.frecency(application.id);
+            if (search.length === 0)
+                return { application: application, score: frecency };
+            const nameScore = LauncherUsageService.matchScore(search, application.name);
+            const extraScore = [application.genericName, application.comment, ...application.keywords]
+                .some(text => text && text.toLowerCase().includes(search)) ? 40 : -1;
+            const match = Math.max(nameScore, extraScore);
+            return { application: application, score: match < 0 ? -1 : match + Math.min(30, frecency * 3) };
+        }).filter(entry => entry.score >= 0).sort((first, second) => {
+            return second.score - first.score
+                || first.application.name.localeCompare(second.application.name)
+                || first.application.id.localeCompare(second.application.id);
+        }).map(entry => ({
+                    key: "app:" + entry.application.id,
                     type: "application",
-                    application: application,
-                    name: application.name,
-                    detail: application.genericName || application.comment || "Application"
+                    application: entry.application,
+                    name: entry.application.name,
+                    detail: entry.application.genericName || entry.application.comment || "Application"
                 }));
     }
 

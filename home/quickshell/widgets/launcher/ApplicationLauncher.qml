@@ -84,6 +84,7 @@ Item {
 
     function launchApplication(result): void {
         result.application.execute();
+        LauncherUsageService.record(result.application.id);
         if (SettingsService.launcherCloseOnLaunch)
             root.closeRequested();
     }

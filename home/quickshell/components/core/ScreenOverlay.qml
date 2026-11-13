@@ -8,6 +8,7 @@ import "../../widgets/memory"
 import "../../widgets/notifications"
 import "../../widgets/osd"
 import "../../widgets/powermenu"
+import "../../widgets/screenshot"
 import "../../widgets/utilitycenter"
 import "../state"
 import "../theme"
@@ -240,6 +241,25 @@ EdgeOverlayWindow {
         closeMotionDamping: ShellMetrics.fastPanelCloseSpringDamping
 
         OsdContent {
+            anchors.fill: parent
+        }
+    }
+
+    EdgePanel {
+        host: root
+        edge: EdgePanel.Right
+        edgeAlignment: EdgePanel.End
+        alongEdgeOffset: 16
+        edgeOffset: ShellMetrics.panelScreenEdgeOverlap
+        shown: OverlayState.screenshotVisible
+        targetWidth: 380 + ShellMetrics.panelScreenEdgeOverlap
+        targetHeight: 132
+        radius: ShellMetrics.panelRadius
+        motionStiffness: ShellMetrics.fastPanelSpringStiffness
+        motionDamping: ShellMetrics.fastPanelSpringDamping
+        closeMotionDamping: ShellMetrics.fastPanelCloseSpringDamping
+
+        ScreenshotPreview {
             anchors.fill: parent
         }
     }

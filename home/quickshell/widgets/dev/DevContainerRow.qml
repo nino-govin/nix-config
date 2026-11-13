@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
+import "../../components/common"
 import "../../components/theme"
 import "../../services"
 
@@ -74,18 +75,18 @@ Item {
             visible: hover.hovered
             spacing: 2
 
-            DevIconButton {
+            IconButton {
                 icon: Icons.terminal
                 onClicked: DevService.containerLogs(root.container)
             }
 
-            DevIconButton {
+            IconButton {
                 visible: root.container.running
                 icon: Icons.restart
                 onClicked: DevService.containerAction("restart", [root.container.id])
             }
 
-            DevIconButton {
+            IconButton {
                 icon: root.container.running ? Icons.stop : Icons.play
                 danger: root.container.running
                 onClicked: DevService.containerAction(root.container.running ? "stop" : "start", [root.container.id])

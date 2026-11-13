@@ -16,6 +16,8 @@ hl.config({
 })
 
 hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
+hl.gesture({ fingers = 3, direction = "up", action = function() hl.exec_cmd("qs ipc call gesture swipeUp") end })
+hl.gesture({ fingers = 3, direction = "down", action = function() hl.exec_cmd("qs ipc call gesture swipeDown") end })
 
 hl.config({
   general = {

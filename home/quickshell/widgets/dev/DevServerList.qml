@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
+import "../../components/common"
 import "../../components/theme"
 import "../../services"
 
@@ -83,7 +84,7 @@ Rectangle {
                         port: row.modelData.port
                     }
 
-                    DevIconButton {
+                    IconButton {
                         opacity: hover.hovered ? 1 : 0
                         icon: Icons.stop
                         danger: true

@@ -2,6 +2,7 @@
 
 {
   home.packages = [
+    pkgs.satty
     (pkgs.writeShellApplication {
       name = "screenshot";
       runtimeInputs = with pkgs; [
@@ -19,7 +20,8 @@
           *) grim "$file" ;;
         esac
         wl-copy --type image/png < "$file"
-        notify-send -a Screenshot -i "$file" "Screenshot" "Copied to clipboard · $(basename "$file")"
+        qs ipc call screenshot open "$file" \
+          || notify-send -a Screenshot -i "$file" "Screenshot" "Copied to clipboard · $(basename "$file")"
       '';
     })
   ];

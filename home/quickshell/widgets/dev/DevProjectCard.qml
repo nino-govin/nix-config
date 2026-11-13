@@ -97,19 +97,19 @@ Rectangle {
                     visible: headerHover.hovered
                     spacing: 2
 
-                    DevIconButton {
+                    IconButton {
                         visible: root.project.name !== ""
                         icon: Icons.terminal
                         onClicked: DevService.projectLogs(root.project)
                     }
 
-                    DevIconButton {
+                    IconButton {
                         visible: root.project.running > 0
                         icon: Icons.restart
                         onClicked: DevService.containerAction("restart", root.runningIds)
                     }
 
-                    DevIconButton {
+                    IconButton {
                         icon: root.project.running > 0 ? Icons.stop : Icons.play
                         danger: root.project.running > 0
                         onClicked: DevService.containerAction(root.project.running > 0 ? "stop" : "start",

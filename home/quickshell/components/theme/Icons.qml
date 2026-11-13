@@ -68,6 +68,8 @@ Singleton {
     readonly property string server: "󰒋"
     readonly property string chevronDown: "󰅀"
     readonly property string chevronRight: "󰅂"
+    readonly property string annotate: "󰏫"
+    readonly property string folder: "󰉋"
     readonly property string calculator: "󰃬"
     readonly property string camera: "󰖠"
     readonly property string screenShare: "󰄘"

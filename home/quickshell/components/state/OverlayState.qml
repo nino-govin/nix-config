@@ -30,6 +30,9 @@ Singleton {
     property bool statusBarHovered: false
     property string osdKind: "volume"
     property bool osdVisible: false
+    property string screenshotPath: ""
+    property bool screenshotVisible: false
+    property bool screenshotHovered: false
 
     readonly property bool controlCenterVisible: activeOverlay === controlCenter
     readonly property bool utilityCenterVisible: activeOverlay === utilityCenter
@@ -89,6 +92,16 @@ Singleton {
         launcherInitialQuery = "/clip ";
         launcherRequestSerial++;
         show(launcher);
+    }
+
+    function showScreenshot(path: string): void {
+        screenshotPath = path;
+        screenshotVisible = true;
+        screenshotTimer.restart();
+    }
+
+    function hideScreenshot(): void {
+        screenshotVisible = false;
     }
 
     function showOsd(kind: string): void {
@@ -320,6 +333,43 @@ Singleton {
 
         function hide(): void {
             root.hideMemory();
+        }
+    }
+
+    Timer {
+        id: screenshotTimer
+        interval: 6000
+        running: root.screenshotVisible && !root.screenshotHovered
+        onTriggered: root.screenshotVisible = false
+    }
+
+    IpcHandler {
+        target: "screenshot"
+
+        function open(path: string): void {
+            root.showScreenshot(path);
+        }
+
+        function hide(): void {
+            root.hideScreenshot();
+        }
+    }
+
+    IpcHandler {
+        target: "gesture"
+
+        function swipeUp(): void {
+            if (root.activeOverlay === "")
+                root.showLauncher();
+            else if (!root.launcherVisible)
+                root.activeOverlay = "";
+        }
+
+        function swipeDown(): void {
+            if (root.activeOverlay === "")
+                root.show(root.controlCenter);
+            else if (!root.controlCenterVisible)
+                root.activeOverlay = "";
         }
     }
 
